@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TestNeuralNetwork" project="Text4Less" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="appTest.TestNeuralNetwork" time="0.0">
+    <testcase name="testWithoutWeights" classname="appTest.TestNeuralNetwork" time="0.0"/>
+    <testcase name="testRandomWeights" classname="appTest.TestNeuralNetwork" time="0.0"/>
+    <testcase name="testIllegalArgument" classname="appTest.TestNeuralNetwork" time="0.0"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,65 @@
+package neuralNetwork;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class NeuralNetwork {
+	NetworkLayer inputLayer, outputLayer;
+	List<NetworkLayer> hiddenLayers;
+	private final int FIRST_HIDDEN_LAYER_INDEX = 0;
+	private final float MAX_POSITIVE_RANDOM_WEIGHT = 0.05f;
+	private final float MAX_NEGATIVE_RANDOM_WEIGHT = -0.05f;
+	
+	public NeuralNetwork(int numberInputs, int numberHiddenLayers,
+			int numNeuronsPerHiddenLayer, int numberOutputs,
+			boolean isRandomWeights){
+		inputLayer = createBlankLayer(numberInputs);
+		setupHiddenLayers(numberHiddenLayers, numNeuronsPerHiddenLayer);
+		setupOutputLayer(numberOutputs);
+		
+		setupConnections(isRandomWeights);
+	}
+	
+	private void setupConnections(boolean isRandomWeights){
+		for (Neuron nextInputNeuron : inputLayer.getNeurons()){
+			for (Neuron nextHiddenNeuron : 
+				hiddenLayers.get(FIRST_HIDDEN_LAYER_INDEX).getNeurons()){
+				if (!nextHiddenNeuron.isBias()){
+					nextInputNeuron.addOutputConnection(nextHiddenNeuron, 0.0f);
+					nextHiddenNeuron.addInputConnection(nextInputNeuron, 0.0f);
+				}
+			}
+		}
+	}
+	
+	private void setupHiddenLayers(int numberHiddenLayers, 
+			int numNeuronsPerLayer){
+		hiddenLayers = new LinkedList<NetworkLayer>();
+		
+		for (int i = 0; i < numberHiddenLayers; i++){
+			hiddenLayers.add(createBlankLayer(numNeuronsPerLayer));
+		}
+	}
+	
+	private void setupOutputLayer(int numberOutputs){
+		outputLayer = new NetworkLayer();
+		
+		for (int i = 0; i < numberOutputs; i++){
+			outputLayer.addNeuron(new Neuron());
+		}
+	}
+	
+	private NetworkLayer createBlankLayer(int numberOfNeurons){
+		NetworkLayer layer = new NetworkLayer();
+		
+		Neuron biasNeuron = new Neuron();
+		biasNeuron.setBias(true);
+		layer.addNeuron(biasNeuron);
+		
+		for (int i = 0; i < numberOfNeurons; i++){
+			layer.addNeuron(new Neuron());
+		}
+		
+		return layer;
+	}
+}

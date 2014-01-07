@@ -1,0 +1,11 @@
+package neuralNetwork;
+
+public class SigmoidActivationCalculator implements IActivationFunctionCalculator{
+
+	@Override
+	public float calculateActivationValue(float zValue) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

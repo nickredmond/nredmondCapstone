@@ -1,0 +1,9 @@
+1389036924582	Encapsulate field 'value'
+1389037001325	Encapsulate field 'connector'
+1389037007482	Encapsulate field 'weight'
+1389037084966	Encapsulate field 'inputConnections'
+1389037089504	Encapsulate field 'outputConnections'
+1389037215008	Encapsulate field 'neurons'
+1389037644079	Encapsulate field 'isInactive'
+1389040961799	Delete element
+1389043916215	Extract method 'calculateActivationForNeuron'

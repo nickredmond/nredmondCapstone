@@ -1,0 +1,35 @@
+package neuralNetwork;
+
+import java.util.List;
+
+public class NeuralNetwork {
+	NetworkLayer inputLayer, outputLayer;
+	List<NetworkLayer> hiddenLayers;
+	
+	public NeuralNetwork(int numberInputs, int numberHiddenLayers,
+			int numInputsPerHiddenLayer, int numberOutputs){
+		setupInputLayer(numberInputs);
+		setupHiddenLayers(numberHiddenLayers, numInputsPerHiddenLayer);
+	}
+	
+	private void setupHiddenLayers(int numberHiddenLayers, 
+			int numInputsPerLayer){
+		for (int i = 0; i < numberHiddenLayers; i++){
+			NetworkLayer nextLayer = new NetworkLayer();
+			Neuron biasNeuron = new Neuron();
+			biasNeuron.setBias(true);
+		}
+	}
+	
+	private void setupInputLayer(int numberInputs){
+		inputLayer = new NetworkLayer();
+		Neuron biasNeuron = new Neuron();
+		biasNeuron.setBias(true);
+		
+		inputLayer.addNeuron(biasNeuron);
+		
+		for (int i = 0; i < numberInputs; i++){
+			inputLayer.addNeuron(new Neuron());
+		}
+	}
+}

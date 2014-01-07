@@ -1,0 +1,32 @@
+package neuralNetwork;
+
+import java.util.List;
+
+public class Neuron {
+	private float value;
+	private List<NeuronConnection> inputConnections, outputConnections;
+	
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
+
+	public List<NeuronConnection> getInputConnections() {
+		return inputConnections;
+	}
+
+	public void setInputConnections(List<NeuronConnection> inputConnections) {
+		this.inputConnections = inputConnections;
+	}
+
+	public List<NeuronConnection> getOutputConnections() {
+		return outputConnections;
+	}
+
+	public void setOutputConnections(List<NeuronConnection> outputConnections) {
+		this.outputConnections = outputConnections;
+	}
+}

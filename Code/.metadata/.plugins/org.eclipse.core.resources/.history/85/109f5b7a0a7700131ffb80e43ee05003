@@ -1,0 +1,15 @@
+package neuralNetwork;
+
+import java.util.List;
+
+public class NetworkLayer {
+	private List<Neuron> neurons;
+
+	public List<Neuron> getNeurons() {
+		return neurons;
+	}
+
+	public void setNeurons(List<Neuron> neurons) {
+		this.neurons = neurons;
+	}
+}

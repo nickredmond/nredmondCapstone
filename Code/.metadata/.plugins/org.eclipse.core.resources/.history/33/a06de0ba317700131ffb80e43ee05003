@@ -1,0 +1,12 @@
+package appTest;
+
+import neuralNetwork.NeuralNetwork;
+
+public class MainTest {
+
+	public static void main(String[] args) {
+		NeuralNetwork network = new NeuralNetwork(2, 3, 3, 5, true);
+		network.getOutputForInput(new float[]{0.1f, 0.7f});
+	}
+
+}

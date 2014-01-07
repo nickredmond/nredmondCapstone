@@ -1,0 +1,17 @@
+package appTest;
+
+import neuralNetwork.NeuralNetwork;
+
+import org.junit.Test;
+
+public class TestNeuralNetwork {
+
+	@Test
+	public void testWithoutWeights() {
+		NeuralNetwork network1 = new NeuralNetwork(1, 3, 3, 1, false);
+		NeuralNetwork network2 = new NeuralNetwork(5, 3, 4, 1, false);
+		NeuralNetwork network3 = new NeuralNetwork(1, 3, 2, 5, false);
+		NeuralNetwork network4 = new NeuralNetwork(6, 5, 7, 19, false);
+	}
+
+}

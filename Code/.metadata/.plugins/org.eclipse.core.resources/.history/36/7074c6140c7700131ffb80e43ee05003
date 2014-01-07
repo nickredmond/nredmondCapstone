@@ -1,0 +1,17 @@
+package neuralNetwork;
+
+import java.util.List;
+
+public class NeuralNetwork {
+	NetworkLayer inputLayer, outputLayer;
+	List<NetworkLayer> hiddenLayers;
+	
+	public NeuralNetwork(int numberInputs, int numberHiddenLayers,
+			int numInputsPerHiddenLayer, int numberOutputs){
+		setupInputLayer(numberInputs);
+	}
+	
+	private void setupInputLayer(int numberInputs){
+		inputLayer = new NetworkLayer();
+	}
+}
