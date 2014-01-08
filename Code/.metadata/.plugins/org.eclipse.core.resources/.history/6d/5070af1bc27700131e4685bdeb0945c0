@@ -1,0 +1,18 @@
+package neuralNetwork;
+
+public class TrainingExample {
+	private float[] input, output;
+	
+	public TrainingExample(float[] input, float[] output){
+		this.input = input;
+		this.output = output;
+	}
+	
+	public float[] getInput(){
+		return input;
+	}
+	
+	public float[] getOutput(){
+		return output;
+	}
+}

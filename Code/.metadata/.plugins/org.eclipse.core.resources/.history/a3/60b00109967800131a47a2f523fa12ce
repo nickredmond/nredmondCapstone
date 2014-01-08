@@ -1,0 +1,15 @@
+package neuralNetwork;
+
+import java.util.List;
+
+public class CharacterNetworkTrainer {
+	private List<CharacterTrainingExample> trainingExamples;
+	
+	public void addTrainingExample(CharacterTrainingExample example){
+		trainingExamples.add(example);
+	}
+	
+	public void trainNeuralNetwork(NeuralNetwork network){
+		
+	}
+}

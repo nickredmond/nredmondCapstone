@@ -7,3 +7,10 @@
 1389037644079	Encapsulate field 'isInactive'
 1389040961799	Delete element
 1389043916215	Extract method 'calculateActivationForNeuron'
+1389116414529	Encapsulate field 'errorValue'
+1389116592389	Extract method 'calculateOutputErrors'
+1389116984259	Extract method 'calculateHiddenErrors'
+1389117304661	Encapsulate field 'deltaValue'
+1389201119867	Encapsulate field 'characterImage'
+1389201124027	Encapsulate field 'characterValue'
+1389202085502	Extract method 'scaleToDimension'

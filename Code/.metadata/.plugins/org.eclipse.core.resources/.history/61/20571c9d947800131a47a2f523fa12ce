@@ -1,0 +1,17 @@
+package neuralNetwork;
+
+import java.awt.image.BufferedImage;
+
+public class CharacterReader {
+	private NeuralNetwork network;
+	
+	public CharacterReader(NeuralNetwork network){
+		this.network = network;
+	}
+	
+	public char readCharacter(BufferedImage img){
+		
+		
+		return 'a';
+	}
+}

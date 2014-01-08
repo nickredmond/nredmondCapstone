@@ -1,0 +1,27 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class NetworkIOTranslator {
+	private final int IMAGE_DIMENSION = 30;
+	
+	public int[] translateCharacterToBraille(char c){
+		return null;
+	}
+	
+	public char translateBrailleToCharacter(int[] braille){
+		return 'a';
+	}
+	
+	public float[] translateImageToNetworkInput(BufferedImage img){
+		float[] networkInput = new float[IMAGE_DIMENSION * IMAGE_DIMENSION];
+		
+		int[] sourceData = new int[img.getWidth() * img.getHeight()];
+		
+		for (int x = 0; x < img.getWidth(); x++){
+			for (int y = 0; y < img.getHeight(); y++){
+				sourceData[x * img.getWidth() + y] = img.getRGB(x, y);
+			}
+		}
+	}
+}

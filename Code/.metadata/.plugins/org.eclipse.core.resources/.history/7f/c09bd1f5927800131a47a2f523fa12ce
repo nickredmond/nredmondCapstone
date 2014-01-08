@@ -1,0 +1,109 @@
+package imageProcessing;
+
+import io.CharacterUnicodeReader;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Map;
+
+public class NetworkIOTranslator {
+	private final int IMAGE_DIMENSION = 30;
+	private final int MAX_RGB_VALUE = -16777216;
+	private Map<Character, Integer> unicodeMappings;
+	private final String UNICODE_FILEPATH = "charToUnicode.txt";
+	
+	private final int MAX_BINARY_INDEX = 7;
+	
+	public NetworkIOTranslator(){
+		try {
+			unicodeMappings = CharacterUnicodeReader.readCharacterUnicodeFile(UNICODE_FILEPATH);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		translateIntToBinary128(64);
+		translateIntToBinary128(127);
+		translateIntToBinary128(0);
+		translateIntToBinary128(15);
+		translateIntToBinary128(8);
+		translateIntToBinary128(71);
+	}
+	
+	public int[] translateCharacterToNetworkOutput(char c){
+		int unicodeValue = unicodeMappings.get(c);
+		
+		return null;
+	}
+	
+	public char translateNetworkOutputToCharacter(int[] braille){
+		return 'a';
+	}
+	
+	private int[] translateIntToBinary128(int value){
+		int remainder = value;
+		int[] binary = new int[MAX_BINARY_INDEX];
+		
+		for (int i = binary.length; i >= -1; i--){
+			int binaryIndexValue = (int)Math.pow(2, i + 1);
+			
+			if (remainder / binaryIndexValue > 0){
+				binary[binary.length - i - 2] = 1;
+			}
+			
+			remainder = remainder % binaryIndexValue;
+		}
+		
+		System.out.print("binary: ");
+		
+		for (int i = 0; i < binary.length ; i++){
+			System.out.print(binary[i] + " ");
+		}
+		System.out.println("- value: " + value);
+		
+		return binary;
+	}
+	
+	private int translateBinary128ToInt(int[] value){
+		return 0;
+	}
+	
+	public float[] translateImageToNetworkInput(BufferedImage img){
+		float[] networkInput = scaleToDimension(img);
+		float[] normalizedInput = normalizeNetworkInput(networkInput);
+		
+		return normalizedInput;
+	}
+
+	private float[] normalizeNetworkInput(float[] networkInput) {
+		float[] normalizedInput = networkInput;
+		
+		for (int i = 0; i < networkInput.length; i++){
+			normalizedInput[i] = normalizedInput[i] / (float)MAX_RGB_VALUE;
+		}
+		
+		return normalizedInput;
+	}
+
+	private float[] scaleToDimension(BufferedImage img) {
+		float[] networkInput = new float[IMAGE_DIMENSION * IMAGE_DIMENSION];		
+		float scaleValueX = (float)IMAGE_DIMENSION / img.getWidth();
+		float scaleValueY = (float)IMAGE_DIMENSION / img.getHeight();
+		
+		int currentInputIndex = 0;
+		
+		for (float x = scaleValueX; x < img.getWidth() && 
+				currentInputIndex < networkInput.length; x += scaleValueX){
+			for (float y = scaleValueY; y < img.getHeight() && 
+					currentInputIndex < networkInput.length; y += scaleValueY){
+				int xPos = (int) x;
+				int yPos = (int) y;
+				
+				networkInput[currentInputIndex] = img.getRGB(xPos, yPos);
+				currentInputIndex++;
+			}
+		}
+		
+		return networkInput;
+	}
+}

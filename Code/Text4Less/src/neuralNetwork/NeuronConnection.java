@@ -1,24 +1,39 @@
 package neuralNetwork;
 
 public class NeuronConnection {
-	private Neuron connector;
-	private float weight;
+	private Neuron leftConnector, rightConnector;
+	private float weight, deltaValue;
 	
-	public NeuronConnection(Neuron connector, float weight){
-		this.connector = connector;
+	public NeuronConnection(Neuron leftConnector, Neuron rightConnector, float weight){
+		this.leftConnector = leftConnector;
+		this.rightConnector = rightConnector;
 		this.weight = weight;
 	}
 	
-	public Neuron getConnector() {
-		return connector;
+	public Neuron getLeftConnector() {
+		return leftConnector;
 	}
-	public void setConnector(Neuron connector) {
-		this.connector = connector;
+	public void setLeftConnector(Neuron connector) {
+		this.leftConnector = connector;
+	}
+	public Neuron getRightConnector() {
+		return rightConnector;
+	}
+	public void setRightConnector(Neuron connector) {
+		this.rightConnector = connector;
 	}
 	public float getWeight() {
 		return weight;
 	}
 	public void setWeight(float weight) {
 		this.weight = weight;
+	}
+
+	public float getDeltaValue() {
+		return deltaValue;
+	}
+
+	public void setDeltaValue(float deltaValue) {
+		this.deltaValue = deltaValue;
 	}
 }

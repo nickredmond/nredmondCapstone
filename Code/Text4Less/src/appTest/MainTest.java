@@ -1,38 +1,84 @@
 package appTest;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
+
+import neuralNetwork.BackpropagationTrainer;
+import neuralNetwork.CharacterNetworkTrainer;
+import neuralNetwork.CharacterReader;
+import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.NeuralNetwork;
-import neuralNetwork.SigmoidActivationCalculator;
+import neuralNetwork.TrainingExample;
 
 public class MainTest {
 
-	public static void main(String[] args) {
-		NeuralNetwork network = new NeuralNetwork(2, 1, 3, 2, true);
-//		network.setWeightForNeuron(1, 0, 1, 0.98f);
-//		network.setWeightForNeuron(1, 0, 2, 0.73f);
-//		network.setWeightForNeuron(1, 0, 3, -0.11f);
-//		network.setWeightForNeuron(1, 1, 1, 0.26f);
-//		network.setWeightForNeuron(1, 1, 2, -0.98f);
-//		network.setWeightForNeuron(1, 1, 3, 0.90f);
-//		network.setWeightForNeuron(1, 2, 1, 0.98f);
-//		network.setWeightForNeuron(1, 2, 2, 0.38f);
-//		network.setWeightForNeuron(1, 2, 3, -0.05f);
+	public static void main(String[] args) throws IOException {
+//		NeuralNetwork network = new NeuralNetwork(2, 1, 3, 2, true);
 //		
-//		network.setWeightForNeuron(2, 0, 0, 0.5f);
-//		network.setWeightForNeuron(2, 0, 1, -0.5f);
-//		network.setWeightForNeuron(2, 1, 0, 0.7f);
-//		network.setWeightForNeuron(2, 1, 1, 0.52f);
-//		network.setWeightForNeuron(2, 2, 0, 0.02f);
-//		network.setWeightForNeuron(2, 2, 1, 0.0f);
-//		network.setWeightForNeuron(2, 3, 0, -0.22f);
-//		network.setWeightForNeuron(2, 3, 1, 0.01f);
-		int[] outputs = network.getOutputForInput(new float[]{0.1f, 0.7f});
+//		TrainingExample e1 = new TrainingExample(new float[]{0.41f, 0.07f}, new int[]{0, 0});
+//		TrainingExample e2 = new TrainingExample(new float[]{-0.45f, -0.05f}, new int[]{0, 1});
+//		TrainingExample e3 = new TrainingExample(new float[]{0.27f, -0.17f}, new int[]{1, 1});
+//		
+//		Set<TrainingExample> set = new HashSet<TrainingExample>();
+//		set.add(e1);
+//		set.add(e2);
+//		set.add(e3);
+//		
+//		testMe(network,set);
+//		
+//		BackpropagationTrainer trainer = new BackpropagationTrainer();
+//		trainer.trainWithTrainingSet(network, set);
+//		
+//		testMe(network,set);
 		
-		 SigmoidActivationCalculator calc = new SigmoidActivationCalculator();
-		 System.out.println(calc.calculateActivationValue(0.76f));
+		//System.out.println("yes: " + (char)58);
 		
-		for (int i = 0; i < outputs.length; i++){
-			System.out.println(outputs[i] + " ");
-		}
+		NeuralNetwork network = new NeuralNetwork(900, 3, 20, 7, true);
+		CharacterReader reader = new CharacterReader(network);
+		BufferedImage testA = 
+				ImageIO.read(new File("C:\\Users\\nredmond\\Documents\\Capstone\\Training Data\\Set1 - Capital Letters\\A.jpg"));
+		BufferedImage testZ = 
+				ImageIO.read(new File("C:\\Users\\nredmond\\Documents\\Capstone\\Training Data\\Set1 - Capital Letters\\Z.jpg"));
+		
+		CharacterNetworkTrainer trainer = new CharacterNetworkTrainer();
+		CharacterTrainingExample example1 = new CharacterTrainingExample(testA, 'A');
+		CharacterTrainingExample example2 = new CharacterTrainingExample(testZ, 'Z');
+		
+		trainer.addTrainingExample(example1);
+		trainer.addTrainingExample(example2);
+		
+		trainer.trainNeuralNetwork(network, new BackpropagationTrainer());
+		
+		char result1 = reader.readCharacter(testA);
+		char result2 = reader.readCharacter(testZ);
+		
+		System.out.println("This should be A: " + result1);
+		System.out.println("This should be Z: " + result2);
 	}
 
+	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
+		
+		for (TrainingExample nextExample : set){
+			int[] outputs = network.getOutputForInput(nextExample.getInput());
+			
+			System.out.print("Desired: ");
+			
+			for (int i = 0; i < nextExample.getOutput().length; i++){
+				System.out.print(nextExample.getOutput()[i] + " ");
+			}
+			
+			System.out.print(" --- Actual: ");
+			
+			for (int i = 0; i < outputs.length; i++){
+				System.out.print(outputs[i] + " ");
+			}
+			System.out.println();
+		}
+		
+		System.out.println();
+	}
 }

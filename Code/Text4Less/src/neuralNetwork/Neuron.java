@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Neuron {
-	private float value;
+	private float value, errorValue;
 	private List<NeuronConnection> inputConnections, outputConnections;
 	private boolean isBias;
 	
@@ -37,14 +37,12 @@ public class Neuron {
 		this.outputConnections = outputConnections;
 	}
 	
-	public void addInputConnection(Neuron n, float weight){
-		NeuronConnection connection = new NeuronConnection(n, weight);
-		inputConnections.add(connection);
+	public void addInputConnection(NeuronConnection conn){
+		inputConnections.add(conn);
 	}
 	
-	public void addOutputConnection(Neuron n, float weight){
-		NeuronConnection connection = new NeuronConnection(n, weight);
-		outputConnections.add(connection);
+	public void addOutputConnection(NeuronConnection conn){
+		outputConnections.add(conn);
 	}
 
 	public boolean isBias() {
@@ -57,5 +55,13 @@ public class Neuron {
 		if (isBias){
 			setValue(1.0f);
 		}
+	}
+
+	public float getErrorValue() {
+		return errorValue;
+	}
+
+	public void setErrorValue(float errorValue) {
+		this.errorValue = errorValue;
 	}
 }

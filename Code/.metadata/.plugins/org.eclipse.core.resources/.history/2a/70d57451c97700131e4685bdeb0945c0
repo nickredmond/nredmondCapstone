@@ -1,0 +1,83 @@
+package neuralNetwork;
+
+import java.util.List;
+import java.util.Set;
+
+public class BackpropagationTrainer implements INetworkTrainer {
+
+	@Override
+	public void trainWithSingleTrainingExample(NeuralNetwork network,
+			TrainingExample example) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void trainWithTrainingSet(NeuralNetwork network,
+			Set<TrainingExample> trainingSet) {
+		for (TrainingExample nextExample : trainingSet){
+			List<Neuron> outputNeurons = network.getOutputLayer().getNeurons();
+			calculateOutputErrors(network, nextExample, outputNeurons);
+			
+			List<NetworkLayer> hiddenLayers = network.getHiddenLayers();
+			calculateHiddenErrors(hiddenLayers);
+			
+			calculateDeltas(hiddenLayers, network.getInputLayer(), network.getOutputLayer());
+		}
+	}
+	
+	private void calculateDeltas(List<NetworkLayer> hiddenLayers, NetworkLayer inputLayer,
+			NetworkLayer outputLayer){
+		
+	}
+
+	private void calculateHiddenErrorsAndDeltas(List<NetworkLayer> hiddenLayers, NetworkLayer outputLayer) {
+		for (int i = hiddenLayers.size() - 1; i >= 0; i++){
+			NetworkLayer currentLayer = hiddenLayers.get(i);
+			NetworkLayer nextLayer = (i == hiddenLayers.size() - 1) ? outputLayer :
+				hiddenLayers.get(i + 1);
+			
+			for (Neuron nextNeuron : currentLayer.getNeurons()){
+				float errorValue = 0.0f;
+				
+				for (NeuronConnection nextConnection : nextNeuron.getOutputConnections()){
+					errorValue += nextConnection.getWeight() + nextConnection.getConnector().getErrorValue();
+					NeuronConnection nextLayerInputConnection = findInputConnection(nextLayer, nextNeuron);
+					
+					float nextDeltaValue = nextConnection.getDeltaValue() + 
+							(nextNeuron.getValue() * nextConnection.getConnector().getErrorValue());
+					
+					nextConnection.setDeltaValue(nextDeltaValue);
+					nextLayerInputConnection.setDeltaValue(nextDeltaValue);
+				}
+				
+				nextNeuron.setErrorValue(errorValue);
+			}
+		}
+	}
+
+	private NeuronConnection findInputConnection(NetworkLayer layer,
+			Neuron match) {		
+		for (Neuron nextNeuron : layer.getNeurons()){
+			for (NeuronConnection nextConnection : nextNeuron.getInputConnections()){
+				if (nextConnection.getConnector() == match){
+					return nextConnection;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	private void calculateOutputErrors(NeuralNetwork network,
+			TrainingExample nextExample, List<Neuron> outputNeurons) {
+		int[] actualOutput = network.getOutputForInput(nextExample.getInput());
+		int[] desiredOutput = nextExample.getOutput();
+		
+		for (int i = 0; i < actualOutput.length; i++){
+			float nextErrorValue = (float)(actualOutput[i] - desiredOutput[i]);
+			outputNeurons.get(i).setErrorValue(nextErrorValue);
+		}
+	}
+
+}

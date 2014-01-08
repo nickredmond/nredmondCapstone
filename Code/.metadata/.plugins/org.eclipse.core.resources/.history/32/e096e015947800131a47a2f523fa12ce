@@ -1,0 +1,56 @@
+package appTest;
+
+import imageProcessing.NetworkIOTranslator;
+
+import java.io.IOException;
+import java.util.Set;
+
+import neuralNetwork.NeuralNetwork;
+import neuralNetwork.TrainingExample;
+
+public class MainTest {
+
+	public static void main(String[] args) throws IOException {
+//		NeuralNetwork network = new NeuralNetwork(2, 1, 3, 2, true);
+//		
+//		TrainingExample e1 = new TrainingExample(new float[]{0.41f, 0.07f}, new int[]{0, 0});
+//		TrainingExample e2 = new TrainingExample(new float[]{-0.45f, -0.05f}, new int[]{0, 1});
+//		TrainingExample e3 = new TrainingExample(new float[]{0.27f, -0.17f}, new int[]{1, 1});
+//		
+//		Set<TrainingExample> set = new HashSet<TrainingExample>();
+//		set.add(e1);
+//		set.add(e2);
+//		set.add(e3);
+//		
+//		testMe(network,set);
+//		
+//		BackpropagationTrainer trainer = new BackpropagationTrainer();
+//		trainer.trainWithTrainingSet(network, set);
+//		
+//		testMe(network,set);
+		
+		System.out.println("hey arnold: " + (int)':');
+	}
+
+	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
+		
+		for (TrainingExample nextExample : set){
+			int[] outputs = network.getOutputForInput(nextExample.getInput());
+			
+			System.out.print("Desired: ");
+			
+			for (int i = 0; i < nextExample.getOutput().length; i++){
+				System.out.print(nextExample.getOutput()[i] + " ");
+			}
+			
+			System.out.print(" --- Actual: ");
+			
+			for (int i = 0; i < outputs.length; i++){
+				System.out.print(outputs[i] + " ");
+			}
+			System.out.println();
+		}
+		
+		System.out.println();
+	}
+}

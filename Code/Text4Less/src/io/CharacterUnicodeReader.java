@@ -1,0 +1,38 @@
+package io;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CharacterUnicodeReader {
+	private static final int CHAR_INDEX = 0;
+	private static final int UNICODE_INDEX = 1;
+	private static final char SPACE_CHAR = ' ';
+	private static final int SPACE_INT = 32;
+	
+	public static Map<Character, Integer> readCharacterUnicodeFile(String filepath) throws IOException{
+		BufferedReader reader = new BufferedReader(new FileReader(filepath));
+		Map<Character, Integer> unicodeValues = new HashMap<Character, Integer>();
+		
+		String nextLine = null;
+		
+		while ((nextLine = reader.readLine()) != null){
+			String[] lineParts = nextLine.split(" ");
+			
+			if (lineParts.length > 0){
+				char nextCharacter = lineParts[CHAR_INDEX].charAt(0);
+				int nextUnicodeValue = Integer.parseInt(lineParts[UNICODE_INDEX]);
+				
+				unicodeValues.put(nextCharacter, nextUnicodeValue);
+			}
+		}
+		
+		unicodeValues.put(SPACE_CHAR, SPACE_INT);
+		
+		reader.close();
+		return unicodeValues;
+	}
+}

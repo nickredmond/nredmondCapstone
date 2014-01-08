@@ -1,0 +1,55 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class NetworkIOTranslator {
+	private final int IMAGE_DIMENSION = 30;
+	private final int MAX_RGB_VALUE = -16777216;
+	
+	public int[] translateCharacterToBraille(char c){
+		return null;
+	}
+	
+	public char translateBrailleToCharacter(int[] braille){
+		return 'a';
+	}
+	
+	public float[] translateImageToNetworkInput(BufferedImage img){
+		float[] networkInput = scaleToDimension(img);
+		float[] normalizedInput = normalizeNetworkInput(networkInput);
+		
+		return normalizedInput;
+	}
+
+	private float[] normalizeNetworkInput(float[] networkInput) {
+		float[] normalizedInput = networkInput;
+		
+		for (int i = 0; i < networkInput.length; i++){
+			normalizedInput[i] = normalizedInput[i] / (float)MAX_RGB_VALUE;
+		}
+		
+		return normalizedInput;
+	}
+
+	private float[] scaleToDimension(BufferedImage img) {
+		float[] networkInput = new float[IMAGE_DIMENSION * IMAGE_DIMENSION];		
+		float scaleValueX = (float)IMAGE_DIMENSION / img.getWidth();
+		float scaleValueY = (float)IMAGE_DIMENSION / img.getHeight();
+		
+		int currentInputIndex = 0;
+		
+		for (float x = scaleValueX; x < img.getWidth() && 
+				currentInputIndex < networkInput.length; x += scaleValueX){
+			for (float y = scaleValueY; y < img.getHeight() && 
+					currentInputIndex < networkInput.length; y += scaleValueY){
+				int xPos = (int) x;
+				int yPos = (int) x;
+				
+				networkInput[currentInputIndex] = img.getRGB(xPos, yPos);
+				currentInputIndex++;
+			}
+		}
+		
+		return networkInput;
+	}
+}
