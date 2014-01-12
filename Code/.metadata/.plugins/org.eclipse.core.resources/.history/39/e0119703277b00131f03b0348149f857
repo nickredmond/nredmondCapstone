@@ -1,0 +1,27 @@
+package io;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import neuralNetwork.NeuralNetwork;
+
+public class NeuralNetworkIO {
+	private static final String NETWORK_DIRECTORY = "savedNetworks/";
+	private static final String EXTENSION = ".ann";
+	
+	public static void writeNetwork(NeuralNetwork network){
+		
+	}
+	
+	public static NeuralNetwork readNetwork(String filename){
+		String path = NETWORK_DIRECTORY + filename + EXTENSION;
+		try {
+			FileInputStream inputStream = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+}

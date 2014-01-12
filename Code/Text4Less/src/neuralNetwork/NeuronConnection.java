@@ -1,6 +1,8 @@
 package neuralNetwork;
 
-public class NeuronConnection {
+import java.io.Serializable;
+
+public class NeuronConnection implements Serializable {
 	private Neuron leftConnector, rightConnector;
 	private float weight, deltaValue;
 	

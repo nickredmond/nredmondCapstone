@@ -1,0 +1,13 @@
+package io;
+
+import neuralNetwork.NeuralNetwork;
+
+public class NeuralNetworkIO {
+	public static void writeNetwork(NeuralNetwork network){
+		
+	}
+	
+	public static NeuralNetwork readNetwork(String filepath){
+		
+	}
+}

@@ -1,9 +1,10 @@
 package neuralNetwork;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Neuron {
+public class Neuron implements Serializable {
 	private float value, errorValue;
 	private List<NeuronConnection> inputConnections, outputConnections;
 	private boolean isBias;

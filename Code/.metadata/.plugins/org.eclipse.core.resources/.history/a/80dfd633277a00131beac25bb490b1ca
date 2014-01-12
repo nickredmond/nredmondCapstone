@@ -1,0 +1,104 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class ImagePreprocessor {
+	private final float WHITESPACE_MARGIN = 0.0002f;
+	private final int CROP_PIXEL_BUFFER = 2;
+	
+	private final long DEFAULT_MAX_WHITESPACE_VALUE = 50000;
+	private long maxWhitespaceValue;
+	
+	public ImagePreprocessor(){
+		maxWhitespaceValue = DEFAULT_MAX_WHITESPACE_VALUE;
+	}
+	
+	public BufferedImage trimMargins(BufferedImage original){
+		BufferedImage topBottomCrop = trimTopBottomMargins(original);
+		BufferedImage fullCrop = trimLeftRightMargins(topBottomCrop);
+		return fullCrop;
+	}
+	
+	private BufferedImage trimTopBottomMargins(BufferedImage original){
+		RgbLimitSet rowLimits = 
+				getRgbValueLimits(RgbValueReader.ROW_VALUE_READER, original, original.getHeight());
+		long maxWhitespaceRowValue = (long) (rowLimits.getLowestRgbValue() + (WHITESPACE_MARGIN * rowLimits.getRgbRange()));
+		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.ROW_VALUE_READER, 
+				original.getHeight(), maxWhitespaceRowValue);
+		
+		int cropHeight = cropValues.getEndValue() - cropValues.getStartValue();
+		BufferedImage trimmedImg = original.getSubimage(0, cropValues.getStartValue() - CROP_PIXEL_BUFFER, 
+				original.getWidth(), cropHeight + CROP_PIXEL_BUFFER);
+		
+		return trimmedImg;
+	}
+	
+	private BufferedImage trimLeftRightMargins(BufferedImage original){
+		RgbLimitSet colLimits = 
+				getRgbValueLimits(RgbValueReader.COLUMN_VALUE_READER, original, original.getWidth());
+		long maxWhitespaceColValue = 
+				(long) (colLimits.getLowestRgbValue() + (WHITESPACE_MARGIN * colLimits.getRgbRange()));
+		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.COLUMN_VALUE_READER,
+				original.getWidth(), maxWhitespaceColValue);
+		
+		int cropWidth = cropValues.getEndValue() - cropValues.getStartValue();
+		BufferedImage trimmedImg = original.getSubimage(cropValues.getStartValue() - CROP_PIXEL_BUFFER, 0, 
+				cropWidth + CROP_PIXEL_BUFFER, original.getHeight());
+		
+		return trimmedImg;
+	}
+	
+	private CropValueSet getCropValueSet(BufferedImage original, RgbValueReader reader,
+			int maxPosition, long maxWhitespaceValue){
+		int startValue = 0;
+		int endValue = 0;
+		
+		boolean foundTopCrop = false;
+		boolean foundBottomCrop = false;
+		
+		for (int position = 0; position < maxPosition && !foundTopCrop; position++){
+			if (reader.readRgbValue(original, position) > maxWhitespaceValue){
+				foundTopCrop = true;
+				startValue = position;
+			}
+		}
+		for (int position = maxPosition - 1; position >= 0 && !foundBottomCrop; position--){
+			if (reader.readRgbValue(original, position) > maxWhitespaceValue){
+				foundBottomCrop = true;
+				endValue = position;
+			}
+		}
+		
+		return new CropValueSet(startValue, endValue);
+	}
+	
+	private RgbLimitSet getRgbValueLimits(RgbValueReader reader, BufferedImage img, int maxPosition){
+		long lowest = reader.readRgbValue(img, 0);
+		long highest = lowest;
+		
+		for (int position = 1; position < maxPosition; position++){
+			long nextRgbValue = reader.readRgbValue(img, position);
+			
+			if (nextRgbValue < lowest){
+				lowest = nextRgbValue;
+			}
+			if (nextRgbValue > highest){
+				highest = nextRgbValue;
+			}
+		}
+		
+		return new RgbLimitSet(lowest, highest);
+	}
+	
+	
+	public List<BufferedImage> splitIntoLines(BufferedImage document){
+		
+		return null;
+	}
+	
+	public List<BufferedImage> splitIntoCharacters(BufferedImage line){
+		
+		return null;
+	}
+}

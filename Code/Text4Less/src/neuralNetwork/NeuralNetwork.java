@@ -1,10 +1,11 @@
 package neuralNetwork;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class NeuralNetwork {
+public class NeuralNetwork implements Serializable {
 	NetworkLayer inputLayer, outputLayer;
 	List<NetworkLayer> hiddenLayers;
 	private final int FIRST_HIDDEN_LAYER_INDEX = 0;
@@ -137,15 +138,40 @@ public class NeuralNetwork {
 		return layer;
 	}
 	
-	public int[] getOutputForInput(float[] input){
-		List<Neuron> inputNeurons = inputLayer.getNeurons();
+	private float[] normalizeNetworkInput(float[] input){
+		float[] normalizedInput = new float[inputLayer.getNeurons().size() - 1];
+		float normalizationRatio = (float)input.length / normalizedInput.length;
 		
-		if (input.length != inputNeurons.size() - 1){
-			throw new IllegalArgumentException("Wrong number of neurons into network.");
+		int numInputNeuronsCopied = 0;
+		int normalizedInputIndex = 0;
+		float inputSumForIndex = 0.0f;
+		
+		for (int i = 0; i < input.length; i++){
+			inputSumForIndex += input[i];
+			numInputNeuronsCopied++;
+					
+			if ((float)numInputNeuronsCopied / normalizationRatio >= 1.0f){
+				normalizedInput[normalizedInputIndex] = inputSumForIndex / (float)numInputNeuronsCopied;
+				
+				numInputNeuronsCopied = 0;
+				normalizedInputIndex++;
+			}
 		}
 		
-		for (int i = 1; i <= input.length; i++){
-			inputNeurons.get(i).setValue(input[i - 1]);
+		return normalizedInput;
+	}
+	
+	public int[] getOutputForInput(float[] input){
+		List<Neuron> inputNeurons = inputLayer.getNeurons();
+		float[] normalizedInput = new float[inputNeurons.size()];
+		
+		if (input.length != inputNeurons.size() - 1){
+			normalizedInput = normalizeNetworkInput(input);
+		}
+		else normalizedInput = input;
+		
+		for (int i = 1; i <= normalizedInput.length; i++){
+			inputNeurons.get(i).setValue(normalizedInput[i - 1]);
 		}
 		
 		forwardPropagate();

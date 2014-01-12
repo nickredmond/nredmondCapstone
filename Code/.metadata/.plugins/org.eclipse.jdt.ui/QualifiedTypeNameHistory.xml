@@ -2,6 +2,17 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="junit.framework.Assert"/>
 <fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
-<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="io.CharacterUnicodeReader"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="neuralNetwork.CharacterTrainingExample"/>
+<fullyQualifiedTypeName name="io.TrainingDataReader"/>
+<fullyQualifiedTypeName name="io.CharacterType"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.awt.Graphics"/>
+<fullyQualifiedTypeName name="appTest.ImageTestPanel"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="app.ImageReader"/>
 </qualifiedTypeNameHistroy>

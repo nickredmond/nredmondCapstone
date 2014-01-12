@@ -1,9 +1,10 @@
 package neuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetworkLayer {
+public class NetworkLayer implements Serializable {
 	private List<Neuron> neurons;
 	
 	public NetworkLayer(){

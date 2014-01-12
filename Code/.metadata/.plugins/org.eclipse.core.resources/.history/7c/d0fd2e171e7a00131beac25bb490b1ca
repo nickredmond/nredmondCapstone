@@ -1,0 +1,22 @@
+package imageProcessing;
+
+public class RgbLimitSet {
+	private int lowestRgbValue, highestRgbValue;
+	
+	public RgbLimitSet(int low, int high){
+		lowestRgbValue = low;
+		highestRgbValue = high;
+	}
+
+	public int getLowestRgbValue() {
+		return lowestRgbValue;
+	}
+
+	public int getHighestRgbValue() {
+		return highestRgbValue;
+	}
+	
+	public int getRgbRange(){
+		return highestRgbValue - lowestRgbValue;
+	}
+}

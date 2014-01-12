@@ -1,0 +1,61 @@
+package appTest;
+
+import io.CharacterType;
+import io.TrainingDataReader;
+
+import java.io.IOException;
+import java.util.Set;
+
+import neuralNetwork.BackpropagationTrainer;
+import neuralNetwork.CharacterNetworkTrainer;
+import neuralNetwork.CharacterReader;
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.NeuralNetwork;
+import neuralNetwork.TrainingExample;
+
+public class MainTest {
+
+	public static void main(String[] args) throws IOException {		
+		NeuralNetwork network = new NeuralNetwork(900, 2, 100, 7, true);
+		
+		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		CharacterNetworkTrainer trainer = new CharacterNetworkTrainer();	
+		
+		for (CharacterTrainingExample nextExample : trainingSet){
+			trainer.addTrainingExample(nextExample);
+		}
+		
+		trainer.trainNeuralNetwork(network, new BackpropagationTrainer());
+		
+//		for (int i = 65; i <= 90; i++){
+//			char nextLetter = (char)i;
+//			BufferedImage nextImage = ImageIO.read(
+//					new File("C:\\Users\\nredmond\\Documents\\Capstone\\Training Data\\Set1 - Capital Letters\\" + nextLetter + ".jpg"));
+//			
+//			char nextResult = reader.readCharacter(nextImage);
+//			System.out.println("THIS SHOULD BE '" + nextLetter + "': " + nextResult);
+//		}
+	}
+
+	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
+		
+		for (TrainingExample nextExample : set){
+			int[] outputs = network.getOutputForInput(nextExample.getInput());
+			
+			System.out.print("Desired: ");
+			
+			for (int i = 0; i < nextExample.getOutput().length; i++){
+				System.out.print(nextExample.getOutput()[i] + " ");
+			}
+			
+			System.out.print(" --- Actual: ");
+			
+			for (int i = 0; i < outputs.length; i++){
+				System.out.print(outputs[i] + " ");
+			}
+			System.out.println();
+		}
+		
+		System.out.println();
+	}
+}
