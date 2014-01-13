@@ -1,12 +1,18 @@
 package appTest;
 
+import imageProcessing.INetworkIOTranslator;
+import imageProcessing.ReceptorChooser;
+import imageProcessing.ReceptorNetworkIOTranslator;
 import io.CharacterType;
 import io.NeuralNetworkIO;
 import io.TrainingDataReader;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -21,31 +27,51 @@ import app.ImageReader;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
-		NeuralNetwork network = new NeuralNetwork(900, 2, 109, 7, true);
-		//NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
+	//	NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
 		
-		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
-		CharacterNetworkTrainer trainer = new CharacterNetworkTrainer();	
+		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		//Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
+		//Set<CharacterTrainingExample> trainingSet3 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII3);
 		
-		for (CharacterTrainingExample nextExample : trainingSet){
-			trainer.addTrainingExample(nextExample);
+		List<BufferedImage> yes = new LinkedList<BufferedImage>();
+		for (CharacterTrainingExample nextExample : trainingSet1){
+			yes.add(nextExample.getCharacterImage());
 		}
 		
-		trainer.trainNeuralNetwork(network, new BackpropagationTrainer(0.03f, 0.5f));
+		List<Point> receptors = ReceptorChooser.chooseReceptors(yes, 30);
+		NeuralNetwork network = new NeuralNetwork(receptors.size(), 1, 250, 7, true);
+		INetworkIOTranslator t = new ReceptorNetworkIOTranslator(receptors);
 		
-		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\textExample.png"));
-		ImageReader reader = new ImageReader(network);
+		CharacterNetworkTrainer trainer1 = new CharacterNetworkTrainer(t);	
+		//CharacterNetworkTrainer trainer2 = new CharacterNetworkTrainer(t);
+		
+		for (CharacterTrainingExample nextExample : trainingSet1){
+			trainer1.addTrainingExample(nextExample);
+		}
+		
+//		for (CharacterTrainingExample nextExample : trainingSet2){
+//			trainer1.addTrainingExample(nextExample);
+//		}
+		
+//		for (CharacterTrainingExample nextExample : trainingSet3){
+//			trainer1.addTrainingExample(nextExample);
+//		}
+		
+		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.05f));
+		
+		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
+		ImageReader reader = new ImageReader(network, t);
 		
 		String result = reader.readTextFromImage(test);
 		System.out.println("RESULT: " + result);
 		
-		//NeuralNetworkIO.writeNetwork(network, "myNetwork");
+	//	NeuralNetworkIO.writeNetwork(network, "myNetwork");
 	}
 
 	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
 		
 		for (TrainingExample nextExample : set){
-			int[] outputs = network.getOutputForInput(nextExample.getInput());
+			float[] outputs = network.getOutputForInput(nextExample.getInput());
 			
 			System.out.print("Desired: ");
 			

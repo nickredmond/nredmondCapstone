@@ -1,5 +1,6 @@
 package app;
 
+import imageProcessing.INetworkIOTranslator;
 import imageProcessing.ImagePreprocessor;
 
 import java.awt.image.BufferedImage;
@@ -11,8 +12,8 @@ import neuralNetwork.NeuralNetwork;
 public class ImageReader {
 	private CharacterReader reader;
 	
-	public ImageReader(NeuralNetwork network){
-		reader = new CharacterReader(network);
+	public ImageReader(NeuralNetwork network, INetworkIOTranslator translator){
+		reader = new CharacterReader(network, translator);
 	}
 	
 	public String readTextFromImage(BufferedImage image){
@@ -22,7 +23,6 @@ public class ImageReader {
 		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
 		String result = "";
 		
-		int i = 0;
 		for (BufferedImage nextLine : lines){
 			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
 			
@@ -30,8 +30,6 @@ public class ImageReader {
 				char translation = reader.readCharacter(nextCharacter);
 				result += translation;
 			}
-			i++;
-			if (i > 0) break;
 			result += "\r\n";
 		}
 		

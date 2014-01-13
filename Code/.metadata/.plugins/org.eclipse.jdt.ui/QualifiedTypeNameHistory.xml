@@ -15,4 +15,7 @@
 <fullyQualifiedTypeName name="appTest.ImageTestPanel"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.ImageReader"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 </qualifiedTypeNameHistroy>

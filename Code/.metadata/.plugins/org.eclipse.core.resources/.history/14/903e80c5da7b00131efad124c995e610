@@ -1,0 +1,44 @@
+package neuralNetwork;
+
+import imageProcessing.NetworkIOTranslator;
+
+import java.awt.image.BufferedImage;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public class CharacterNetworkTrainer {
+	private List<CharacterTrainingExample> trainingExamples;
+	
+	public CharacterNetworkTrainer(){
+		trainingExamples = new LinkedList<CharacterTrainingExample>();
+	}
+	
+	public void addTrainingExample(CharacterTrainingExample example){
+		trainingExamples.add(example);
+	}
+	
+	public void trainNeuralNetwork(NeuralNetwork network, INetworkTrainer trainer){
+		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples();
+		trainer.trainWithTrainingSet(network, trainingSet);
+	}
+
+	private Set<TrainingExample> setupNetworkTrainingExamples() {
+		Set<TrainingExample> examples = new HashSet<TrainingExample>();
+		
+		for (CharacterTrainingExample nextExample : trainingExamples){
+			BufferedImage nextImage = nextExample.getCharacterImage();
+			char nextCharacter = nextExample.getCharacterValue();
+			
+			NetworkIOTranslator translator = new NetworkIOTranslator();
+			
+			float[] nextInput = translator.translateImageToNetworkInput(nextImage);
+			int[] nextOutput = translator.translateCharacterToNetworkOutput(nextCharacter);
+			
+			examples.add(new TrainingExample(nextInput, nextOutput));
+		}
+		
+		return examples;
+	}
+}

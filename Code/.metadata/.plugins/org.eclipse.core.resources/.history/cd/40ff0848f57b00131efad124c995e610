@@ -1,0 +1,18 @@
+package imageProcessing;
+
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ReceptorChooser {
+	public List<Point> chooseReceptors(List<BufferedImage> samples, int imageDimension){
+		List<Point> receptors = new LinkedList<Point>();
+		
+		for (int x = 0; x < imageDimension; x++){
+			for (int y = 0; y < imageDimension; y++){
+				
+			}
+		}
+	}
+}

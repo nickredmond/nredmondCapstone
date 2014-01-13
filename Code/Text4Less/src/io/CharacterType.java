@@ -1,5 +1,7 @@
 package io;
 
 public enum CharacterType {
-	ASCII
+	ASCII,
+	ASCII2,
+	ASCII3
 }

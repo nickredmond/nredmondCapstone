@@ -1,0 +1,6 @@
+package imageProcessing;
+
+public interface INetworkIOTranslator {
+	public char translateNetworkOutputToCharacter(int[] output);
+	public int[] translateCharacterToNetworkOutput(char c);
+}

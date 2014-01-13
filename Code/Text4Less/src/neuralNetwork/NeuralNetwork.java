@@ -153,6 +153,7 @@ public class NeuralNetwork implements Serializable {
 			if ((float)numInputNeuronsCopied / normalizationRatio >= 1.0f){
 				normalizedInput[normalizedInputIndex] = inputSumForIndex / (float)numInputNeuronsCopied;
 				
+				inputSumForIndex = 0.0f;
 				numInputNeuronsCopied = 0;
 				normalizedInputIndex++;
 			}
@@ -161,7 +162,7 @@ public class NeuralNetwork implements Serializable {
 		return normalizedInput;
 	}
 	
-	public int[] getOutputForInput(float[] input){
+	public float[] getOutputForInput(float[] input){
 		List<Neuron> inputNeurons = inputLayer.getNeurons();
 		float[] normalizedInput = new float[inputNeurons.size()];
 		
@@ -177,11 +178,11 @@ public class NeuralNetwork implements Serializable {
 		forwardPropagate();
 		
 		List<Neuron> outputNeurons = outputLayer.getNeurons();
-		int[] output = new int[outputNeurons.size()];
+		float[] output = new float[outputNeurons.size()];
 		
 		for (int i = 0; i < output.length; i++){
 			float nextOutputValue = outputNeurons.get(i).getValue();
-			output[i] = ((nextOutputValue > ACTIVATION_BOUNDARY) ? 1 : 0);
+			output[i] = nextOutputValue;
 		}
 		
 		return output;

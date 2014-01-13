@@ -1,25 +1,37 @@
 package imageProcessing;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.imageio.ImageIO;
 
-import appTest.ImageTestPanel;
-
-public class NetworkIOTranslator {
+public class NetworkIOTranslator implements INetworkIOTranslator {
 	private final int IMAGE_DIMENSION = 30;
-	private final int MAX_RGB_VALUE = -16777216;
+	private final int MAX_RGB_VALUE = -16777216 / 1;
 	
 	private final int MAX_BINARY_INDEX = 7;
 	private final int WHITE_RGB_VALUE = -1;
+	
+	private final float CERTAINTY_VALUE = 0.5f;
 	
 	public int[] translateCharacterToNetworkOutput(char c){
 		int unicodeValue = (int)c;
 		return translateIntToBinary128(unicodeValue);
 	}
 	
-	public char translateNetworkOutputToCharacter(int[] output){
+	public char translateNetworkOutputToCharacter(float[] output){
+		int[] normalizedOutput = new int[output.length];
+		
+		for (int i = 0; i < output.length; i++){
+			normalizedOutput[i] = (output[i] > CERTAINTY_VALUE) ? 1 : 0;
+		}
+		
+		return translateNetworkOutputToCharacter(normalizedOutput);
+	}
+	
+	private char translateNetworkOutputToCharacter(int[] output){
 		int unicodeValue = translateBinary128ToInt(output);
 		return (char)unicodeValue;
 	}
@@ -70,6 +82,7 @@ public class NetworkIOTranslator {
 		float[] normalizedInput = networkInput;
 		
 		for (int i = 0; i < networkInput.length; i++){
+			//normalizedInput[i] = (normalizedInput[i] == WHITE_RGB_VALUE) ? 0 : 1;
 			normalizedInput[i] = normalizedInput[i] / (float)MAX_RGB_VALUE;
 		}
 		
@@ -99,6 +112,13 @@ public class NetworkIOTranslator {
 				scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
 			}
 		}
+		
+//		try {
+//			ImageIO.write(scaledImg, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII\\" + System.nanoTime() + ".jpg"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return converScaledImageToNetworkInput(scaledImg);
 	}

@@ -6,7 +6,7 @@ import java.util.Set;
 public class BackpropagationTrainer implements INetworkTrainer {
 	private final float LEARNING_RATE = 0.03f;
 	private final float REGULARIZATION_PARAM = 0.1f;
-	private final float MAXIMUM_ALLOWABLE_ERROR = 2.6f;
+	private final float MAXIMUM_ALLOWABLE_ERROR = 99.0f;
 	
 	private float learningRate, regularizationParam;
 	
@@ -103,8 +103,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 			TrainingExample nextExample, List<Neuron> outputNeurons) {
 		float totalError = 0.0f;
 		
-		network.getOutputForInput(nextExample.getInput());
-		float[] actualOutput = network.getNormalizedOutput();
+		float[] actualOutput = network.getOutputForInput(nextExample.getInput());
 		int[] desiredOutput = nextExample.getOutput();
 		
 		for (int i = 0; i < actualOutput.length; i++){

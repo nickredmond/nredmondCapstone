@@ -1,5 +1,6 @@
 package neuralNetwork;
 
+import imageProcessing.INetworkIOTranslator;
 import imageProcessing.NetworkIOTranslator;
 
 import java.awt.image.BufferedImage;
@@ -10,9 +11,11 @@ import java.util.Set;
 
 public class CharacterNetworkTrainer {
 	private List<CharacterTrainingExample> trainingExamples;
+	INetworkIOTranslator translator;
 	
-	public CharacterNetworkTrainer(){
+	public CharacterNetworkTrainer(INetworkIOTranslator translator){
 		trainingExamples = new LinkedList<CharacterTrainingExample>();
+		this.translator = translator;
 	}
 	
 	public void addTrainingExample(CharacterTrainingExample example){
@@ -30,8 +33,6 @@ public class CharacterNetworkTrainer {
 		for (CharacterTrainingExample nextExample : trainingExamples){
 			BufferedImage nextImage = nextExample.getCharacterImage();
 			char nextCharacter = nextExample.getCharacterValue();
-			
-			NetworkIOTranslator translator = new NetworkIOTranslator();
 			
 			float[] nextInput = translator.translateImageToNetworkInput(nextImage);
 			int[] nextOutput = translator.translateCharacterToNetworkOutput(nextCharacter);
