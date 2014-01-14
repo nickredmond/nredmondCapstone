@@ -3,16 +3,18 @@ package imageProcessing;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
 public class NetworkIOTranslator implements INetworkIOTranslator {
-	private final int IMAGE_DIMENSION = 30;
+	private final int IMAGE_DIMENSION = 8;
 	private final int MAX_RGB_VALUE = -16777216 / 1;
 	
 	private final int MAX_BINARY_INDEX = 7;
 	private final int WHITE_RGB_VALUE = -1;
+	private final int BLACK_RGB_VALUE = -16777216;
+	
+	private final int BLACK_TOLERANCE = 50000;
 	
 	private final float CERTAINTY_VALUE = 0.5f;
 	
@@ -93,34 +95,151 @@ public class NetworkIOTranslator implements INetworkIOTranslator {
 		return (x < img.getWidth() && y < img.getHeight());
 	}
 
-	private float[] scaleToDimension(BufferedImage img) {	
-		float scaleValue = (float) img.getHeight() / IMAGE_DIMENSION;
-		int newWidth = (int) ((1 / scaleValue) * img.getWidth());
+	private float[] scaleToDimension(BufferedImage img) {
+		 float scaleValue = (float) img.getHeight() / IMAGE_DIMENSION;
+         int newWidth = (int) ((1 / scaleValue) * img.getWidth());
+         
+         int startingX = (IMAGE_DIMENSION - newWidth) / 2;
+         
+         BufferedImage scaledImg = scaleToProperHeight(img, scaleValue, startingX);
+         
+         for (int x = 0; x < startingX; x++){
+                 for (int y = 0; y < scaledImg.getHeight(); y++){
+                         scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
+                 }
+         }
+         
+         for (int x = (startingX + newWidth); x < scaledImg.getWidth(); x++){
+                 for (int y = 0; y < scaledImg.getHeight(); y++){
+                         scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
+                 }
+         }
+         
+//         try {
+//                 ImageIO.write(scaledImg, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII\\" + System.nanoTime() + ".jpg"));
+//         } catch (IOException e) {
+//                 // TODO Auto-generated catch block
+//                 e.printStackTrace();
+//         }
+         
+         return converScaledImageToNetworkInput(scaledImg);
 		
-		int startingX = (IMAGE_DIMENSION - newWidth) / 2;
+	//	return binaryScaleToDimension(img);
+	}
+	
+	private float[] binaryScaleToDimension(BufferedImage img) {			
+		BufferedImage scaledImg = new BufferedImage(IMAGE_DIMENSION, IMAGE_DIMENSION, BufferedImage.TYPE_INT_RGB);
 		
-		BufferedImage scaledImg = scaleToProperHeight(img, scaleValue, startingX);
-		
-		for (int x = 0; x < startingX; x++){
-			for (int y = 0; y < scaledImg.getHeight(); y++){
-				scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
-			}
-		}
-		
-		for (int x = (startingX + newWidth); x < scaledImg.getWidth(); x++){
-			for (int y = 0; y < scaledImg.getHeight(); y++){
-				scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
+		for (int x = 0; x < IMAGE_DIMENSION; x++){
+			for (int y = 0; y < IMAGE_DIMENSION; y++){
+				int nextPixelValue = calculatePixelValue(x, y, img);
+				scaledImg.setRGB(x, y, nextPixelValue);
 			}
 		}
 		
 //		try {
-//			ImageIO.write(scaledImg, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII\\" + System.nanoTime() + ".jpg"));
+//			ImageIO.write(scaledImg, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII3\\" + System.nanoTime() + ".jpg"));
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 		
 		return converScaledImageToNetworkInput(scaledImg);
+	}
+	
+//	private BufferedImage trimImage(BufferedImage img){
+//		
+//		boolean foundBlack = false;
+//		boolean foundStart = false;
+//		boolean foundEnd = false;
+//		int startingX = 0;
+//		int endingX = 0;
+//		int startingY = 0;
+//		int endingY = 0;
+//		
+//		for (int x = 0; x < img.getWidth() &&!foundEnd; x++){
+//			foundBlack = false;
+//			
+//			for (int y = 0; y < img.getHeight(); y++){
+//				int nextRgb = img.getRGB(x, y);
+//				
+//				if(nextRgb < BLACK_RGB_VALUE + 150000){
+//					foundBlack = true;
+//					foundEnd = false;
+//					if (!foundStart){
+//						foundStart = true;
+//						startingX = x;
+//					}
+//				}
+//				
+//			}
+//			
+//			if (foundStart && !foundBlack){
+//				endingX = x;
+//				foundEnd = true;
+//			}
+//		}
+//		
+//		foundStart = false;
+//		foundEnd = false;
+//		
+//		for (int y = 0; y < img.getHeight() && !foundEnd; y++){
+//			foundBlack = false;
+//			
+//			for (int x = 0; x < img.getWidth(); x++){
+//				int nextRgb = img.getRGB(x, y);
+//				
+//				if(nextRgb < BLACK_RGB_VALUE + 150000){
+//					foundBlack = true;
+//					foundEnd = false;
+//					if (!foundStart){
+//						foundStart = true;
+//						startingY = y;
+//					}
+//				}
+//			}
+//			
+//			if (foundStart && !foundBlack){
+//				endingY = y;
+//				foundEnd = true;
+//			}
+//		}
+//		
+//		endingX = (endingX == 0) ? img.getWidth() : endingX;
+//		endingY = (endingY == 0) ? img.getHeight() : endingY;
+//		
+//		//startingX = (startingX == endingX) ? 0 : startingX;
+//		//startingY = (startingY == endingY) ? 0 : startingY;
+//		
+//		return img.getSubimage(startingX, startingY, endingX - startingX, endingY - startingY);
+//	}
+	
+	private boolean isDark(int rgb){
+		return rgb < BLACK_RGB_VALUE + BLACK_TOLERANCE;
+	}
+
+	private int calculatePixelValue(int x, int y, BufferedImage img) {
+		double scaleFactorX = (double)img.getWidth() / IMAGE_DIMENSION;
+		double scaleFactorY = (double)img.getHeight() / IMAGE_DIMENSION;
+		
+		int startingX = (int) (x * Math.floor(scaleFactorX));
+		int startingY = (int) (y * Math.floor(scaleFactorY));
+		
+		boolean foundBlack = false;
+		int pixelValue = WHITE_RGB_VALUE;
+		
+		for (int currentX = startingX; currentX < startingX + scaleFactorX && !foundBlack; currentX++){
+			for (int currentY = startingY; currentY < startingY + scaleFactorY && !foundBlack; currentY++){
+				int nextRgb = img.getRGB(currentX, currentY);
+				
+				if (isDark(nextRgb)){
+					foundBlack = true;
+					pixelValue = BLACK_RGB_VALUE;
+				}
+			}
+		}
+		
+		return pixelValue;
 	}
 
 	private float[] converScaledImageToNetworkInput(BufferedImage scaledImg) {

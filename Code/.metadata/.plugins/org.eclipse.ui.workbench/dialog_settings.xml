@@ -12,4 +12,7 @@
 		<list key="textEntries">
 		</list>
 	</section>
+	<section name="EditorSelectionDialog">
+		<item value="false" key="EditorSelectionDialog.STORE_ID_INTERNAL_EXTERNAL"/>
+	</section>
 </section>

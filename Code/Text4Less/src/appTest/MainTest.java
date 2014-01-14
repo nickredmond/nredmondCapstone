@@ -1,8 +1,8 @@
 package appTest;
 
 import imageProcessing.INetworkIOTranslator;
+import imageProcessing.NetworkIOTranslator;
 import imageProcessing.ReceptorChooser;
-import imageProcessing.ReceptorNetworkIOTranslator;
 import io.CharacterType;
 import io.NeuralNetworkIO;
 import io.TrainingDataReader;
@@ -27,9 +27,9 @@ import app.ImageReader;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
-	//	NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
+		NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
 		
-		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII3);
 		//Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
 		//Set<CharacterTrainingExample> trainingSet3 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII3);
 		
@@ -39,8 +39,8 @@ public class MainTest {
 		}
 		
 		List<Point> receptors = ReceptorChooser.chooseReceptors(yes, 30);
-		NeuralNetwork network = new NeuralNetwork(receptors.size(), 1, 250, 7, true);
-		INetworkIOTranslator t = new ReceptorNetworkIOTranslator(receptors);
+		NeuralNetwork network = new NeuralNetwork(64, 1, 90, 7, true);
+		INetworkIOTranslator t = new NetworkIOTranslator();
 		
 		CharacterNetworkTrainer trainer1 = new CharacterNetworkTrainer(t);	
 		//CharacterNetworkTrainer trainer2 = new CharacterNetworkTrainer(t);
@@ -57,10 +57,10 @@ public class MainTest {
 //			trainer1.addTrainingExample(nextExample);
 //		}
 		
-		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.05f));
+	//	trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.2f));
 		
 		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
-		ImageReader reader = new ImageReader(network, t);
+		ImageReader reader = new ImageReader(trainedNetwork, t);
 		
 		String result = reader.readTextFromImage(test);
 		System.out.println("RESULT: " + result);

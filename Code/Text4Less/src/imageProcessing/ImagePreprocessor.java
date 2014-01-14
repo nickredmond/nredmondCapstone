@@ -7,7 +7,7 @@ import java.util.List;
 public class ImagePreprocessor {
 	private final float WHITESPACE_MARGIN = 0.0002f;
 	private final int CROP_PIXEL_BUFFER = 5;
-	private final int SPLIT_PIXEL_BUFFER = 1;
+	private final int SPLIT_PIXEL_BUFFER = 	1;
 	private final float BETWEEN_CHAR_WHITESPACE_MARGIN = 0.057f;
 	
 	private final long DEFAULT_MAX_WHITESPACE_VALUE = 50000;
