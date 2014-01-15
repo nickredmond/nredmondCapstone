@@ -6,3 +6,7 @@
 1389577929735	Encapsulate field 'y'
 1389582683770	Delete elements
 1389663940261	Rename local variable 'x'
+1389724504048	Rename local variable 'startingX'
+1389724514103	Rename local variable 'endingX'
+1389724520685	Rename local variable 'startingY'
+1389724526267	Rename local variable 'endingY'
