@@ -33,10 +33,6 @@ public class CharacterNetworkTrainer {
 		for (CharacterTrainingExample nextExample : trainingExamples){
 			BufferedImage nextImage = nextExample.getCharacterImage();
 			char nextCharacter = nextExample.getCharacterValue();
-			if (nextCharacter == 'L'){
-				int x = 0;
-				int avg = x + 3;
-			}
 			float[] nextInput = translator.translateImageToNetworkInput(nextImage);
 			int[] nextOutput = translator.translateCharacterToNetworkOutput(nextCharacter);
 			

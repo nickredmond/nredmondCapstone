@@ -34,42 +34,48 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
+		
 		int[][] lightValues = getLightValues(img);
 		int[][] croppedLightValues = cropLightValues(lightValues);
+		float[] input = new float[DEFAULT_INPUT_LENGTH];
 		
-		float[] percentages = {TOP_DIMENSION_PERCENT, MID_DIMENSION_PERCENT, BOTTOM_DIMENSION_PERCENT};
-		
-		List<Float> inputList = new ArrayList<Float>();
-		
-		for (int i = 0; i < percentages.length; i++){
-			inputList.add(getHeightPercentage(percentages[i], croppedLightValues));
+		if(croppedLightValues.length > 1 && croppedLightValues[0].length > 1){
+			float[] percentages = {TOP_DIMENSION_PERCENT, MID_DIMENSION_PERCENT, BOTTOM_DIMENSION_PERCENT};
+			
+			List<Float> inputList = new ArrayList<Float>();
+
+			for (int i = 0; i < percentages.length; i++){
+				inputList.add(getHeightPercentage(percentages[i], croppedLightValues));
+			}
+			
+			for (int i = 0; i < percentages.length; i++){
+				inputList.add(getWidthPercentage(percentages[i], croppedLightValues));
+			}
+
+			inputList.add(getVerticalSymmetryValue(croppedLightValues));
+			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
+			
+			float[] zoningValues = getZoningValues(croppedLightValues);
+			
+			for (int i = 0; i < zoningValues.length; i++){
+				inputList.add(zoningValues[i]);
+			}
+			
+			input = new float[inputList.size()];
+			
+			for (int i = 0; i < input.length; i++){
+				input[i] = inputList.get(i);
+			}
+			
+			//printImg(croppedLightValues);
+			
+//			for (int i = 0; i < input.length; i++){
+//				System.out.print(input[i] + " ");
+//			}
+//			System.out.println();
 		}
 		
-		for (int i = 0; i < percentages.length; i++){
-			inputList.add(getWidthPercentage(percentages[i], croppedLightValues));
-		}
 		
-		inputList.add(getVerticalSymmetryValue(croppedLightValues));
-		inputList.add(getHorizontalSymmetryValue(croppedLightValues));
-		
-		float[] zoningValues = getZoningValues(croppedLightValues);
-		
-		for (int i = 0; i < zoningValues.length; i++){
-			inputList.add(zoningValues[i]);
-		}
-		
-		float[] input = new float[inputList.size()];
-		
-		for (int i = 0; i < input.length; i++){
-			input[i] = inputList.get(i);
-		}
-		
-		printImg(croppedLightValues);
-		
-		for (int i = 0; i < input.length; i++){
-			System.out.print(input[i] + " ");
-		}
-		System.out.println();
 		
 		return input;
 	}
@@ -122,15 +128,15 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		}
 		
 		startingRow = (startingRow == -1) ? 0 : startingRow;
-		endingRow = (endingRow == -1) ? lightValues.length : endingRow;
+		endingRow = (endingRow <= 0) ? lightValues.length : endingRow;
 		startingCol = (startingCol == -1) ? 0 : startingCol;
-		endingCol = (endingCol == -1) ? lightValues[0].length : endingCol;
+		endingCol = (endingCol <= 0) ? lightValues[0].length : endingCol;
 		
 		return new Rectangle(startingRow, startingCol, endingCol - startingCol, endingRow - startingRow);
 	}
 
 	private int[][] getLightValues(BufferedImage img){
-		int[][] lightValues = new int[img.getWidth()][img.getHeight()];
+		int[][] lightValues = new int[img.getHeight()][img.getWidth()];
 		
 		for (int x = 0; x < img.getWidth(); x++){
 			for (int y = 0; y < img.getHeight(); y++){

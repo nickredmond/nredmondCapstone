@@ -1,0 +1,28 @@
+package neuralNetwork;
+
+import imageProcessing.INetworkIOTranslator;
+import imageProcessing.NetworkIOTranslator;
+
+import java.awt.image.BufferedImage;
+
+public class CharacterReader {
+	private NeuralNetwork network;
+	private INetworkIOTranslator translator;
+	
+	public CharacterReader(NeuralNetwork network, INetworkIOTranslator translator){
+		this.network = network;
+		this.translator = translator;
+	}
+	
+	public char readCharacter(BufferedImage img){
+		char result = '-';
+		if (img.getWidth() > 0 && img.getHeight() > 0){
+		float[] input = translator.translateImageToNetworkInput(img);
+		float[] output = network.getOutputForInput(input);
+		
+		result = translator.translateNetworkOutputToCharacter(output);
+		}
+		
+		return result;
+	}
+}
