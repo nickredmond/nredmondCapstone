@@ -21,5 +21,6 @@
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="imageProcessing.ReceptorChooser"/>
+<fullyQualifiedTypeName name="app.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

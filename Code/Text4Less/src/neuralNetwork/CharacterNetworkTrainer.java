@@ -23,14 +23,14 @@ public class CharacterNetworkTrainer {
 	}
 	
 	public void trainNeuralNetwork(NeuralNetwork network, INetworkTrainer trainer){
-		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples();
-		trainer.trainWithTrainingSet(network, trainingSet);
+		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples(trainingExamples);
+		trainer.trainWithTrainingSet(network, trainingSet, new HashSet<TrainingExample>());
 	}
 
-	private Set<TrainingExample> setupNetworkTrainingExamples() {
+	private Set<TrainingExample> setupNetworkTrainingExamples(List<CharacterTrainingExample> characterExamples) {
 		Set<TrainingExample> examples = new HashSet<TrainingExample>();
 		
-		for (CharacterTrainingExample nextExample : trainingExamples){
+		for (CharacterTrainingExample nextExample : characterExamples){
 			BufferedImage nextImage = nextExample.getCharacterImage();
 			char nextCharacter = nextExample.getCharacterValue();
 			float[] nextInput = translator.translateImageToNetworkInput(nextImage);

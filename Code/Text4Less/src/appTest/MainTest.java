@@ -35,7 +35,7 @@ public class MainTest {
 	}
 	
 	private static void runApp() throws IOException{
-		//NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
+		//NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork3");
 		
 		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
 		//Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
@@ -46,7 +46,7 @@ public class MainTest {
 			yes.add(nextExample.getCharacterImage());
 		}
 
-		NeuralNetwork network = new NeuralNetwork(FeatureExtractionIOTranslator.DEFAULT_INPUT_LENGTH, 1, 105, 127, true);
+		NeuralNetwork network = new NeuralNetwork(FeatureExtractionIOTranslator.DEFAULT_INPUT_LENGTH, 1, 95, 127, true);
 		INetworkIOTranslator t = new FeatureExtractionIOTranslator();
 		
 		CharacterNetworkTrainer trainer1 = new CharacterNetworkTrainer(t);	
@@ -57,13 +57,13 @@ public class MainTest {
 		
 		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.04f));
 		
-		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
+		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
 		ImageReader reader = new ImageReader(network, t);
 		
 		String result = reader.readTextFromImage(test);
 		System.out.println("RESULT: " + result);
 		
-		//NeuralNetworkIO.writeNetwork(network, "myNetwork2");
+		//NeuralNetworkIO.writeNetwork(network, "myNetwork3");
 	}
 
 	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){

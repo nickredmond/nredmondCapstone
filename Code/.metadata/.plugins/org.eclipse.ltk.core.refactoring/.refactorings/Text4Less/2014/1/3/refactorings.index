@@ -24,3 +24,4 @@
 1389834309498	Rename local variable 'rowSymmetryDifference'
 1389837571809	Rename method 'getWidthSum'
 1389837578377	Rename method 'getHeightSum'
+1389897141994	Rename local variable 'sumOfErrors'

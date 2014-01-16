@@ -6,7 +6,9 @@ import java.util.Set;
 public class BackpropagationTrainer implements INetworkTrainer {
 	private final float LEARNING_RATE = 0.03f;
 	private final float REGULARIZATION_PARAM = 0.1f;
-	private final float MAXIMUM_ALLOWABLE_ERROR = 2.0f;
+	private final float MAXIMUM_ALLOWABLE_ERROR = 1.0f;
+	
+	private final float MIN_ALLOWABLE_ERR_CHANGE = 0.00005f;
 	
 	private float learningRate, regularizationParam;
 	
@@ -22,23 +24,50 @@ public class BackpropagationTrainer implements INetworkTrainer {
 
 	@Override
 	public void trainWithTrainingSet(NeuralNetwork network,
-			Set<TrainingExample> trainingSet) {
-		float sumOfErrors = 0.0f;
+			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
+		float trainingError = 0.0f;
+		float crossValidationError = 0.0f;
 		
 		do{
-		sumOfErrors = 0.0f;		
+			trainingError = performTrainingIteration(network, trainingSet);		
+			crossValidationError = calculateCrossValidationErr(network, testSet);
+		}
+		while(trainingError > MAXIMUM_ALLOWABLE_ERROR);
+	}
+	
+	private float calculateCrossValidationErr(NeuralNetwork network,
+			Set<TrainingExample> testSet) {
+		float cvError = 0.0f;
+		
+		for (TrainingExample nextTestExample : testSet){
+			List<Neuron> outputNeurons = network.getOutputLayer().getNeurons();
+			cvError += calculateOutputErrors(network, nextTestExample, outputNeurons);
+		}
+		
+		cvError = cvError / (2 * testSet.size());
+		System.out.println("CVE: " + cvError);
+		
+		return cvError;
+	}
+
+	private float performTrainingIteration(NeuralNetwork network,
+			Set<TrainingExample> trainingSet){
+		float trainingError = 0.0f;
+		
 		for (TrainingExample nextExample : trainingSet){
 			List<Neuron> outputNeurons = network.getOutputLayer().getNeurons();
-			sumOfErrors += calculateOutputErrors(network, nextExample, outputNeurons);
+			trainingError += calculateOutputErrors(network, nextExample, outputNeurons);
 			
 			List<NetworkLayer> hiddenLayers = network.getHiddenLayers();
 			calculateHiddenErrorsAndDeltas(hiddenLayers, network.getOutputLayer());
 		}
 		
+		trainingError = trainingError / (2 * trainingSet.size());
+		
 		changeWeights(trainingSet.size(), network);
-		System.out.println("sum: " + sumOfErrors);
-		}
-		while(sumOfErrors > MAXIMUM_ALLOWABLE_ERROR);
+		System.out.println("MSE: " + trainingError);
+		
+		return trainingError;
 	}
 	
 	private void changeWeights(int trainingSize, NeuralNetwork network){
@@ -61,6 +90,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 				//System.out.println("weight: " + nextConnection.getWeight() + ", change: " + changeAmount);
 				
 				nextConnection.setWeight(nextConnection.getWeight() - (learningRate * changeAmount));
+				nextConnection.setDeltaValue(0.0f);
 			}
 		}
 	}
@@ -112,7 +142,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 			totalError += Math.abs(nextErrorValue);
 		}
 		
-		return totalError;
+		return totalError * totalError;
 	}
 
 }
