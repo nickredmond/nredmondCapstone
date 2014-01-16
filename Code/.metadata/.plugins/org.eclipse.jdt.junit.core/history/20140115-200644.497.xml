@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TestStatisticalMath" project="Text4Less" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="appTest.TestStatisticalMath" time="0.002">
+    <testcase name="testStdDev" classname="appTest.TestStatisticalMath" time="0.002"/>
+  </testsuite>
+</testrun>

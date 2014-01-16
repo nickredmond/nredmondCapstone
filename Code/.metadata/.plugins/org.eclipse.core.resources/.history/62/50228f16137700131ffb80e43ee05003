@@ -1,7 +1,0 @@
-package appTest;
-
-public class TestNetwork {
-	public void testWithoutWeights(){
-		
-	}
-}

@@ -1,0 +1,60 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
+	private final int ZONING_DIMENSION_X = 4;
+	private final int ZONING_DIMENSION_Y = 4;
+	
+	private final float TOP_DIMENSION_PERCENT = 0.3f;
+	private final float MID_DIMENSION_PERCENT = 0.5f;
+	private final float BOTTOM_DIMENSION_PERCENT = 0.8f;
+	
+	@Override
+	public char translateNetworkOutputToCharacter(float[] output) {
+		return new UnicodeNetworkIOTranslator().translateNetworkOutputToCharacter(output);
+	}
+
+	@Override
+	public int[] translateCharacterToNetworkOutput(char c) {
+		return new UnicodeNetworkIOTranslator().translateCharacterToNetworkOutput(c);
+	}
+
+	@Override
+	public float[] translateImageToNetworkInput(BufferedImage img) {
+		float[][] lumenValues = new float[img.getWidth()][img.getHeight()];
+		
+		for (int x = 0; x < img.getWidth(); x++){
+			for (int y = 0; y < img.getHeight(); y++){
+				int rgbValue = img.getRGB(x, y);
+				int rVal = (rgbValue >> 16) & 0xff;
+				int gVal = (rgbValue >> 8) & 0xff;
+				int bVal = (rgbValue) & 0xff;
+				
+				
+			}
+		}
+		
+		return null;
+	}
+
+	private float getWidthSum(float percentTotalHeight, BufferedImage img){
+		return 0.0f;
+	}
+	
+	private float getHeightSum(float percentTotalWidth, BufferedImage img){
+		return 0.0f;
+	}
+	
+	private float getHorizontalSymmetryValue(BufferedImage img){
+		return 0.0f;
+	}
+	
+	private float getVerticalSymmetryValue(BufferedImage img){
+		return 0.0f;
+	}
+	
+	private float[] getZoningValues(BufferedImage img){
+		return null;
+	}
+}

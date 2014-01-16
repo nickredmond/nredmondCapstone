@@ -1,0 +1,23 @@
+package app;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class StatisticalMath {
+	public float average(float[] values){
+		return average(convertArrayToList(values));
+	}
+	
+	public float average(List<Float> values){
+		
+	}
+	
+	private List<Float> convertArrayToList(float[] values){
+		List<Float> valueList = new LinkedList<Float>();
+		for (int i = 0; i < values.length; i++){
+			valueList.add(values[i]);
+		}
+		
+		return valueList;
+	}
+}

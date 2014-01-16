@@ -1,8 +1,0 @@
-package neuralNetwork;
-
-public interface INetworkTrainer {
-	public void trainWithSingleTrainingExample(NeuralNetwork network,
-			int[] input, int[] desiredOutput);
-	
-	public void trainWithTrainingSet(NeuralNetwork network, HashMap<int[], int[]>)
-}

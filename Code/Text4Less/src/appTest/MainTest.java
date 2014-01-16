@@ -1,5 +1,6 @@
 package appTest;
 
+import imageProcessing.FeatureExtractionIOTranslator;
 import imageProcessing.INetworkIOTranslator;
 import imageProcessing.ReceptorChooser;
 import imageProcessing.UnicodeNetworkIOTranslator;
@@ -27,7 +28,14 @@ import app.ImageReader;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
-		NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
+//		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/f.jpg")));
+		
+		MainTest.runApp();
+	}
+	
+	private static void runApp() throws IOException{
+NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork");
 		
 		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
 		//Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
@@ -57,10 +65,10 @@ public class MainTest {
 //			trainer1.addTrainingExample(nextExample);
 //		}
 		
-	//	trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.1f));
+		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.01f, 0.1f));
 		
-		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
-		ImageReader reader = new ImageReader(trainedNetwork, t);
+		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
+		ImageReader reader = new ImageReader(network, t);
 		
 		String result = reader.readTextFromImage(test);
 		System.out.println("RESULT: " + result);
