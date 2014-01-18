@@ -25,3 +25,6 @@
 1389837571809	Rename method 'getWidthSum'
 1389837578377	Rename method 'getHeightSum'
 1389897141994	Rename local variable 'sumOfErrors'
+1389979545841	Rename local variable 'lightValues'
+1390019675245	Rename local variable 'y'
+1390019687341	Rename local variable 'x'

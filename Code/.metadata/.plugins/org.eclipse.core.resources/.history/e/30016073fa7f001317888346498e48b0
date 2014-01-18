@@ -1,0 +1,13 @@
+package app;
+
+public class MomentCalculator {
+	public static int calculateRegularMoment(int[][] imageValues, int p, int q){
+		int moment = 0;
+		
+		for (int x = 0; x < imageValues[0].length; x++){
+			for (int y = 0; y < imageValues.length; y++){
+				moment += Math.pow(x, p) * Math.pow(y, q) * imageValues[y][x];
+			}
+		}
+	}
+}
