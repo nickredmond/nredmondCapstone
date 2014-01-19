@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.Set;
 
 public class CharacterNetworkTrainer {
-	private List<CharacterTrainingExample> trainingExamples;
+	private List<CharacterTrainingExample> trainingExamples, testExamples;
 	INetworkIOTranslator translator;
 	
 	public CharacterNetworkTrainer(INetworkIOTranslator translator){
 		trainingExamples = new LinkedList<CharacterTrainingExample>();
+		testExamples = new LinkedList<CharacterTrainingExample>();
+		
 		this.translator = translator;
 	}
 	
@@ -22,9 +24,15 @@ public class CharacterNetworkTrainer {
 		trainingExamples.add(example);
 	}
 	
+	public void addTestExample(CharacterTrainingExample example){
+		testExamples.add(example);
+	}
+	
 	public void trainNeuralNetwork(NeuralNetwork network, INetworkTrainer trainer){
 		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples(trainingExamples);
-		trainer.trainWithTrainingSet(network, trainingSet, new HashSet<TrainingExample>());
+		Set<TrainingExample> testSet = setupNetworkTrainingExamples(testExamples);
+		
+		trainer.trainWithTrainingSet(network, trainingSet, testSet);
 	}
 
 	private Set<TrainingExample> setupNetworkTrainingExamples(List<CharacterTrainingExample> characterExamples) {

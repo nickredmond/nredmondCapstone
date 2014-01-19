@@ -19,9 +19,16 @@ public class TrainingDataReader {
 	private static final char SPACE_CHAR = ' ';
 	private static final int SPACE_INT = 32;
 	
-	public static Set<CharacterTrainingExample> createTrainingSetFromFile(CharacterType type) throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader("metadataFiles/" + type.toString() + 
-				"/characterImageLocations.txt"));
+	public static Set<CharacterTrainingExample> createTestSetFromFile(CharacterType type) throws IOException{
+		BufferedReader reader = new BufferedReader(new FileReader("metaDataFiles/" + type.toString() +
+				"/testImageLocations.txt"));
+		String imagePath = "trainingImages/" + type.toString() + "/testImages/";
+		
+		return readCharacterSet(reader, type, imagePath);
+	}
+	
+	private static Set<CharacterTrainingExample> readCharacterSet(BufferedReader reader, CharacterType type,
+			String imagePath) throws IOException{
 		Set<CharacterTrainingExample> trainingSet = new HashSet<CharacterTrainingExample>();
 		
 		String nextLine = null;
@@ -34,7 +41,7 @@ public class TrainingDataReader {
 				String nextFilename = lineParts[FILENAME_INDEX];
 				
 				BufferedImage nextImage = 
-						ImageIO.read(new File("trainingImages/" + type.toString() + "/" + nextFilename + ".jpg"));
+						ImageIO.read(new File(imagePath + nextFilename + ".jpg"));
 				
 				CharacterTrainingExample nextExample = new CharacterTrainingExample(nextImage, nextCharacter);
 				trainingSet.add(nextExample);
@@ -43,5 +50,13 @@ public class TrainingDataReader {
 		
 		reader.close();
 		return trainingSet;
+	}
+	
+	public static Set<CharacterTrainingExample> createTrainingSetFromFile(CharacterType type) throws IOException{
+		BufferedReader reader = new BufferedReader(new FileReader("metadataFiles/" + type.toString() + 
+				"/characterImageLocations.txt"));
+		String imagePath = "trainingImages/" + type.toString() + "/";
+		
+		return readCharacterSet(reader, type, imagePath);
 	}
 }

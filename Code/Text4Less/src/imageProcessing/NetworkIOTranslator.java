@@ -116,13 +116,6 @@ public class NetworkIOTranslator implements INetworkIOTranslator {
                      scaledImg.setRGB(x, y, WHITE_RGB_VALUE);
              }
 	     }
-
-//         try {
-//                 ImageIO.write(scaledImg, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII2\\" + System.nanoTime() + ".jpg"));
-//         } catch (IOException e) {
-//                 // TODO Auto-generated catch block
-//                 e.printStackTrace();
-//         }
          
          return converScaledImageToNetworkInput(scaledImg);
 	}

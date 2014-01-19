@@ -3,9 +3,13 @@ package imageProcessing;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import app.MomentCalculator;
 import app.StatisticalMath;
@@ -13,7 +17,7 @@ import app.StatisticalMath;
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final static int NUMBER_VERTICAL_BINS = 6;
 	private final static int NUMBER_HORIZONTAL_BINS = 7;
-	public final static int DEFAULT_INPUT_LENGTH = 24;// + NUMBER_VERTICAL_BINS + NUMBER_HORIZONTAL_BINS;
+	public final static int DEFAULT_INPUT_LENGTH = 24+7;// + NUMBER_VERTICAL_BINS + NUMBER_HORIZONTAL_BINS;
 	
 	private final int ZONING_DIMENSION_X = 4;
 	private final int ZONING_DIMENSION_Y = 4;
@@ -28,6 +32,13 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final float B_LUMINANCE = 0.0722f;
 	
 	private final int DARK_BOUNDARY = 5000;
+	
+	// testing method
+	public void printImageBinary(BufferedImage img){
+		int[][] lightValues = getLightValues(img);
+		int[][] croppedLightValues = cropLightValues(lightValues);
+		printImg(croppedLightValues);
+	}
 	
 	@Override
 	public char translateNetworkOutputToCharacter(float[] output) {
@@ -46,21 +57,45 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		int[][] croppedLightValues = cropLightValues(lightValues);
 		float[] input = new float[DEFAULT_INPUT_LENGTH];
 		
-		if(croppedLightValues.length > 1 && lightValues[0].length > 1){
-			printImg(lightValues);
-			System.out.println();
+		if(croppedLightValues.length > 1 && lightValues[0].length > 1){			
+			float[] percentages = {TOP_DIMENSION_PERCENT, MID_DIMENSION_PERCENT, BOTTOM_DIMENSION_PERCENT};
 			
-			int moment = MomentCalculator.calculateRegularMoment(lightValues, 0, 0);
-			System.out.println("moment: " + moment);
+			List<Float> inputList = new ArrayList<Float>();
 			
-			Point centroid = MomentCalculator.calculateCentroid(lightValues);
-			System.out.println("centroid: " + centroid.x + " " + centroid.y);
+			float[] huMoments = MomentCalculator.calculateHuInvariantMoments(croppedLightValues);
 			
-			int centralMoment = MomentCalculator.calculateCentralMoment(lightValues, 2, 2);
-			System.out.println("central moment: " + centralMoment);
+			for (int i = 0; i < huMoments.length; i++){
+				inputList.add(huMoments[i]);
+			}
+
+			for (int i = 0; i < percentages.length; i++){
+				inputList.add(getHeightPercentage(percentages[i], croppedLightValues));
+			}
 			
-			float scaleInvMoment = MomentCalculator.calculateScaleInvariantCentralMoment(lightValues, 2, 1);
-			System.out.println("scale invariant: " + scaleInvMoment);
+			for (int i = 0; i < percentages.length; i++){
+				inputList.add(getWidthPercentage(percentages[i], croppedLightValues));
+			}
+
+			inputList.add(getVerticalSymmetryValue(croppedLightValues));
+			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
+			
+			float[] zoningValues = getZoningValues(croppedLightValues);
+			
+			for (int i = 0; i < zoningValues.length; i++){
+				inputList.add(zoningValues[i]);
+			}
+	
+			input = new float[inputList.size()];
+			
+			for (int i = 0; i < input.length; i++){
+				input[i] = inputList.get(i);
+			}
+			
+//			for (int i = 0; i < input.length; i++){
+//				if (input[i] != input[i]){
+//					printImg(croppedLightValues);
+//				}
+//			}
 		}		
 		
 		return input;
@@ -354,59 +389,5 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	}
 	
 	private void doStuff(){
-//		float[] percentages = {TOP_DIMENSION_PERCENT, MID_DIMENSION_PERCENT, BOTTOM_DIMENSION_PERCENT};
-//		
-//		List<Float> inputList = new ArrayList<Float>();
-//
-//		for (int i = 0; i < percentages.length; i++){
-//			inputList.add(getHeightPercentage(percentages[i], croppedLightValues));
-//		}
-//		
-//		for (int i = 0; i < percentages.length; i++){
-//			inputList.add(getWidthPercentage(percentages[i], croppedLightValues));
-//		}
-//
-//		inputList.add(getVerticalSymmetryValue(croppedLightValues));
-//		inputList.add(getHorizontalSymmetryValue(croppedLightValues));
-//		
-//		float[] zoningValues = getZoningValues(croppedLightValues);
-//		
-//		for (int i = 0; i < zoningValues.length; i++){
-//			inputList.add(zoningValues[i]);
-//		}
-		
-	//	float[] vertHist = getVerticalHistogram(croppedLightValues, NUMBER_VERTICAL_BINS);
-	//	float[] horizHist = getHorizontalHistogram(croppedLightValues, NUMBER_HORIZONTAL_BINS);
-		
-//		for (int i = 0; i < vertHist.length; i++){
-//			inputList.add(vertHist[i] / croppedLightValues.length);
-//		}
-//		for (int i = 0; i < horizHist.length; i++){
-//			inputList.add(horizHist[i] / croppedLightValues[0].length);
-//		}
-//		
-		//inputList.add(StatisticalMath.average(inputList));
-		
-//		input = new float[inputList.size()];
-//		
-//		for (int i = 0; i < input.length; i++){
-//			input[i] = inputList.get(i);
-//		}
-		
-//		printImg(croppedLightValues);
-//		System.out.println();
-		
-//		for (int i = 0; i < horizHist.length; i++){
-//			System.out.print("| ");
-//			for (int x = 0; x < horizHist[i]; x++){
-//				System.out.print("X ");
-//			}
-//			System.out.println();
-//		}
-		
-//		for (int i = 0; i < input.length; i++){
-//			System.out.print(input[i] + " ");
-//		}
-//		System.out.println();
 	}
 }
