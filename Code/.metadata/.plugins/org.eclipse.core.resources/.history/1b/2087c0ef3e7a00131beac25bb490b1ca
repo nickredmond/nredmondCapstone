@@ -1,9 +1,0 @@
-package app;
-
-import java.awt.image.BufferedImage;
-
-public class ImageReader {
-	public String readTextFromImage(BufferedImage image){
-		
-	}
-}

@@ -17,7 +17,10 @@ import app.StatisticalMath;
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final static int NUMBER_VERTICAL_BINS = 6;
 	private final static int NUMBER_HORIZONTAL_BINS = 7;
-	public final static int DEFAULT_INPUT_LENGTH = 24+7;// + NUMBER_VERTICAL_BINS + NUMBER_HORIZONTAL_BINS;
+	
+	private static final int NUMBER_PROFILE_DIRECTIONS = 4;
+	
+	public final static int DEFAULT_INPUT_LENGTH = 24 + 7 + (NUMBER_PROFILE_DIRECTIONS * 3);// + NUMBER_VERTICAL_BINS + NUMBER_HORIZONTAL_BINS;
 	
 	private final int ZONING_DIMENSION_X = 4;
 	private final int ZONING_DIMENSION_Y = 4;
@@ -84,7 +87,21 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			for (int i = 0; i < zoningValues.length; i++){
 				inputList.add(zoningValues[i]);
 			}
-	
+			
+			float[] profilingValues = new float[NUMBER_PROFILE_DIRECTIONS * percentages.length];
+			
+			for (int i = 0; i < percentages.length; i++){
+				int index = NUMBER_PROFILE_DIRECTIONS * i;
+				profilingValues[index] = getTopProfileAtPercent(percentages[i], croppedLightValues);
+				profilingValues[index + 1] = getRightProfileAtPercent(percentages[i], croppedLightValues);
+				profilingValues[index + 2] = getBottomProfileAtPercent(percentages[i], croppedLightValues);
+				profilingValues[index + 3] = getLeftProfileAtPercent(percentages[i], croppedLightValues);
+			}
+			
+			for (int i = 0; i < profilingValues.length; i++){
+				inputList.add(profilingValues[i]);
+			}
+			
 			input = new float[inputList.size()];
 			
 			for (int i = 0; i < input.length; i++){
@@ -99,6 +116,58 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		}		
 		
 		return input;
+	}
+	
+	private float getLeftProfileAtPercent(float percentHeight, int[][] lightValues){
+		int row = (int)(percentHeight * lightValues.length);
+		boolean foundCharacter = false;
+		int currentColumn = 0;
+		
+		for (int col = 0; col < lightValues[row].length && !foundCharacter; col++){
+			foundCharacter = (lightValues[row][col] == 1);
+			currentColumn = col;
+		}
+		
+		return (float)currentColumn / lightValues[row].length;
+	}
+	
+	private float getRightProfileAtPercent(float percentHeight, int[][] lightValues){
+		int row = (int)(percentHeight * lightValues.length);
+		boolean foundCharacter = false;
+		int currentColumn = lightValues[row].length - 1;
+		
+		for (int col = lightValues[row].length - 1; col >= 0 && !foundCharacter; col--){
+			foundCharacter = (lightValues[row][col] == 1);
+			currentColumn = col;
+		}
+		
+		return (float)(lightValues[row].length - 1 - currentColumn) / lightValues[row].length;
+	}
+	
+	private float getTopProfileAtPercent(float percentWidth, int[][] lightValues){
+		int col = (int) (percentWidth * lightValues[0].length);
+		boolean foundCharacter = false;
+		int currentRow = 0;
+		
+		for (int row = 0; row < lightValues.length && !foundCharacter; row++){
+			foundCharacter = (lightValues[row][col] == 1);
+			currentRow = row;
+		}
+		
+		return (float)currentRow / lightValues.length;
+	}
+	
+	private float getBottomProfileAtPercent(float percentWidth, int[][] lightValues){
+		int col = (int) (percentWidth * lightValues[0].length);
+		boolean foundCharacter = false;
+		int currentRow = lightValues.length - 1;
+		
+		for (int row = lightValues.length - 1; row >= 0 && !foundCharacter; row--){
+			foundCharacter = (lightValues[row][col] == 1);
+			currentRow = row;
+		}
+		
+		return (float)(lightValues.length - 1 - currentRow) / lightValues.length;
 	}
 	
 	private float[] getHorizontalHistogram(int[][] lightValues, int numberBins){

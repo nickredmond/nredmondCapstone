@@ -6,7 +6,7 @@ import java.util.Set;
 public class BackpropagationTrainer implements INetworkTrainer {
 	private final float LEARNING_RATE = 0.03f;
 	private final float REGULARIZATION_PARAM = 0.1f;
-	private final float MAXIMUM_ALLOWABLE_ERROR = 0.005f;
+	private final float MAXIMUM_ALLOWABLE_ERROR = 0.05f;
 	
 	private final float MIN_ALLOWABLE_ERR_CHANGE = 0.00005f;
 	

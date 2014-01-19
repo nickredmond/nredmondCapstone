@@ -24,13 +24,13 @@ public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
 		//INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-		//translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/aLEFT.jpg")));
+		//translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowerv2.jpg")));
 		
 		MainTest.runApp();
 	}
 	
 	private static void runApp() throws IOException{
-		NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork3");
+	//	NeuralNetwork trainedNetwork = NeuralNetworkIO.readNetwork("myNetwork4");
 		
 		Set<CharacterTrainingExample> trainingSet1 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
 		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(CharacterType.ASCII);
@@ -47,10 +47,10 @@ public class MainTest {
 			trainer1.addTestExample(nextExample);
 		}
 		
-		//trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.05f, 0.02f));
+		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.05f, 0.02f));
 		
 		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
-		ImageReader reader = new ImageReader(trainedNetwork, t);
+		ImageReader reader = new ImageReader(network, t);
 		
 		String result = reader.readTextFromImage(test);
 		System.out.println("RESULT: " + result);
@@ -61,7 +61,7 @@ public class MainTest {
 //					ImageIO.read(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII\\" + y + ".jpg"));
 //			System.out.println("this should be " + y + ": " + t.translateNetworkOutputToCharacter(network.getOutputForInput(t.translateImageToNetworkInput(c))));
 //		}
-		//NeuralNetworkIO.writeNetwork(network, "myNetwork3");
+		//NeuralNetworkIO.writeNetwork(network, "myNetwork4");
 	}
 
 	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
