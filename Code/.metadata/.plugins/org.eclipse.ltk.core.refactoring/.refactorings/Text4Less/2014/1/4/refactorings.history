@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;deletionValues&apos; in &apos;app.ImageThinner.deletePixels(...)&apos; to &apos;deletionMarkers&apos;&#x0D;&#x0A;- Original project: &apos;Text4Less&apos;&#x0D;&#x0A;- Original element: &apos;app.ImageThinner.deletePixels(int[][], boolean[][]).deletionValues&apos;&#x0D;&#x0A;- Renamed element: &apos;deletionValues&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;deletionValues&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;app{ImageThinner.java[ImageThinner~deletePixels~\[\[I~\[\[Z@deletionValues!957!982!969!982!\[\[Z!0!true" name="deletionMarkers" references="true" stamp="1390208516862" version="1.0"/>
+</session>

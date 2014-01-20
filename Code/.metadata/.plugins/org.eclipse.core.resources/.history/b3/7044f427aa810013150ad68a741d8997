@@ -1,0 +1,34 @@
+package app;
+
+public class ImageThinner {
+	private final int NUM_SURROUNDING_PIXELS = 8;
+	
+	public int getConnectivityNumber(int x, int y, int[][] imageValues){
+		int[] surroundingPixels = getSurroundingPixels(x, y, imageValues);
+		int connectivityNumber = 0;
+		
+		for (int i = 1; i < NUM_SURROUNDING_PIXELS; i+=2){
+			int currentPixelValue = surroundingPixels[i];
+			int nextPixelValue = surroundingPixels[(i+1) % NUM_SURROUNDING_PIXELS];
+			int afterPixelValue = surroundingPixels[(i+2) % NUM_SURROUNDING_PIXELS];
+			
+			connectivityNumber +=  currentPixelValue - (currentPixelValue * nextPixelValue * afterPixelValue);
+		}
+		
+		return connectivityNumber;
+	}
+	
+	private int[] getSurroundingPixels(int x, int y, int[][] imageValues){
+		int[] surroundingPixels = new int[NUM_SURROUNDING_PIXELS];
+		surroundingPixels[0] = (x + 1 < imageValues[0].length) ? imageValues[y][x+1] : 0;
+		surroundingPixels[7] = (x + 1 < imageValues[0].length && y + 1 < imageValues.length) ? imageValues[y+1][x+1] : 0;
+		surroundingPixels[6] = (y + 1 < imageValues[0].length) ? imageValues[y+1][x] : 0;
+		surroundingPixels[5] = (x - 1 >= 0 && y + 1 < imageValues.length) ? imageValues[y+1][x-1] : 0;
+		surroundingPixels[4] = (x - 1 >= 0) ? imageValues[y][x-1] : 0;
+		surroundingPixels[3] = (x - 1 >= 0 && y - 1 >= 0) ? imageValues[y-1][x-1] : 0;
+		surroundingPixels[2] = (y - 1 >= 0) ? imageValues[y-1][x] : 0;
+		surroundingPixels[1] = (x + 1 < imageValues[0].length && y - 1 >= 0) ? imageValues[y-1][x+1] : 0;
+		
+		return surroundingPixels;
+	}
+}

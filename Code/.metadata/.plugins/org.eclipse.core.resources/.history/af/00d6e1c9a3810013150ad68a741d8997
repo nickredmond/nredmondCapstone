@@ -1,0 +1,7 @@
+package app;
+
+public class ImageThinner {
+	public int getConnectivityNumber(int x, int y, int[][] imageValues){
+		
+	}
+}
