@@ -7,6 +7,7 @@ import java.util.List;
 
 import app.ImageThinner;
 import app.MomentCalculator;
+import app.VectorCalculator;
 
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final static int NUMBER_VERTICAL_BINS = 6;
@@ -53,7 +54,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		int[][] lightValues = getLightValues(img);
 		int[][] croppedLightValues = cropLightValues(lightValues);
 		float[] input = new float[DEFAULT_INPUT_LENGTH];
-		
+		printImg(lightValues);
+		System.out.println();
 		printImg(croppedLightValues);
 		
 		ImageThinner thinner = new ImageThinner();
@@ -62,15 +64,17 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		System.out.println("\r\n");
 		
 		printImg(croppedLightValues);
+		System.out.println("\r\n");
 		
-		int[][] values = {{1,1,1},{1,1,1},{1,1,1}};
-		boolean yes = thinner.matchesTemplate(values, thinner.TEMPLATE_2, 0, 0);
-		System.out.println("conn: " + yes);
+		int[][] vectorSkeleton = VectorCalculator.calculateVectorsForSkeleton(croppedLightValues);
+		printImg(vectorSkeleton);
 		
 		if(croppedLightValues.length > 1 && lightValues[0].length > 1){			
 			
 		}		
-		
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		return input;
 	}
 	
@@ -239,6 +243,9 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 					endingRow = (endingRow < 0) ? row : endingRow;
 					endingCol = (endingCol < 0 && startingCol >= 0) ? col : endingCol;
 				}
+			}
+			if (endingCol < 0){
+				endingCol = lightValues[0].length - 1;
 			}
 		}
 		

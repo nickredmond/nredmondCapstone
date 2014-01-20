@@ -19,30 +19,17 @@ public class ImageThinner {
 	}
 	
 	public void thinImage(int[][] imageValues){
-		// repeat while deletions are made
 		boolean[][] deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
 		
 		boolean madeDeletions = false;
 		
 		do{
 			markForDeletion(imageValues, TEMPLATE_1, deletionMarkers);
-		//	madeDeletions = deletePixels(imageValues, deletionMarkers);
-		//	deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
-			
 			markForDeletion(imageValues, TEMPLATE_2, deletionMarkers);
-		//	madeDeletions = madeDeletions || deletePixels(imageValues, deletionMarkers);
-		//	deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
-			
 			markForDeletion(imageValues, TEMPLATE_3, deletionMarkers);
-		//	madeDeletions = madeDeletions ||  deletePixels(imageValues, deletionMarkers);
-		//	deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
-			
 			markForDeletion(imageValues, TEMPLATE_4, deletionMarkers);
-		//	madeDeletions = madeDeletions || deletePixels(imageValues, deletionMarkers);
-		//	deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
 			
 			madeDeletions = deletePixels(imageValues, deletionMarkers);
-			
 			deletionMarkers = new boolean[imageValues.length][imageValues[0].length];
 		}while (madeDeletions);
 	}
@@ -65,7 +52,7 @@ public class ImageThinner {
 	private void markForDeletion(int[][] imageValues, int[][] template, boolean[][] deletionMarkers){
 		for (int row = 0; row < imageValues.length; row++){
 			for (int col = 0; col < imageValues[0].length; col++){
-				if (imageValues[row][col] == 1 && matchesTemplate(imageValues, template, row, col)){
+				if (imageValues[row][col] == 1 && matchesTemplate(imageValues, template, row, col, deletionMarkers)){
 					if (!isEndpoint(col, row, imageValues) && getConnectivityNumber(col, row, imageValues) == 1){
 						deletionMarkers[row][col] = true;
 					}
@@ -74,7 +61,7 @@ public class ImageThinner {
 		}
 	}
 	
-	public boolean matchesTemplate(int[][] imageValues, int[][] template, int row, int col){
+	public boolean matchesTemplate(int[][] imageValues, int[][] template, int row, int col, boolean[][] deletionMarkers){
 		boolean isMatch = true;
 		
 		for (int y = 0; y < template.length && isMatch; y++){
@@ -84,9 +71,11 @@ public class ImageThinner {
 				
 				int imageValue = (imageRow >= 0 && imageRow < imageValues.length && 
 						imageCol >= 0 && imageCol < imageValues[0].length) ? imageValues[imageRow][imageCol] : 0;
+				boolean deletionValue = (imageRow >= 0 && imageRow < imageValues.length && 
+						imageCol >= 0 && imageCol < imageValues[0].length) ? deletionMarkers[imageRow][imageCol] : false;
 				int templateValue = template[y][x];
 				
-				isMatch = (imageValue == templateValue || templateValue == -1);
+				isMatch = ((imageValue == templateValue && !deletionValue) || templateValue == -1);
 			}
 		}
 		

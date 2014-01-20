@@ -24,7 +24,7 @@ public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
 		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/h2.jpg")));
+		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/g2.jpg")));
 		
 		//MainTest.runApp();
 	}
@@ -61,7 +61,7 @@ public class MainTest {
 //					ImageIO.read(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII\\" + y + ".jpg"));
 //			System.out.println("this should be " + y + ": " + t.translateNetworkOutputToCharacter(network.getOutputForInput(t.translateImageToNetworkInput(c))));
 //		}
-		NeuralNetworkIO.writeNetwork(network, "myNetwork");
+		//NeuralNetworkIO.writeNetwork(network, "myNetwork");
 	}
 
 	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
