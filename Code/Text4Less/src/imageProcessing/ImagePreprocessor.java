@@ -76,7 +76,7 @@ public class ImagePreprocessor {
 			}
 		}
 		
-		return new CropValueSet(startValue, endValue);
+		return new CropValueSet(startValue, endValue + 5);
 	}
 	
 	private RgbLimitSet getRgbValueLimits(RgbValueReader reader, BufferedImage img, int maxPosition){
@@ -120,12 +120,6 @@ public class ImagePreprocessor {
 				lineValues.add(nextLineValues);
 				isInLine = false;
 			}
-		}
-		
-		if (isInLine = true){
-			CropValueSet nextLineValues = new CropValueSet(nextStartValue - SPLIT_PIXEL_BUFFER, 
-					document.getHeight() - 1);
-			lineValues.add(nextLineValues);
 		}
 		
 		List<BufferedImage> croppedImages = convertCropValuesToImages(lineValues, document,

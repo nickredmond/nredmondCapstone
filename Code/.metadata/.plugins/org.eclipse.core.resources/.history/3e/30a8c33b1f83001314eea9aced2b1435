@@ -1,0 +1,105 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class ImageScaler {
+	public static BufferedImage scaleToHeight(int height, BufferedImage img){
+		float scaleValue = (float) img.getHeight() / height;
+        int newWidth = (int) ((1 / scaleValue) * img.getWidth());
+        int startingX = (height - newWidth) / 2;
+        
+        BufferedImage scaledImg = scaleToProperHeight(img, scaleValue, startingX, height);
+        
+        for (int x = 0; x < startingX; x++){
+            for (int y = 0; y < scaledImg.getHeight(); y++){
+                    scaledImg.setRGB(x, y, NetworkIOTranslator.WHITE_RGB_VALUE);
+            }
+        }
+    
+	     for (int x = (startingX + newWidth + 1); x < scaledImg.getWidth(); x++){
+            for (int y = 0; y < scaledImg.getHeight(); y++){
+                    scaledImg.setRGB(x, y, NetworkIOTranslator.WHITE_RGB_VALUE);
+            }
+	     }
+	     
+	     return scaledImg;
+	}
+	
+	private BufferedImage trimImage(BufferedImage img){
+		int left = getLeft(img);
+		int right = getRight(img);
+		int top = 0;
+		int bottom = 0;
+		
+		right = (right == 0) ? img.getWidth() : right;
+		bottom = (bottom == 0) ? img.getHeight() : bottom;
+		
+		left = (left == right) ? 0 : left;
+		top = (top == bottom) ? 0 : top;
+		
+		return img.getSubimage(left, top, right - left, bottom - top);
+	}
+	
+	private int getLeft(BufferedImage img){
+		int left = 0;
+		boolean foundLeft = false;
+		
+		for (int x = 0; x < img.getWidth() && !foundLeft; x++){
+			for (int y = 0; y < img.getHeight() && !foundLeft; y++){
+				if (img.getRGB(x, y) < NetworkIOTranslator.BLACK_RGB){
+					left = x;
+					foundLeft = true;
+				}
+			}
+		}
+		
+		return left;
+	}
+	
+	private int getRight(BufferedImage img){
+		int right = img.getWidth();
+		boolean foundRight = false;
+		
+		for (int x = img.getWidth() - 1; x >= 0 && !foundRight; x--){
+			for (int y = 0; y < img.getHeight() && !foundRight; y++){
+				if (img.getRGB(x, y) < NetworkIOTranslator.BLACK_RGB){
+					right = x;
+					foundRight = true;
+				}
+			}
+		}
+		
+		return right;
+	}
+	
+	private static boolean isValidPoint(int x, int y, BufferedImage img){
+		return (x < img.getWidth() && y < img.getHeight());
+	}
+	
+	private static BufferedImage scaleToProperHeight(BufferedImage img, float scaleValue, int startingX, int height) {
+		BufferedImage scaledImg = new BufferedImage(height, height, BufferedImage.TYPE_INT_RGB);
+		int currentScaledImgX = startingX;
+		int currentScaledImgY;
+		
+		if (currentScaledImgX < 0){
+			currentScaledImgX = 0;
+		}
+		
+		for (float x = 0; x < img.getWidth(); x += scaleValue){
+			currentScaledImgY = 0;
+			
+			for (float y = 0; y < img.getHeight(); y += scaleValue){
+				int xPos = (int) x;
+				int yPos = (int) y;
+				
+				if (isValidPoint(currentScaledImgX, currentScaledImgY, scaledImg)){
+					scaledImg.setRGB(currentScaledImgX, currentScaledImgY, img.getRGB(xPos, yPos));
+				}
+				
+				currentScaledImgY++;
+			}
+			currentScaledImgX++;
+		}
+		return scaledImg;
+	}
+}

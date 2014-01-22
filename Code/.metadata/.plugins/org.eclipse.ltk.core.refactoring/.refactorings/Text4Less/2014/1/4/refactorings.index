@@ -1,1 +1,12 @@
 1390208516862	Rename local variable 'deletionValues'
+1390254648590	Rename local variable 'zoneX'
+1390324562324	Rename local variable 'row'
+1390324668222	Rename local variable 'column'
+1390324692114	Rename local variable 'currentPosition'
+1390325771971	Move compilation units
+1390326361875	Encapsulate field 'inputLength'
+1390365737982	Rename local variable 'right'
+1390365744901	Rename local variable 'x'
+1390365760209	Rename local variable 'foundRight'
+1390366327141	Rename local variable 'height'
+1390366802898	Rename local variable 'height'

@@ -1,0 +1,40 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class ImageScaler {
+	public static BufferedImage scaleToHeight(int height, BufferedImage img){
+		
+	}
+	
+	private static boolean isValidPoint(int x, int y, BufferedImage img){
+		return (x < img.getWidth() && y < img.getHeight());
+	}
+	
+	private static BufferedImage scaleToProperHeight(BufferedImage img, float scaleValue, int startingX, int height) {
+		BufferedImage scaledImg = new BufferedImage(height, height, BufferedImage.TYPE_INT_RGB);
+		int currentScaledImgX = startingX;
+		int currentScaledImgY;
+		
+		if (currentScaledImgX < 0){
+			currentScaledImgX = 0;
+		}
+		
+		for (float x = 0; x < img.getWidth(); x += scaleValue){
+			currentScaledImgY = 0;
+			
+			for (float y = 0; y < img.getHeight(); y += scaleValue){
+				int xPos = (int) x;
+				int yPos = (int) y;
+				
+				if (isValidPoint(currentScaledImgX, currentScaledImgY, scaledImg)){
+					scaledImg.setRGB(currentScaledImgX, currentScaledImgY, img.getRGB(xPos, yPos));
+				}
+				
+				currentScaledImgY++;
+			}
+			currentScaledImgX++;
+		}
+		return scaledImg;
+	}
+}
