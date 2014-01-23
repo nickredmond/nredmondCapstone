@@ -6,11 +6,15 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ComplexNumber;
+import app.ComplexNumberMath;
+import app.GeneralMath;
 import debug.FeatureExtractionDebug;
 import featureExtraction.CrossingCalculator;
 import featureExtraction.ImageThinner;
 import featureExtraction.MomentCalculator;
 import featureExtraction.VectorCalculator;
+import featureExtraction.ZernikeImageNormalizer;
 
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final static int NUMBER_VERTICAL_BINS = 6;
@@ -83,18 +87,29 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			
 			List<Float> inputList = new ArrayList<Float>();
 			
-			addHuMomentFeatures(inputList, croppedLightValues);
-			addProfilingFeatures(inputList, croppedLightValues, percentages);
-			addVectorFeatures(inputList, croppedLightValues);
-			addCrossingFeatures(inputList, croppedLightValues);
+			int[][] normalizedLightValues = ZernikeImageNormalizer.normalizeImageOnCentroidScaleInvariant(croppedLightValues);
+			int[][] zernikeLightValues = ZernikeImageNormalizer.padToRequiredDimension(normalizedLightValues, 30);
 			
-			inputList.add(getHeightToWidthRatio(croppedLightValues));
+			ComplexNumber zernike73 = MomentCalculator.calculateZernikeMoment(zernikeLightValues, 7, 3);
+			System.out.println("zernike moment: " + zernike73);
+			
+//			addHuMomentFeatures(inputList, croppedLightValues);
+//			addProfilingFeatures(inputList, croppedLightValues, percentages);
+//			addVectorFeatures(inputList, croppedLightValues);
+//			addCrossingFeatures(inputList, croppedLightValues);
+//			
+//			inputList.add(getHeightToWidthRatio(croppedLightValues));
+			
+			//--- I disregarded the features below ---//
 			
 //			inputList.add(getVerticalSymmetryValue(croppedLightValues));
 //			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
 //			
 //			addPercentDimensionFeatures(inputList, croppedLightValues, percentages);
 //			addZoningFeatures(inputList, croppedLightValues);
+			
+//			FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(paddedShiz), paddedShiz);
+//			System.out.println("h: " + squareShiz.length + " w: " + squareShiz[0].length);
 			
 			input = new float[inputList.size()];
 			

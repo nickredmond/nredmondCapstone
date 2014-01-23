@@ -24,8 +24,10 @@
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="app.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
-<fullyQualifiedTypeName name="imageProcessing.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="app.VectorCalculator"/>
 <fullyQualifiedTypeName name="app.MomentCalculator"/>
 <fullyQualifiedTypeName name="app.CrossingCalculator"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageScaler"/>
+<fullyQualifiedTypeName name="imageProcessing.FeatureExtractionIOTranslator"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 </qualifiedTypeNameHistroy>

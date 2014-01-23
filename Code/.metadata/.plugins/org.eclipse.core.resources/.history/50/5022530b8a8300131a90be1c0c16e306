@@ -1,0 +1,18 @@
+package app;
+
+public class ComplexNumber {
+	private float a, b;
+	
+	public ComplexNumber(float a, float b){
+		this.a = a;
+		this.b = b;
+	}
+	
+	public float a(){
+		return a;
+	}
+	
+	public float b(){
+		return b;
+	}
+}

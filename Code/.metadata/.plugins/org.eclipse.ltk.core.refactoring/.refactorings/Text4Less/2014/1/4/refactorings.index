@@ -10,3 +10,6 @@
 1390365760209	Rename local variable 'foundRight'
 1390366327141	Rename local variable 'height'
 1390366802898	Rename local variable 'height'
+1390415970134	Rename local variable 'skeleton'
+1390416639686	Rename type 'ImageNormalizer'
+1390450325900	Rename local variable 'squareCenteredValues'
