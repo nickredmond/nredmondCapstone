@@ -18,7 +18,6 @@
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="imageProcessing.ReceptorChooser"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
@@ -27,7 +26,12 @@
 <fullyQualifiedTypeName name="app.VectorCalculator"/>
 <fullyQualifiedTypeName name="app.MomentCalculator"/>
 <fullyQualifiedTypeName name="app.CrossingCalculator"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageScaler"/>
 <fullyQualifiedTypeName name="imageProcessing.FeatureExtractionIOTranslator"/>
+<fullyQualifiedTypeName name="featureExtraction.ZernikeImageNormalizer"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageScaler"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="app.ComplexNumberMath"/>
+<fullyQualifiedTypeName name="app.GeneralMath"/>
+<fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
 </qualifiedTypeNameHistroy>

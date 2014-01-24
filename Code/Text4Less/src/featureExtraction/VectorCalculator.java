@@ -1,5 +1,8 @@
 package featureExtraction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class VectorCalculator {
 	private static final int EMPTY = 0;
 	private static final int NON_VISITED = 1;
@@ -27,11 +30,40 @@ public class VectorCalculator {
 				
 				zonedValues[zoneValueIndex] = 
 						calculateVectorValueForZone(startingRow, endingRow, startingCol, endingCol, vectorSkeleton);
+						
 				zoneValueIndex++;
 			}
 		}
 		
 		return zonedValues;
+	}
+	
+	private static float calculateSumVectorValueForZone(int startingRow, int endingRow, int startingCol,
+			int endingCol, int[][] vectorValues){
+		Map<Integer, Integer> vectorCounts = new HashMap<Integer, Integer>();
+		
+		for (int row = startingRow; row <= endingRow; row++){
+			for (int col = startingCol; col <= endingCol; col++){
+				if (row < vectorValues.length && col < vectorValues[row].length && vectorValues[row][col] != 0){
+					int vectorValue = (vectorCounts.get(vectorValues[row][col]) != null) ? vectorCounts.get(vectorValues[row][col]) : 0;
+					vectorCounts.put(vectorValues[row][col], (vectorValue + 1));
+				}
+			}
+		}
+		
+		int chosenVector = 0;
+		int highestVectorCount = 0;
+		
+		for (Integer nextVectorDirection : vectorCounts.keySet()){
+			int nextVectorCount = vectorCounts.get(nextVectorDirection);
+			
+			if (nextVectorCount > highestVectorCount){
+				highestVectorCount = nextVectorCount;
+				chosenVector = nextVectorDirection;
+			}
+		}
+		
+		return chosenVector / DIAG_LEFT;
 	}
 	
 	private static float calculateVectorValueForZone(int startingRow,

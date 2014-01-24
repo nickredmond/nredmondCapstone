@@ -16,7 +16,7 @@ public class ZernikeImageNormalizer {
 		
 		int[][] paddedImgValues = imageValues;
 		
-		while (paddedImgValues.length != dimension){
+		while (paddedImgValues.length <= dimension){
 			paddedImgValues = padRight(paddedImgValues, 1);
 			paddedImgValues = padDown(paddedImgValues, 1);
 			
@@ -46,6 +46,9 @@ public class ZernikeImageNormalizer {
 			squareValues;
 		
 		int[][] centeredImgValues = centerAroundCentroid(scaledImg);
+		if (centeredImgValues.length != centeredImgValues[0].length){
+			centeredImgValues = squareImage(centeredImgValues);
+		}
 		
 		int newMoment = MomentCalculator.calculateRegularMoment(centeredImgValues, 0, 0);
 		System.out.println("old: " + m00 + " new: " + newMoment);
@@ -53,7 +56,7 @@ public class ZernikeImageNormalizer {
 		return centeredImgValues;
 	}
 	
-	private static int[][] squareImage(int[][] imageValues){
+	public static int[][] squareImage(int[][] imageValues){
 		int ratio = getHeightToWidthRatio(imageValues);
 		int[][] squaredImage = copyImage(imageValues);
 		

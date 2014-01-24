@@ -6,7 +6,9 @@ import java.util.Set;
 public class BackpropagationTrainer implements INetworkTrainer {
 	private final float LEARNING_RATE = 0.03f;
 	private final float REGULARIZATION_PARAM = 0.1f;
-	private final float MAXIMUM_ALLOWABLE_ERROR = 0.05f;
+	private final float MAXIMUM_ALLOWABLE_ERROR = 0.02f;
+	
+	private float minErrorAchieved = 1000.0f;
 	
 	private final float MIN_ALLOWABLE_ERR_CHANGE = 0.00005f;
 	
@@ -65,7 +67,11 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		trainingError = trainingError / (2 * trainingSet.size());
 		
 		changeWeights(trainingSet.size(), network);
-		System.out.print("MSE: " + trainingError + " --- ");
+		System.out.print("MSE: " + trainingError + " --- MIN: " + minErrorAchieved + " --- ");
+		
+		if (trainingError < minErrorAchieved){
+			minErrorAchieved = trainingError;
+		}
 		
 		return trainingError;
 	}

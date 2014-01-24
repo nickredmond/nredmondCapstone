@@ -24,11 +24,11 @@ import app.ImageReader;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException {		
-		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/p3.jpg")));
-		//translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));
+//		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/b2.jpg")));
+//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/a3.jpg")));
 		
-		//MainTest.runApp();
+		MainTest.runApp();
 	}
 	
 	private static void runApp() throws IOException{

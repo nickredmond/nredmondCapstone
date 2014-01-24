@@ -31,13 +31,12 @@ public class GeneralMath {
 
 		if (value < 1){
 			factorial = 0;
-			System.out.println("factorial is zero");
 		}
 		else if (value == 1){
 			factorial = 1;
 		}
 		else factorial = value * factorial(value - 1);
-		System.out.println("fact:  " + factorial);
+		
 		return factorial;
 	}
 }
