@@ -1,0 +1,43 @@
+package featureExtraction;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ChainCodeCreator {
+	private static final int VISITED = -1;
+	private static final int NON_VISITED = 1;
+	
+	public static int[] generateChainCode(int[][] skeletonValues){
+		// start at top-left
+		// find first point
+		// rotate clockwise starting at noon until finding non-visited value
+		// rotate clockwise to find next value and mark direction
+		// recurse and repeat until all values are visited
+		
+		// continue through image and repeat for all non-visited values
+		
+		List<Integer> chainCodeValues = new ArrayList<Integer>();
+		
+		for (int row = 0; row < skeletonValues.length; row++){
+			for (int col = 0; col < skeletonValues[0].length; col++){
+				if (skeletonValues[row][col] == NON_VISITED){
+					skeletonValues[row][col] = VISITED;
+					findNextPixel(skeletonValues, chainCodeValues, row, col);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private static void findNextPixel(int[][] skeletonValues, List<Integer> chainCodeValues, int row, int col){
+		List<Integer> surroundingPixels = FeatureExtractionHelper.getSurroundingPixels(skeletonValues, row, col);
+		
+		for (int i = 0; i < surroundingPixels.size(); i++){
+			if (surroundingPixels.get(i) == NON_VISITED){
+				
+			}
+		}
+	}
+	
+}

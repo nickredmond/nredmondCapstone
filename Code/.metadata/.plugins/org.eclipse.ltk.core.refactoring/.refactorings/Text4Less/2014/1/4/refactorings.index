@@ -13,3 +13,7 @@
 1390415970134	Rename local variable 'skeleton'
 1390416639686	Rename type 'ImageNormalizer'
 1390450325900	Rename local variable 'squareCenteredValues'
+1390585562691	Encapsulate field 'x'
+1390585568184	Encapsulate field 'y'
+1390623575437	Extract method 'correctPixelVectorValue'
+1390626817609	Extract method 'correctAroundDiagLeft'

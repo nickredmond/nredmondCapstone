@@ -4,22 +4,21 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import app.ComplexNumber;
-import app.ComplexNumberMath;
-import app.GeneralMath;
 import debug.FeatureExtractionDebug;
+import app.ComplexNumber;
+import featureExtraction.ChainCodeCreator;
 import featureExtraction.CrossingCalculator;
+import featureExtraction.FeaturePoint;
+import featureExtraction.FeatureType;
 import featureExtraction.ImageThinner;
 import featureExtraction.MomentCalculator;
 import featureExtraction.VectorCalculator;
 import featureExtraction.ZernikeImageNormalizer;
 
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
-	private final static int NUMBER_VERTICAL_BINS = 6;
-	private final static int NUMBER_HORIZONTAL_BINS = 7;
-	
 	private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 	
 	public final static int DEFAULT_INPUT_LENGTH = 7 + (NUMBER_PROFILE_DIRECTIONS * 3) + 16 + 2; // plus 24 w/ original values
@@ -40,6 +39,9 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private final int MAX_NUMBER_CROSSINGS = 4;
 	
 	private final int DARK_BOUNDARY = 5000;
+	
+	private final int MAX_ENDPOINTS = 4;
+	private final int MAX_T_JUNCS = 4;
 	
 	// testing method
 //	public void printImageBinary(BufferedImage img){
@@ -89,16 +91,26 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 30, 30);
-			//FeatureExtractionDebug.printImg(scaledImg);
+			
+			
+		//	FeatureExtractionDebug.printImg(scaledImg);
+		//	System.out.println();
 			
 			//FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(zernikeLightValues), zernikeLightValues);
 			
-		//	addHuMomentFeatures(inputList, scaledImg);
-			addProfilingFeatures(inputList, scaledImg, percentages);
-			addVectorFeatures(inputList, scaledImg);
-			addCrossingFeatures(inputList, scaledImg);
+		//	addFeaturePoints(inputList, scaledImg);
 			
-			inputList.add(getHeightToWidthRatio(croppedLightValues));
+		//	addHuMomentFeatures(inputList, scaledImg);
+//			addProfilingFeatures(inputList, scaledImg, percentages);
+			addVectorFeatures(inputList, scaledImg);
+			
+			int[][] vectorValues = VectorCalculator.calculateVectorsForSkeleton(scaledImg);
+			VectorCalculator.correctVectorValues(vectorValues);
+			VectorCalculator.removeDiagonalLineThickness(vectorValues);
+			int[] chainCode = ChainCodeCreator.generateChainCode(vectorValues);
+//			addCrossingFeatures(inputList, scaledImg);
+//			
+//			inputList.add(getHeightToWidthRatio(croppedLightValues));
 			
 			//addZernikeFeatures(inputList, croppedLightValues);
 			
@@ -119,10 +131,10 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 				input[i] = inputList.get(i);
 			}
 			
-//			for (int i = 0; i < input.length; i++){
-//				System.out.print(input[i] + " ");
-//			}
-//			System.out.println();
+			for (int i = 0; i < input.length; i++){
+				System.out.print(input[i] + " ");
+			}
+			System.out.println();
 			
 			inputLength = input.length;
 		}
@@ -143,6 +155,42 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		}
 		
 		return paddedLightValues;
+	}
+	
+	private void addFeaturePoints(List<Float> inputList, int[][] croppedLightValues){
+		ImageThinner t = new ImageThinner();
+		t.thinImage(croppedLightValues);
+		int[][] croppedSkeleton = cropLightValues(croppedLightValues);
+		int[][] directionVectors = VectorCalculator.calculateVectorsForSkeleton(croppedSkeleton);
+		
+		List<FeaturePoint> points = VectorCalculator.calculateFeaturePoints(directionVectors, ZONING_DIMENSION_X, ZONING_DIMENSION_Y);
+		Collections.sort(points);
+		
+		int[] featurePoints = new int[(MAX_ENDPOINTS * 2) + (MAX_T_JUNCS * 2)];
+		int currentEndPtIndex = 0;
+		int currentTjuncIndex = MAX_ENDPOINTS * 2;
+		
+		for (FeaturePoint nextPoint : points){
+			if (nextPoint.getType() == FeatureType.END_POINT){
+				featurePoints[currentEndPtIndex++] = nextPoint.y();
+				featurePoints[currentEndPtIndex++] = nextPoint.x();
+			}
+			else if (nextPoint.getType() == FeatureType.T_JUNCTION){
+				featurePoints[currentTjuncIndex++] = nextPoint.y();
+				featurePoints[currentTjuncIndex++] = nextPoint.x();
+			}
+		}
+		
+		for (int i = 0; i < featurePoints.length; i++){
+			inputList.add((float)featurePoints[i]);
+		}
+		
+	//	FeatureExtractionDebug.printPointFeatures(points, ZONING_DIMENSION_X, ZONING_DIMENSION_Y);
+		
+//		VectorCalculator.correctVectorValues(directionVectors);
+//		System.out.println();
+//		FeatureExtractionDebug.printImg(directionVectors);
+//		System.out.println();
 	}
 	
 	private void addZernikeFeatures(List<Float> inputList, int[][] croppedLightValues){
@@ -219,7 +267,7 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		ImageThinner thinner = new ImageThinner();
 		thinner.thinImage(croppedLightValues);
 		
-		float[] zoneVectors = VectorCalculator.calculateZonedVectorsForSkeleton(croppedLightValues, ZONING_DIMENSION_Y, ZONING_DIMENSION_Y);
+		float[] zoneVectors = VectorCalculator.calculateZonedVectorsForSkeleton(croppedLightValues, ZONING_DIMENSION_Y, ZONING_DIMENSION_Y, true);
 		
 		for (int i = 0; i < zoneVectors.length; i++){
 			inputList.add(zoneVectors[i]);
@@ -355,6 +403,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		endingRow = (endingRow <= 0) ? lightValues.length : endingRow;
 		startingCol = (startingCol == -1) ? 0 : startingCol;
 		endingCol = (endingCol <= 0) ? lightValues[0].length : endingCol;
+		
+		endingRow = (endingRow < lightValues.length - 1) ? endingRow + 1 : endingRow;
 		
 		return new Rectangle(startingRow, startingCol, endingCol - startingCol, endingRow - startingRow);
 	}

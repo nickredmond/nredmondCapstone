@@ -1,7 +1,0 @@
-package featureExtraction;
-
-public class ImageNormalizer {
-	public int[][] normalizeImageOnCentroidScaleInvariant(int[][] imageValues, int desiredArea){
-		
-	}
-}

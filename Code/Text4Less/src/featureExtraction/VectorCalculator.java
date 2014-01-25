@@ -1,7 +1,13 @@
 package featureExtraction;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import debug.FeatureExtractionDebug;
 
 public class VectorCalculator {
 	private static final int EMPTY = 0;
@@ -13,8 +19,143 @@ public class VectorCalculator {
 	
 	public static final int MAX_DIRECTION_VALUE = DIAG_LEFT;
 	
-	public static float[] calculateZonedVectorsForSkeleton(int[][] skeleton, int zoneDimensionX, int zoneDimensionY){
-		int[][] vectorSkeleton = calculateVectorsForSkeleton(skeleton);
+	public static List<FeaturePoint> calculateFeaturePoints(int[][] skeleton, int zoneDimensionX, int zoneDimensionY){
+		float numPixelsPerZoneX = (float)skeleton[0].length / zoneDimensionX;
+		float numPixelsPerZoneY = (float)skeleton.length / zoneDimensionY;
+		
+		List<FeaturePoint> points = new ArrayList<FeaturePoint>();
+		
+		for (int row = 0; row < skeleton.length; row++){
+			for (int col = 0; col < skeleton[0].length; col++){
+				int currentPixel = skeleton[row][col];
+				
+				if (currentPixel != 0){
+					int above = (row > 0) ? skeleton[row-1][col] : 0;
+					int below = (row < skeleton.length - 1) ? skeleton[row+1][col] : 0;
+					int left = (col > 0) ? skeleton[row][col-1] : 0;
+					int right = (col < skeleton[0].length - 1) ? skeleton[row][col+1] : 0;
+					
+					int numDirections = 0;
+					int[] directions = {above, below, left, right};
+					
+					for (int i = 0; i < directions.length; i++){
+						if (directions[i] != 0){
+							numDirections++;
+						}
+					}
+					
+					int x = (int)((float)col / numPixelsPerZoneX) + 1;
+					int y = (int)((float)row / numPixelsPerZoneY) + 1;
+					
+					if (numDirections == 1){
+						FeaturePoint endPt = new FeaturePoint(x, y, FeatureType.END_POINT);
+						points.add(endPt);
+					}
+					if (numDirections == 3){
+						FeaturePoint tJunction = new FeaturePoint(x, y, FeatureType.T_JUNCTION);
+						points.add(tJunction);
+					}
+				}
+			}
+		}
+		
+		return points;
+	}
+	
+	public static void removeDiagonalLineThickness(int[][] correctedVectorValues){
+		for (int row = 0; row < correctedVectorValues.length; row++){
+			for (int col = 0; col < correctedVectorValues[0].length; col++){
+				if (correctedVectorValues[row][col] == DIAG_LEFT){
+					correctAroundDiagonal(correctedVectorValues, row, col, DIAG_LEFT, 
+							VectorDirection.TOP_LEFT.ordinal(), VectorDirection.BOTTOM_RIGHT.ordinal());
+				}
+				else if (correctedVectorValues[row][col] == DIAG_RIGHT){
+					correctAroundDiagonal(correctedVectorValues, row, col, DIAG_RIGHT,
+							VectorDirection.TOP_RIGHT.ordinal(), VectorDirection.BOTTOM_LEFT.ordinal());
+				}
+			}
+		}
+	}
+	
+	private static void correctAroundDiagonal(int[][] correctedVectorValues, int row, int col, 
+			int diagValue, int aboveValue, int belowValue){
+		List<Integer> surroundingValues = FeatureExtractionHelper.getSurroundingValuesFromPoints(correctedVectorValues, row, col);
+		
+		if (surroundingValues.get(aboveValue) == diagValue && 
+				surroundingValues.get(belowValue) == diagValue){
+			if (row > 0){
+				correctedVectorValues[row-1][col] = 0;
+			}
+			if (col > 0){
+				correctedVectorValues[row][col-1] = 0;
+			}
+			if (row < correctedVectorValues.length - 1){
+				correctedVectorValues[row+1][col] = 0;
+			}
+			if (col < correctedVectorValues[0].length - 1){
+				correctedVectorValues[row][col+1] = 0;
+			}
+		}
+	}
+	
+	
+	
+	public static void correctVectorValues(int[][] vectorValues){		
+		for (int row = 0; row < vectorValues.length; row++){
+			for (int col = 0; col < vectorValues[0].length; col++){
+				List<Integer> surroundingPixels = 
+						FeatureExtractionHelper.getSurroundingValuesFromPoints(vectorValues, row, col);
+				Map<Integer, Integer> vectorCounts = new HashMap<Integer, Integer>();
+				
+				if (vectorValues[row][col] != 0){
+					for (Integer nextVectorValue : surroundingPixels){
+						if (nextVectorValue != 0){
+							int currentValueCount = (vectorCounts.get(nextVectorValue) != null) ? vectorCounts.get(nextVectorValue) : 0;
+							vectorCounts.put(nextVectorValue, currentValueCount + 1);
+						}
+					}
+					
+					if (vectorCounts.keySet().size() > 0){
+						correctPixelVectorValue(vectorValues, row, col, vectorCounts);
+					}
+				}
+			}
+		}
+	}
+
+	private static void correctPixelVectorValue(int[][] vectorValues, int row,
+			int col, Map<Integer, Integer> vectorCounts) {
+		final int UNDEFINED = -1;
+		int maxValue = Collections.max(vectorCounts.values());
+		boolean hasGreatestNeighbor = true;
+		int greatestNeighbor = UNDEFINED;
+		
+		for (Integer nextDirection : vectorCounts.keySet()){
+			if (vectorCounts.get(nextDirection) == maxValue){
+				if (greatestNeighbor == UNDEFINED){
+					greatestNeighbor = nextDirection;
+				}
+				else hasGreatestNeighbor = false;
+			}
+		}
+		
+		if (hasGreatestNeighbor){
+			vectorValues[row][col] = greatestNeighbor;
+		}
+	}
+	
+	public static float[] calculateZonedVectorsForSkeleton(int[][] skeleton, int zoneDimensionX, int zoneDimensionY, boolean calculateVectors){
+		int[][] vectorSkeleton = (calculateVectors ? calculateVectorsForSkeleton(skeleton) : skeleton);
+		
+		if (calculateVectors)
+			correctVectorValues(vectorSkeleton);
+		
+		removeDiagonalLineThickness(vectorSkeleton);
+		
+		System.out.println();
+		FeatureExtractionDebug.printImg(vectorSkeleton);
+		System.out.println();
+		
 		float[] zonedValues = new float[zoneDimensionX * zoneDimensionY];
 		int zoneValueIndex = 0;
 		
@@ -29,7 +170,7 @@ public class VectorCalculator {
 				int endingCol = (int) (startingCol + numPixelsPerZoneX);
 				
 				zonedValues[zoneValueIndex] = 
-						calculateVectorValueForZone(startingRow, endingRow, startingCol, endingCol, vectorSkeleton);
+						calculateVectorValueForZone(startingRow, endingRow, startingCol, endingCol, skeleton);
 						
 				zoneValueIndex++;
 			}
