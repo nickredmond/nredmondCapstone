@@ -50,7 +50,14 @@ public class MainTest {
 			trainer1.addTestExample(nextExample);
 		}
 		
+		long before = System.nanoTime();
 		trainer1.trainNeuralNetwork(network, new BackpropagationTrainer(0.05f, 0.02f));
+		long after = System.nanoTime();
+		
+		long nanoSecs = after - before;
+		long secs = nanoSecs / 1000000000;
+		
+		System.out.println("Training time: " + secs + " seconds");
 		
 		BufferedImage test = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		ImageReader reader = new ImageReader(network, t);

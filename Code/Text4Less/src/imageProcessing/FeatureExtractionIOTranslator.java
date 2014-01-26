@@ -25,8 +25,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	public final static int DEFAULT_INPUT_LENGTH = 7 + (NUMBER_PROFILE_DIRECTIONS * 3) + 16 + 2; // plus 24 w/ original values
 	private int inputLength;
 	
-	private final int ZONING_DIMENSION_X = 4;
-	private final int ZONING_DIMENSION_Y = 4;
+	private final int ZONING_DIMENSION_X = 6;
+	private final int ZONING_DIMENSION_Y = 6;
 	
 	private final float TOP_DIMENSION_PERCENT = 0.3f;
 	private final float MID_DIMENSION_PERCENT = 0.5f;
@@ -99,15 +99,15 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			
 			//FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(zernikeLightValues), zernikeLightValues);
 			
-		//	addFeaturePoints(inputList, scaledImg);
+			addFeaturePoints(inputList, scaledImg);
 			
 		//	addHuMomentFeatures(inputList, scaledImg);
-//			addProfilingFeatures(inputList, scaledImg, percentages);
-		//	addVectorFeatures(inputList, scaledImg);
+		//	addProfilingFeatures(inputList, scaledImg, percentages);
+			addVectorFeatures(inputList, scaledImg);
 			
-			addChainCodeFeatures(inputList, scaledImg);
+		//	addChainCodeFeatures(inputList, scaledImg);
 
-//			addCrossingFeatures(inputList, scaledImg);
+			addCrossingFeatures(inputList, scaledImg);
 //			
 //			inputList.add(getHeightToWidthRatio(croppedLightValues));
 			
@@ -119,7 +119,7 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 //			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
 //			
 //			addPercentDimensionFeatures(inputList, croppedLightValues, percentages);
-//			addZoningFeatures(inputList, croppedLightValues);
+			addZoningFeatures(inputList, croppedLightValues);
 			
 //			FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(paddedShiz), paddedShiz);
 //			System.out.println("h: " + squareShiz.length + " w: " + squareShiz[0].length);
@@ -130,10 +130,10 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 				input[i] = inputList.get(i);
 			}
 			
-			for (int i = 0; i < input.length; i++){
-				System.out.print(input[i] + " ");
-			}
-			System.out.println();
+//			for (int i = 0; i < input.length; i++){
+//				System.out.print(input[i] + " ");
+//			}
+//			System.out.println();
 			
 			inputLength = input.length;
 		}
@@ -175,7 +175,7 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		int[][] croppedSkeleton = cropLightValues(croppedLightValues);
 		int[][] directionVectors = VectorCalculator.calculateVectorsForSkeleton(croppedSkeleton);
 		
-		List<FeaturePoint> points = VectorCalculator.calculateFeaturePoints(directionVectors, ZONING_DIMENSION_X, ZONING_DIMENSION_Y);
+		List<FeaturePoint> points = VectorCalculator.calculateFeaturePoints(directionVectors, 4, 4);
 		Collections.sort(points);
 		
 		int[] featurePoints = new int[(MAX_ENDPOINTS * 2) + (MAX_T_JUNCS * 2)];
@@ -279,7 +279,7 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		ImageThinner thinner = new ImageThinner();
 		thinner.thinImage(croppedLightValues);
 		
-		float[] zoneVectors = VectorCalculator.calculateZonedVectorsForSkeleton(croppedLightValues, ZONING_DIMENSION_Y, ZONING_DIMENSION_Y, true);
+		float[] zoneVectors = VectorCalculator.calculateZonedVectorsForSkeleton(croppedLightValues, 4, 4, true);
 		
 		for (int i = 0; i < zoneVectors.length; i++){
 			inputList.add(zoneVectors[i]);

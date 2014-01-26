@@ -63,9 +63,15 @@ public class VectorCalculator {
 		if (currentPixel != 0){
 			List<Integer> surroundingPoints = FeatureExtractionHelper.getSurroundingValuesFromPoints(skeleton, row, col);
 			
+			List<Integer> cardinalPoints = new ArrayList<Integer>();
+			cardinalPoints.add(surroundingPoints.get(VectorDirection.RIGHT.ordinal()));
+			cardinalPoints.add(surroundingPoints.get(VectorDirection.BOTTOM.ordinal()));
+			cardinalPoints.add(surroundingPoints.get(VectorDirection.LEFT.ordinal()));
+			cardinalPoints.add(surroundingPoints.get(VectorDirection.TOP.ordinal()));
+			
 			int numDirections = 0;
 			
-			for (Integer nextValue : surroundingPoints){
+			for (Integer nextValue : cardinalPoints){
 				if (nextValue != 0){
 					numDirections++;
 				}
@@ -171,10 +177,6 @@ public class VectorCalculator {
 			correctVectorValues(vectorSkeleton);
 		
 		removeDiagonalLineThickness(vectorSkeleton);
-		
-		System.out.println();
-		FeatureExtractionDebug.printImg(vectorSkeleton);
-		System.out.println();
 		
 		float[] zonedValues = new float[zoneDimensionX * zoneDimensionY];
 		int zoneValueIndex = 0;

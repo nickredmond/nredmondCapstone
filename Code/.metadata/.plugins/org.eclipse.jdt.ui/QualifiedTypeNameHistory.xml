@@ -29,12 +29,12 @@
 <fullyQualifiedTypeName name="imageProcessing.ImageScaler"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="app.ComplexNumberMath"/>
-<fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureType"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="app.GeneralMath"/>
 </qualifiedTypeNameHistroy>
