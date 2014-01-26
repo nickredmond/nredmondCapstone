@@ -19,8 +19,6 @@
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="imageProcessing.ReceptorChooser"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="app.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
 <fullyQualifiedTypeName name="app.VectorCalculator"/>
@@ -29,9 +27,14 @@
 <fullyQualifiedTypeName name="imageProcessing.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="featureExtraction.ZernikeImageNormalizer"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageScaler"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="app.ComplexNumberMath"/>
 <fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="featureExtraction.FeatureType"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
+<fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 </qualifiedTypeNameHistroy>

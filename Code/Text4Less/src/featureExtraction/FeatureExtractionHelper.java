@@ -4,20 +4,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeatureExtractionHelper {
-	public static final int TOP = 0;
-	public static final int TOP_RIGHT = 1;
-	public static final int RIGHT = 2;
-	public static final int BOTTOM_RIGHT = 3;
-	public static final int BOTTOM = 4;
-	public static final int BOTTOM_LEFT = 5;
-	public static final int LEFT = 6;
-	public static final int TOP_LEFT = 7;
-	
+public class FeatureExtractionHelper {	
 	public static List<Point> getSurroundingPixels(int[][] skeletonValues, int row, int col){
 		List<Point> surroundingPixels = new ArrayList<Point>();
 		
-		surroundingPixels.add(VectorDirection.TOP.getNextPixelPoint(row, col, skeletonValues));
 		surroundingPixels.add(VectorDirection.TOP_RIGHT.getNextPixelPoint(row, col, skeletonValues));
 		surroundingPixels.add(VectorDirection.RIGHT.getNextPixelPoint(row, col, skeletonValues));
 		surroundingPixels.add(VectorDirection.BOTTOM_RIGHT.getNextPixelPoint(row, col, skeletonValues));
@@ -25,6 +15,7 @@ public class FeatureExtractionHelper {
 		surroundingPixels.add(VectorDirection.BOTTOM_LEFT.getNextPixelPoint(row, col, skeletonValues));
 		surroundingPixels.add(VectorDirection.LEFT.getNextPixelPoint(row, col, skeletonValues));
 		surroundingPixels.add(VectorDirection.TOP_LEFT.getNextPixelPoint(row, col, skeletonValues));
+		surroundingPixels.add(VectorDirection.TOP.getNextPixelPoint(row, col, skeletonValues));
 		
 		return surroundingPixels;
 	}

@@ -1,0 +1,4 @@
+1390698780921	Extract method 'ignoreSurroundingPixels'
+1390703140639	Extract method 'traverseToNextPoint'
+1390703156338	Rename local variable 'nextLeftPoint'
+1390712249576	Rename local variable 'value'

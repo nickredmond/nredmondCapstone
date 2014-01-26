@@ -9,6 +9,7 @@ import java.util.List;
 
 import debug.FeatureExtractionDebug;
 import app.ComplexNumber;
+import app.GeneralMath;
 import featureExtraction.ChainCodeCreator;
 import featureExtraction.CrossingCalculator;
 import featureExtraction.FeaturePoint;
@@ -102,12 +103,10 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			
 		//	addHuMomentFeatures(inputList, scaledImg);
 //			addProfilingFeatures(inputList, scaledImg, percentages);
-			addVectorFeatures(inputList, scaledImg);
+		//	addVectorFeatures(inputList, scaledImg);
 			
-			int[][] vectorValues = VectorCalculator.calculateVectorsForSkeleton(scaledImg);
-			VectorCalculator.correctVectorValues(vectorValues);
-			VectorCalculator.removeDiagonalLineThickness(vectorValues);
-			int[] chainCode = ChainCodeCreator.generateChainCode(vectorValues);
+			addChainCodeFeatures(inputList, scaledImg);
+
 //			addCrossingFeatures(inputList, scaledImg);
 //			
 //			inputList.add(getHeightToWidthRatio(croppedLightValues));
@@ -155,6 +154,19 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		}
 		
 		return paddedLightValues;
+	}
+	
+	private void addChainCodeFeatures(List<Float> inputList, int[][] croppedLightValues){
+		int[][] vectorValues = VectorCalculator.calculateVectorsForSkeleton(croppedLightValues);
+		VectorCalculator.correctVectorValues(vectorValues);
+		VectorCalculator.removeDiagonalLineThickness(vectorValues);
+		
+		ChainCodeCreator codeGen = new ChainCodeCreator();
+		int[] chainCode = codeGen.generateChainCode(vectorValues);
+		
+		for (int i = 0; i < chainCode.length; i++){
+			inputList.add((float)chainCode[i]);
+		}
 	}
 	
 	private void addFeaturePoints(List<Float> inputList, int[][] croppedLightValues){

@@ -69,4 +69,12 @@ public class FeatureExtractionDebug {
 		}
 		System.out.println();
 	}
+	
+	public static void printChainCode(int[] chainCode){
+		System.out.print("CHAIN CODE: ");
+		for (int i = 0; i < chainCode.length; i++){
+			System.out.print(chainCode[i] + " ");
+		}
+		System.out.println("\r\n");
+	}
 }

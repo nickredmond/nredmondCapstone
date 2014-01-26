@@ -13,6 +13,5 @@ INDEX VERSION 1.126+C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Code\.metad
 3839396663.index
 1473623835.index
 4262625848.index
-3192036149.index
 3461012579.index
 195268357.index

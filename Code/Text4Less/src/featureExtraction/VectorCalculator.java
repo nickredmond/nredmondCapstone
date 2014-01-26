@@ -27,39 +27,59 @@ public class VectorCalculator {
 		
 		for (int row = 0; row < skeleton.length; row++){
 			for (int col = 0; col < skeleton[0].length; col++){
-				int currentPixel = skeleton[row][col];
+				int x = (int)((float)col / numPixelsPerZoneX) + 1;
+				int y = (int)((float)row / numPixelsPerZoneY) + 1;
+				FeaturePoint nextPoint = scanForFeaturePoint(skeleton, x, y, row, col);
 				
-				if (currentPixel != 0){
-					int above = (row > 0) ? skeleton[row-1][col] : 0;
-					int below = (row < skeleton.length - 1) ? skeleton[row+1][col] : 0;
-					int left = (col > 0) ? skeleton[row][col-1] : 0;
-					int right = (col < skeleton[0].length - 1) ? skeleton[row][col+1] : 0;
-					
-					int numDirections = 0;
-					int[] directions = {above, below, left, right};
-					
-					for (int i = 0; i < directions.length; i++){
-						if (directions[i] != 0){
-							numDirections++;
-						}
-					}
-					
-					int x = (int)((float)col / numPixelsPerZoneX) + 1;
-					int y = (int)((float)row / numPixelsPerZoneY) + 1;
-					
-					if (numDirections == 1){
-						FeaturePoint endPt = new FeaturePoint(x, y, FeatureType.END_POINT);
-						points.add(endPt);
-					}
-					if (numDirections == 3){
-						FeaturePoint tJunction = new FeaturePoint(x, y, FeatureType.T_JUNCTION);
-						points.add(tJunction);
-					}
+				if (nextPoint != null){
+					points.add(nextPoint);
 				}
 			}
 		}
 		
 		return points;
+	}
+	
+	public static List<FeaturePoint> calculateFeaturePointLocations(int[][] skeleton){
+		List<FeaturePoint> points = new ArrayList<FeaturePoint>();
+		
+		for (int row = 0; row < skeleton.length; row++){
+			for (int col = 0; col < skeleton[0].length; col++){
+				FeaturePoint nextPoint = scanForFeaturePoint(skeleton, col, row, row, col);
+				
+				if (nextPoint != null){
+					points.add(nextPoint);
+				}
+			}
+		}
+		
+		return points;
+	}
+	
+	private static FeaturePoint scanForFeaturePoint(int[][] skeleton, int x, int y, int row, int col){
+		int currentPixel = skeleton[row][col];
+		FeaturePoint point = null;
+		
+		if (currentPixel != 0){
+			List<Integer> surroundingPoints = FeatureExtractionHelper.getSurroundingValuesFromPoints(skeleton, row, col);
+			
+			int numDirections = 0;
+			
+			for (Integer nextValue : surroundingPoints){
+				if (nextValue != 0){
+					numDirections++;
+				}
+			}
+			
+			if (numDirections == 1){
+				point = new FeaturePoint(x, y, FeatureType.END_POINT);
+			}
+			if (numDirections == 3){
+				point = new FeaturePoint(x, y, FeatureType.T_JUNCTION);
+			}
+		}
+		
+		return point;
 	}
 	
 	public static void removeDiagonalLineThickness(int[][] correctedVectorValues){
