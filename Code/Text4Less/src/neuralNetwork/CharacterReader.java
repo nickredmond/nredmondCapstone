@@ -1,13 +1,9 @@
 package neuralNetwork;
 
-import imageProcessing.FeatureExtractionIOTranslator;
 import imageProcessing.INetworkIOTranslator;
+import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class CharacterReader {
 	private NeuralNetwork network;
@@ -18,9 +14,9 @@ public class CharacterReader {
 		this.translator = translator;
 	}
 	
-	public char readCharacter(BufferedImage img){
+	public TranslationResult readCharacter(BufferedImage img){
 //        try {
-//            ImageIO.write(img, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII2\\" + System.nanoTime() + ".jpg"));
+//            ImageIO.write(img, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII4\\" + System.nanoTime() + ".jpg"));
 //	    } catch (IOException e) {
 //	            // TODO Auto-generated catch block
 //	            e.printStackTrace();
@@ -29,7 +25,7 @@ public class CharacterReader {
 		float[] input = translator.translateImageToNetworkInput(img);
 		float[] output = network.getOutputForInput(input);
 		
-		char result = translator.translateNetworkOutputToCharacter(output);
+		TranslationResult result = translator.translateNetworkOutputToCharacter(output);
 		
 		return result;
 	}

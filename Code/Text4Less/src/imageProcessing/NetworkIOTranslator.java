@@ -25,14 +25,19 @@ public class NetworkIOTranslator implements INetworkIOTranslator {
 		return translateIntToBinary128(unicodeValue);
 	}
 	
-	public char translateNetworkOutputToCharacter(float[] output){
+	public TranslationResult translateNetworkOutputToCharacter(float[] output){
 		int[] normalizedOutput = new int[output.length];
+		float confidenceSum = 0.0f;
 		
 		for (int i = 0; i < output.length; i++){
 			normalizedOutput[i] = (output[i] > CERTAINTY_VALUE) ? 1 : 0;
+			confidenceSum += (output[i] > CERTAINTY_VALUE) ? (1.0f - output[i]) : (output[i]);
 		}
 		
-		return translateNetworkOutputToCharacter(normalizedOutput);
+		float confidence = ((float)output.length - confidenceSum) / output.length;
+		char resultChar = translateNetworkOutputToCharacter(normalizedOutput);
+		
+		return new TranslationResult(resultChar, confidence);
 	}
 	
 	private char translateNetworkOutputToCharacter(int[] output){

@@ -2,3 +2,11 @@
 1390703140639	Extract method 'traverseToNextPoint'
 1390703156338	Rename local variable 'nextLeftPoint'
 1390712249576	Rename local variable 'value'
+1390845086731	Delete elements
+1390856814870	Rename local variable 't'
+1390863665052	Encapsulate field 'result'
+1390863670388	Encapsulate field 'confidence'
+1390866464488	Rename local variable 'i'
+1390866471001	Rename local variable 'j'
+1390867381459	Move compilation units
+1390867871714	Rename local variable 'i'

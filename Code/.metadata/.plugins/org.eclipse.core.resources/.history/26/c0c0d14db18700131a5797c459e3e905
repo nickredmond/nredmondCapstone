@@ -1,0 +1,5 @@
+package appTest;
+
+public class CharacterViewerPanel extends JPanel {
+	
+}

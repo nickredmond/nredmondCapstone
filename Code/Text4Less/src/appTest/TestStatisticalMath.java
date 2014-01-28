@@ -1,10 +1,9 @@
 package appTest;
 
 import static org.junit.Assert.*;
+import math.StatisticalMath;
 
 import org.junit.Test;
-
-import app.StatisticalMath;
 
 public class TestStatisticalMath {
 

@@ -5,12 +5,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class NeuralNetwork implements Serializable {
+public class NeuralNetwork implements Serializable, Cloneable {
 	NetworkLayer inputLayer, outputLayer;
 	List<NetworkLayer> hiddenLayers;
 	private final int FIRST_HIDDEN_LAYER_INDEX = 0;
 	private final float MAX_RANDOM_WEIGHT = 1.0f;
 	private final float ACTIVATION_BOUNDARY = 0.5f;
+	
+	@Override
+	public NeuralNetwork clone(){
+		int numInputs = inputLayer.getNeurons().size() - 1;
+		int numHiddenLayers = hiddenLayers.size();
+		int numNeuronsPerHidden = hiddenLayers.get(0).getNeurons().size() - 1;
+		int numberOutputs = outputLayer.getNeurons().size();
+		boolean isRandom = true;
+		
+		return new NeuralNetwork(numInputs, numHiddenLayers, numNeuronsPerHidden,
+				numberOutputs, isRandom);
+	}
 	
 	public NetworkLayer getOutputLayer(){
 		return outputLayer;

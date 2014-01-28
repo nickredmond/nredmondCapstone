@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.GeneralMath;
+import math.GeneralMath;
 import debug.FeatureExtractionDebug;
 
 public class ChainCodeCreator {
@@ -12,8 +12,8 @@ public class ChainCodeCreator {
 	private int numberPixelsFollowed = 0;
 	//private static final int NON_VISITED = 1;
 	
-	private int NORMALIZED_CHAIN_CODE_LENGTH = 20;
-	private int MIN_CHAIN_VALUE_LENGTH = 3;
+	private int NORMALIZED_CHAIN_CODE_LENGTH = 15;
+	private int MIN_CHAIN_VALUE_LENGTH = 2;
 	
 	private List<Point> convertChainCodeToMatrix(int[] chainCode){
 		List<Point> chainCodeOccurrences = new ArrayList<Point>();

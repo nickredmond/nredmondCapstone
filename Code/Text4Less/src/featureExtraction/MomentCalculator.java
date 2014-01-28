@@ -2,9 +2,9 @@ package featureExtraction;
 
 import java.awt.Point;
 
-import app.ComplexNumber;
-import app.ComplexNumberMath;
-import app.GeneralMath;
+import math.ComplexNumber;
+import math.ComplexNumberMath;
+import math.GeneralMath;
 
 public class MomentCalculator {
 	public static int calculateRegularMoment(int[][] imageValues, int p, int q){

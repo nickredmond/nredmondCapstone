@@ -1,0 +1,41 @@
+package app;
+
+import imageProcessing.INetworkIOTranslator;
+import imageProcessing.ImagePreprocessor;
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import neuralNetwork.CharacterReader;
+import neuralNetwork.NeuralNetwork;
+
+public class ImageReader {
+	private CharacterReader reader;
+	
+	public ImageReader(NeuralNetwork network, INetworkIOTranslator translator){
+		reader = new CharacterReader(network, translator);
+	}
+	
+	public List<List<TranslationResult>> readTextFromImage(BufferedImage image){
+		ImagePreprocessor processor = new ImagePreprocessor();
+		BufferedImage trimmedImage = processor.trimMargins(image);
+		
+		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
+		List<List<TranslationResult>> result = new ArrayList<List<TranslationResult>>();
+		
+		for (BufferedImage nextLine : lines){
+			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
+			List<TranslationResult> lineResults = new ArrayList<TranslationResult>();
+			
+			for (BufferedImage nextCharacter : characters){
+				TranslationResult translation = reader.readCharacter(nextCharacter);
+				lineResults.add(translation);
+			}
+			result.add(lineResults);
+		}
+		
+		return result;
+	}
+}

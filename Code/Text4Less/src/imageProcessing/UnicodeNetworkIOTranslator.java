@@ -6,7 +6,7 @@ public class UnicodeNetworkIOTranslator implements INetworkIOTranslator {
 	private final int NUMBER_UNICODE_VALUES = 128;
 	
 	@Override
-	public char translateNetworkOutputToCharacter(float[] output){
+	public TranslationResult translateNetworkOutputToCharacter(float[] output){
 		int maxValueIndex = 0;
 		float maxValue = 0.0f;
 		
@@ -20,7 +20,9 @@ public class UnicodeNetworkIOTranslator implements INetworkIOTranslator {
 		int[] normalizedOutput = new int[output.length];
 		normalizedOutput[maxValueIndex] = 1;
 		
-		return translateNetworkOutputToCharacter(normalizedOutput);
+		char resultChar = translateNetworkOutputToCharacter(normalizedOutput);
+		float confidence = 0.0f; // UHHHH...
+		return new TranslationResult(resultChar, confidence);
 	}
 	
 	private char translateNetworkOutputToCharacter(int[] output) {

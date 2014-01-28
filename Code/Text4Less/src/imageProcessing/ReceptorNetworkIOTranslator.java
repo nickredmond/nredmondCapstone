@@ -12,7 +12,7 @@ public class ReceptorNetworkIOTranslator implements INetworkIOTranslator {
 	}
 	
 	@Override
-	public char translateNetworkOutputToCharacter(float[] output) {
+	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
 		return new NetworkIOTranslator().translateNetworkOutputToCharacter(output);
 	}
 

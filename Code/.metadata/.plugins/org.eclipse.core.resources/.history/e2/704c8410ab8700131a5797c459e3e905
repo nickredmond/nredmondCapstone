@@ -1,0 +1,61 @@
+package app;
+
+import imageProcessing.FeatureExtractionIOTranslator;
+import imageProcessing.INetworkIOTranslator;
+import io.CharacterType;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import neuralNetwork.BackpropagationTrainer;
+import neuralNetwork.NeuralNetwork;
+
+public class MultiNetworkReader {
+	public static String getTextFromImage(BufferedImage img, CharacterType[] types) throws IOException{
+		String[] results = new String[types.length];
+		
+		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+		NeuralNetwork network = new NeuralNetwork(((FeatureExtractionIOTranslator)translator).getInputLength(), 1, 160, 7, true);
+		
+		for (int i = 0; i < types.length; i++){
+			NeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, types[i], new BackpropagationTrainer(0.05f, 0.02f));
+			ImageReader reader = new ImageReader(trainedNetwork, translator);
+			results[i] = reader.readTextFromImage(img);
+		}
+		
+		return getMultiNetworkString(results);
+	}
+	
+	public static String getMultiNetworkString(String[] results){
+		StringBuilder builder = new StringBuilder();
+		
+		for (int i = 0; i < results[0].length(); i++){
+			Map<Character, Integer> charOccurrences = new HashMap<Character, Integer>();
+			
+			System.out.print("GUESSES: ");
+			for (int j = 0; j < results.length; j++){
+				char nextGuess = results[j].charAt(i);
+				System.out.print(nextGuess + " ");
+				int occurrence = (charOccurrences.get(nextGuess) != null) ? charOccurrences.get(nextGuess) : 0;
+				
+				charOccurrences.put(nextGuess, occurrence + 1);
+			}
+			System.out.println();
+			
+			int maxOccurrence = 0;
+			char decidedChar = ' ';
+			
+			for (Character nextChar : charOccurrences.keySet()){
+				if (charOccurrences.get(nextChar) > maxOccurrence){
+					decidedChar = nextChar;
+				}
+			}
+			
+			builder.append(decidedChar);
+		}
+		
+		return builder.toString();
+	}
+}

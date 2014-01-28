@@ -1,0 +1,19 @@
+package appTest;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class CharacterViewerPanel extends JPanel {
+	public JLabel image;
+	public BinaryImagePanel binaryPanel;
+	//public JPanel[][] binaryRepresentaion;
+	
+	public CharacterViewerPanel(){
+		image = new JLabel("No Image Data");
+	}
+	
+}
