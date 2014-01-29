@@ -1,22 +1,13 @@
 package imageProcessing;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-
-import appTest.CharacterViewerPanel;
 import math.ComplexNumber;
-import math.GeneralMath;
-import debug.CharacterViewDebug;
-import debug.FeatureExtractionDebug;
 import featureExtraction.ChainCodeCreator;
 import featureExtraction.CrossingCalculator;
 import featureExtraction.FeaturePoint;
@@ -27,7 +18,7 @@ import featureExtraction.VectorCalculator;
 import featureExtraction.ZernikeImageNormalizer;
 
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
-	private static final int NUMBER_PROFILE_DIRECTIONS = 4;
+private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 	
 	public final static int DEFAULT_INPUT_LENGTH = 7 + (NUMBER_PROFILE_DIRECTIONS * 3) + 16 + 2; // plus 24 w/ original values
 	private int inputLength;
@@ -50,9 +41,6 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	
 	private final int MAX_ENDPOINTS = 4;
 	private final int MAX_T_JUNCS = 4;
-	
-	private final int SCALE_X = 9;
-	private final int SCALE_Y = 9;
 	
 	// testing method
 //	public void printImageBinary(BufferedImage img){
@@ -88,9 +76,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	public float[] translateImageToNetworkInput(BufferedImage img) {
 		
 		int[][] lightValues = getLightValues(img);
-		
 		int[][] croppedLightValues = cropLightValues(lightValues);
-		float[] input = new float[DEFAULT_INPUT_LENGTH];
+		float[] input = new float[inputLength];
 		
 		if(croppedLightValues.length > 1 && croppedLightValues[0].length > 1){					
 			float[] percentages = {TOP_DIMENSION_PERCENT, MID_DIMENSION_PERCENT, BOTTOM_DIMENSION_PERCENT};
@@ -105,17 +92,35 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 30, 30);
 			
 			
+		//	FeatureExtractionDebug.printImg(scaledImg);
+		//	System.out.println();
 			
-	//		CharacterViewDebug.displayCharacterView(img, stuff, 10, 10);
+			//FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(zernikeLightValues), zernikeLightValues);
 			
-			addProfilingFeatures(inputList, scaledImg, percentages);
-			addZoningFeatures(inputList, scaledImg);
+			addFeaturePoints(inputList, scaledImg);
+			
+		//	addHuMomentFeatures(inputList, scaledImg);
+		//	addProfilingFeatures(inputList, scaledImg, percentages);
 			addVectorFeatures(inputList, scaledImg);
+			
+		//	addChainCodeFeatures(inputList, scaledImg);
+
+			addCrossingFeatures(inputList, scaledImg);
 //			
 //			inputList.add(getHeightToWidthRatio(croppedLightValues));
 			
-		//	addChainCodeFeatures(inputList, scaledImg);
+			//addZernikeFeatures(inputList, croppedLightValues);
 			
+			//--- I disregarded the features below ---//
+			
+//			inputList.add(getVerticalSymmetryValue(croppedLightValues));
+//			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
+//			
+//			addPercentDimensionFeatures(inputList, croppedLightValues, percentages);
+			addZoningFeatures(inputList, croppedLightValues);
+			
+//			FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(paddedShiz), paddedShiz);
+//			System.out.println("h: " + squareShiz.length + " w: " + squareShiz[0].length);
 			
 			input = new float[inputList.size()];
 			
@@ -132,36 +137,6 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		}
 		
 		return input;
-	}
-	
-	private int[][] convertToScale(int width, int height, int[][] lightValues){
-		final float THRESHOLD = 0.0f;
-		float zoneWidth = ((float)lightValues[0].length / width);
-		float zoneHeight = ((float)lightValues.length / height);
-		
-		int[] zoneSums = new int[width * height];
-		int[][] zonedValues = new int[height][width];
-		
-		for (int row = 0; row < lightValues.length; row++){
-			for (int col = 0; col < lightValues[0].length; col++){
-				int zoneX = (int) (col / zoneWidth);
-				int zoneY = (int) (row / zoneHeight);
-				int zoneNumber = (zoneY * width) + zoneX;
-
-				zoneSums[zoneNumber] += (lightValues[row][col] != 0) ? 1 : 0;
-			}
-		}
-		
-		for (int row = 0; row < zonedValues.length; row++){
-			for (int col = 0; col < zonedValues[0].length; col++){
-				int currentZoneIndex = (row * width) + col;
-				int currentZoneSum = zoneSums[currentZoneIndex];
-				
-				zonedValues[row][col] = ((float)currentZoneSum / (zoneWidth * zoneHeight) > THRESHOLD) ? 1 : 0;
-			}
-		}
-		
-		return zonedValues;
 	}
 	
 	private int[][] padWithSpace(int[][] croppedLightValues) {
@@ -195,45 +170,31 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 	private void addFeaturePoints(List<Float> inputList, int[][] croppedLightValues){
 		ImageThinner t = new ImageThinner();
 		t.thinImage(croppedLightValues);
-		int[] featurePoints = new int[(MAX_ENDPOINTS * 2) + (MAX_T_JUNCS * 2)];
-		
 		int[][] croppedSkeleton = cropLightValues(croppedLightValues);
+		int[][] directionVectors = VectorCalculator.calculateVectorsForSkeleton(croppedSkeleton);
 		
-		if (croppedSkeleton.length > 0 && croppedSkeleton[0].length > 0){
-			int[][] directionVectors = VectorCalculator.calculateVectorsForSkeleton(croppedSkeleton);
-			
-			List<FeaturePoint> points = VectorCalculator.calculateFeaturePoints(directionVectors, 4, 4);
-			Collections.sort(points);
-			
-			int currentEndPtIndex = 0;
-			int currentTjuncIndex = MAX_ENDPOINTS * 2;
-			
-			for(int i = 0; i < featurePoints.length && points.size() > 0 && i < points.size(); i++){
-				FeaturePoint nextPoint = points.get(i);
-				
-				if (nextPoint.getType() == FeatureType.END_POINT){
-					if (currentEndPtIndex < featurePoints.length){
-						featurePoints[currentEndPtIndex++] = nextPoint.y();
-						featurePoints[currentEndPtIndex++] = nextPoint.x();
-					}
-				}
-				else if (nextPoint.getType() == FeatureType.T_JUNCTION){
-					if (currentTjuncIndex < featurePoints.length){
-						featurePoints[currentTjuncIndex++] = nextPoint.y();
-						featurePoints[currentTjuncIndex++] = nextPoint.x();
-					}
-				}
+		List<FeaturePoint> points = VectorCalculator.calculateFeaturePoints(directionVectors, 4, 4);
+		Collections.sort(points);
+		
+		int[] featurePoints = new int[(MAX_ENDPOINTS * 2) + (MAX_T_JUNCS * 2)];
+		int currentEndPtIndex = 0;
+		int currentTjuncIndex = MAX_ENDPOINTS * 2;
+		
+		for (FeaturePoint nextPoint : points){
+			if (nextPoint.getType() == FeatureType.END_POINT){
+				featurePoints[currentEndPtIndex++] = nextPoint.y();
+				featurePoints[currentEndPtIndex++] = nextPoint.x();
 			}
-			
-			for (int i = 0; i < featurePoints.length; i++){
-				inputList.add((float)featurePoints[i]);
+			else if (nextPoint.getType() == FeatureType.T_JUNCTION){
+				featurePoints[currentTjuncIndex++] = nextPoint.y();
+				featurePoints[currentTjuncIndex++] = nextPoint.x();
 			}
 		}
-		else{
-			for (int i = 0; i < featurePoints.length; i++){
-				inputList.add(0.0f);
-			}
+		
+		for (int i = 0; i < featurePoints.length; i++){
+			inputList.add((float)featurePoints[i]);
 		}
+		
 	//	FeatureExtractionDebug.printPointFeatures(points, ZONING_DIMENSION_X, ZONING_DIMENSION_Y);
 		
 //		VectorCalculator.correctVectorValues(directionVectors);
@@ -443,6 +404,9 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 					endingCol = (endingCol < 0 && startingCol >= 0) ? col : endingCol;
 				}
 			}
+			if (endingCol < 0){
+				endingCol = lightValues[0].length - 1;
+			}
 		}
 		
 		startingRow = (startingRow == -1) ? 0 : startingRow;
@@ -451,9 +415,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		endingCol = (endingCol <= 0) ? lightValues[0].length : endingCol;
 		
 		endingRow = (endingRow < lightValues.length - 1) ? endingRow + 1 : endingRow;
-		int width = ((endingCol + 1) >= lightValues[0].length) ? endingCol - startingCol : endingCol - startingCol + 1;
 		
-		return new Rectangle(startingRow, startingCol, width, endingRow - startingRow);
+		return new Rectangle(startingRow, startingCol, endingCol - startingCol, endingRow - startingRow);
 	}
 
 	private int[][] getLightValues(BufferedImage img){
@@ -502,15 +465,6 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 
 	private float getWidthPercentage(float percentTotalHeight, int[][] lightValues){
 		int row = (int)(percentTotalHeight * lightValues.length);
-		return widthPercentage(row, lightValues);
-	}
-	
-	private float getHeightPercentage(float percentTotalWidth, int[][] lightValues){
-		int col = (int)(percentTotalWidth * lightValues[0].length);
-		return heightPercentage(col, lightValues);
-	}
-	
-	private float widthPercentage(int row, int[][] lightValues){
 		int widthSum = 0;
 		
 		for (int col = 0; col < lightValues[row].length; col++){
@@ -520,7 +474,8 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 		return (float)widthSum / lightValues[0].length;
 	}
 	
-	private float heightPercentage(int col, int[][] lightValues){
+	private float getHeightPercentage(float percentTotalWidth, int[][] lightValues){
+		int col = (int)(percentTotalWidth * lightValues[0].length);
 		int heightSum = 0;
 		for (int row = 0; row < lightValues.length; row++){
 			heightSum += lightValues[row][col];
@@ -623,5 +578,35 @@ public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
 
 	public void setInputLength(int inputLength) {
 		this.inputLength = inputLength;
+	}
+	
+	private int[][] convertToScale(int width, int height, int[][] lightValues){
+		final float THRESHOLD = 0.0f;
+		float zoneWidth = ((float)lightValues[0].length / width);
+		float zoneHeight = ((float)lightValues.length / height);
+		
+		int[] zoneSums = new int[width * height];
+		int[][] zonedValues = new int[height][width];
+		
+		for (int row = 0; row < lightValues.length; row++){
+			for (int col = 0; col < lightValues[0].length; col++){
+				int zoneX = (int) (col / zoneWidth);
+				int zoneY = (int) (row / zoneHeight);
+				int zoneNumber = (zoneY * width) + zoneX;
+
+				zoneSums[zoneNumber] += (lightValues[row][col] != 0) ? 1 : 0;
+			}
+		}
+		
+		for (int row = 0; row < zonedValues.length; row++){
+			for (int col = 0; col < zonedValues[0].length; col++){
+				int currentZoneIndex = (row * width) + col;
+				int currentZoneSum = zoneSums[currentZoneIndex];
+				
+				zonedValues[row][col] = ((float)currentZoneSum / (zoneWidth * zoneHeight) > THRESHOLD) ? 1 : 0;
+			}
+		}
+		
+		return zonedValues;
 	}
 }

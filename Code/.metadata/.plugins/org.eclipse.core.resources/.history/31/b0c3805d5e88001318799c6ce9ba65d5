@@ -1,0 +1,26 @@
+package neuralNetwork;
+
+import java.util.Set;
+
+public class MatrixBackpropTrainer implements INetworkTrainer {
+
+	@Override
+	public void trainWithTrainingSet(INeuralNetwork network,
+			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
+		performTrainingIteration(trainingSet, network);
+	}
+
+	private void performTrainingIteration(Set<TrainingExample> trainingSet, INeuralNetwork network) {
+		for (TrainingExample nextExample : trainingSet){
+			network.forwardPropagate(nextExample.getInput());
+		}
+	}
+	
+	private void calculateOutputError(INeuralNetwork network){
+		
+	}
+	
+	private void calculateError(INeuralNetwork network){
+		
+	}
+}

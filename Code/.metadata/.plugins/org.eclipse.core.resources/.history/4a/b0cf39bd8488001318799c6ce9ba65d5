@@ -1,0 +1,49 @@
+package neuralNetwork;
+
+import java.util.Set;
+
+public class MatrixBackpropTrainer implements INetworkTrainer {
+
+	@Override
+	public void trainWithTrainingSet(INeuralNetwork network,
+			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
+		performTrainingIteration(trainingSet, network);
+	}
+
+	private void performTrainingIteration(Set<TrainingExample> trainingSet, INeuralNetwork network) {
+		for (TrainingExample nextExample : trainingSet){
+			float[] output = network.forwardPropagate(nextExample.getInput());
+			calculateOutputError(network, output, nextExample.getOutput());
+			
+			float[] lastHiddenError = calculateError(network, 
+					network.getHiddenValues(0).length, network.getOutputWeights(), network.getOutputErrors());
+			network.setHiddenError(network.getn, k, value);
+		}
+	}
+	
+	private void calculateOutputError(INeuralNetwork network, float[] output, int[] desired){
+		float[] outputError = new float[output.length];
+		
+		for (int i = 0; i < outputError.length; i++){
+			outputError[i] = desired[i] - output[i];
+		}
+		
+		network.setOutputError(outputError);
+	}
+	
+	private float[] calculateError(INeuralNetwork network, int layerSize, float[][] weights, float[] nextLayerError){
+		float[] error = new float[layerSize - 1];
+		
+		for (int i = 0; i < error.length; i++){
+			float errorSum = 0.0f;
+			
+			for (int k = 0; k < nextLayerError.length; k++){
+				errorSum += weights[i+1][k] * nextLayerError[k];
+			}
+			
+			error[i] = errorSum;
+		}
+		
+		return error;
+	}
+}

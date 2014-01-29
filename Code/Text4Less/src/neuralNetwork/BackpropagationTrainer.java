@@ -25,7 +25,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 	}
 
 	@Override
-	public void trainWithTrainingSet(NeuralNetwork network,
+	public void trainWithTrainingSet(INeuralNetwork network,
 			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
 		float trainingError = 0.0f;
 		float crossValidationError = 0.0f;
@@ -37,7 +37,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		while(trainingError > MAXIMUM_ALLOWABLE_ERROR);
 	}
 	
-	private float calculateCrossValidationErr(NeuralNetwork network,
+	private float calculateCrossValidationErr(INeuralNetwork network,
 			Set<TrainingExample> testSet) {
 		float cvError = 0.0f;
 		
@@ -52,7 +52,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		return cvError;
 	}
 
-	private float performTrainingIteration(NeuralNetwork network,
+	private float performTrainingIteration(INeuralNetwork network,
 			Set<TrainingExample> trainingSet){
 		float trainingError = 0.0f;
 		
@@ -76,7 +76,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		return trainingError;
 	}
 	
-	private void changeWeights(int trainingSize, NeuralNetwork network){
+	private void changeWeights(int trainingSize, INeuralNetwork network){
 		NetworkLayer inputLayer = network.getInputLayer();
 		changeWeightsForLayer(trainingSize, inputLayer);
 		
@@ -113,7 +113,6 @@ public class BackpropagationTrainer implements INetworkTrainer {
 					
 					float nextDeltaValue = nextConnection.getDeltaValue() + 
 							(nextNeuron.getValue() * nextConnection.getRightConnector().getErrorValue());
-					
 					nextConnection.setDeltaValue(nextDeltaValue);
 				}
 				
@@ -135,7 +134,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 //		return null;
 //	}
 
-	private float calculateOutputErrors(NeuralNetwork network,
+	private float calculateOutputErrors(INeuralNetwork network,
 			TrainingExample nextExample, List<Neuron> outputNeurons, boolean isTestSet) {
 		float totalError = 0.0f;
 		
@@ -146,7 +145,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 //		}
 //		System.out.println();
 		
-		float[] actualOutput = network.getOutputForInput(nextExample.getInput());
+		float[] actualOutput = network.forwardPropagate(nextExample.getInput());
 		int[] desiredOutput = nextExample.getOutput();
 		
 		for (int i = 0; i < actualOutput.length; i++){

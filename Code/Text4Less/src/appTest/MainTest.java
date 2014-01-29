@@ -53,7 +53,7 @@ public class MainTest {
 	private static void testMe(NeuralNetwork network, Set<TrainingExample> set){
 		
 		for (TrainingExample nextExample : set){
-			float[] outputs = network.getOutputForInput(nextExample.getInput());
+			float[] outputs = network.forwardPropagate(nextExample.getInput());
 			
 			System.out.print("Desired: ");
 			

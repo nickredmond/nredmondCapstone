@@ -7,16 +7,15 @@ import io.TrainingDataReader;
 import java.io.IOException;
 import java.util.Set;
 
-import neuralNetwork.BackpropagationTrainer;
 import neuralNetwork.CharacterNetworkTrainer;
 import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INetworkTrainer;
-import neuralNetwork.NeuralNetwork;
+import neuralNetwork.INeuralNetwork;
 
 public class NetworkFactory {
-	public static NeuralNetwork getTrainedNetwork(NeuralNetwork originalNetwork, INetworkIOTranslator translator,
+	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
 			CharacterType type, INetworkTrainer networkTrainer) throws IOException{
-		NeuralNetwork networkCopy = originalNetwork.clone();
+		INeuralNetwork networkCopy = originalNetwork.cloneNetwork();
 		
 		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(type);
 		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(type);

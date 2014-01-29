@@ -1,13 +1,14 @@
 package neuralNetwork;
 
 import imageProcessing.INetworkIOTranslator;
-import imageProcessing.NetworkIOTranslator;
 
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import debug.CharacterViewDebug;
 
 public class CharacterNetworkTrainer {
 	private List<CharacterTrainingExample> trainingExamples, testExamples;
@@ -28,7 +29,7 @@ public class CharacterNetworkTrainer {
 		testExamples.add(example);
 	}
 	
-	public void trainNeuralNetwork(NeuralNetwork network, INetworkTrainer trainer){
+	public void trainNeuralNetwork(INeuralNetwork network, INetworkTrainer trainer){
 		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples(trainingExamples);
 		Set<TrainingExample> testSet = setupNetworkTrainingExamples(testExamples);
 		

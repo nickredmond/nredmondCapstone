@@ -11,7 +11,7 @@ public class TestNeuralNetwork {
 		NeuralNetwork network1 = new NeuralNetwork(3, 5, 3, 1, false);
 		float[] testinput = {0.1f, 0.2f, 0.7f};
 		
-		float[] yes = network1.getOutputForInput(testinput);
+		float[] yes = network1.forwardPropagate(testinput);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
@@ -24,6 +24,6 @@ public class TestNeuralNetwork {
 		NeuralNetwork network1 = new NeuralNetwork(3, 5, 3, 1, true);
 		float[] testinput = {0.1f, 0.2f, 0.7f};
 		
-		float[] yes = network1.getOutputForInput(testinput);
+		float[] yes = network1.forwardPropagate(testinput);
 	}
 }

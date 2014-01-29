@@ -1,0 +1,69 @@
+package neuralNetwork;
+
+import java.util.Set;
+
+public class MatrixBackpropTrainer implements INetworkTrainer {
+
+	@Override
+	public void trainWithTrainingSet(INeuralNetwork network,
+			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
+		performTrainingIteration(trainingSet, network);
+	}
+
+	private void performTrainingIteration(Set<TrainingExample> trainingSet, INeuralNetwork network) {
+		for (TrainingExample nextExample : trainingSet){
+			float[] output = network.forwardPropagate(nextExample.getInput());
+			calculateOutputError(network, output, nextExample.getOutput());
+			
+			float[][] outputDeltas = network.getOutputDeltas();
+			float[] activations = network.getHiddenErrors(network.getNumberHiddenLayers() - 1);
+			float[] errors = network.getOutputErrors();
+			
+			for (int i = 0; i < network.getOutputDeltas().length; i++){
+				for (int j = 0; j < network.getOutputDeltas()[0].length; j++){
+					outputDeltas[i][j] += activations[i] * errors[j];
+				}
+			}
+			
+			network.setOutputDelta(, j, value);
+			
+			int layerSize = network.getHiddenValues(0).length;
+			
+			float[] lastHiddenError = calculateError(network, 
+					layerSize, network.getOutputWeights(), network.getOutputErrors());
+			network.setHiddenError(network.getNumberHiddenLayers() - 1, lastHiddenError);
+			
+			for (int l = network.getNumberHiddenLayers() - 2; l >= 0; l--){
+				float[] nextError = network.getHiddenErrors(l+1);
+				float[] error = calculateError(network, layerSize, network.getHiddenWeights(l), nextError);
+				network.setHiddenError(l, error);
+			}
+		}
+	}
+	
+	private void calculateOutputError(INeuralNetwork network, float[] output, int[] desired){
+		float[] outputError = new float[output.length];
+		
+		for (int i = 0; i < outputError.length; i++){
+			outputError[i] = desired[i] - output[i];
+		}
+		
+		network.setOutputError(outputError);
+	}
+	
+	private float[] calculateError(INeuralNetwork network, int layerSize, float[][] weights, float[] nextLayerError){
+		float[] error = new float[layerSize - 1];
+		
+		for (int i = 0; i < error.length; i++){
+			float errorSum = 0.0f;
+			
+			for (int k = 0; k < nextLayerError.length; k++){
+				errorSum += weights[i][k] * nextLayerError[k];
+			}
+			
+			error[i] = errorSum;
+		}
+		
+		return error;
+	}
+}
