@@ -4,6 +4,7 @@ import imageProcessing.FeatureExtractionIOTranslator;
 import imageProcessing.INetworkIOTranslator;
 import imageProcessing.TranslationResult;
 import io.CharacterType;
+import io.NeuralNetworkIO;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,10 +23,11 @@ public class MultiNetworkReader {
 		List<List<TranslationResult>> results = new ArrayList<List<TranslationResult>>();
 		
 		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-		INeuralNetwork network = new MatrixNeuralNetwork(((FeatureExtractionIOTranslator)translator).getInputLength(), 1, 160, 7, true);
+		INeuralNetwork network = new MatrixNeuralNetwork(((FeatureExtractionIOTranslator)translator).getInputLength(), 1, 100, 7, true);
 		
 		for (int i = 0; i < types.length; i++){
 			INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, types[i], new MatrixBackpropTrainer(0.05f, 0.02f));
+			//NeuralNetworkIO.writeNetwork(trainedNetwork, "myNetwork");
 			ImageReader reader = new ImageReader(trainedNetwork, translator);
 			results.add(reader.readTextFromImage(img));
 		}

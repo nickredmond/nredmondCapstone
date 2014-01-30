@@ -1,19 +1,19 @@
 package io;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import neuralNetwork.INeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 
 public class NeuralNetworkIO {
 	private static final String NETWORK_DIRECTORY = "savedNetworks/";
 	private static final String EXTENSION = ".ann";
 	
-	public static void writeNetwork(NeuralNetwork network, String networkName){
+	public static void writeNetwork(INeuralNetwork network, String networkName){
 		try {
 			FileOutputStream outputStream = new FileOutputStream(NETWORK_DIRECTORY +
 					 networkName + EXTENSION);
@@ -29,14 +29,14 @@ public class NeuralNetworkIO {
 		
 	}
 	
-	public static NeuralNetwork readNetwork(String networkName){
+	public static INeuralNetwork readNetwork(String networkName){
 		String path = NETWORK_DIRECTORY + networkName + EXTENSION;
-		NeuralNetwork network = null;
+		INeuralNetwork network = null;
 		
 		try {
 			FileInputStream inputStream = new FileInputStream(path);
 			ObjectInputStream objectInput = new ObjectInputStream(inputStream);
-			network = (NeuralNetwork) objectInput.readObject();
+			network = (INeuralNetwork) objectInput.readObject();
 			
 			objectInput.close();
 			inputStream.close();

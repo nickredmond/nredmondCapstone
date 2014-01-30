@@ -1,0 +1,34 @@
+package io;
+
+import java.io.File;
+
+public class FileOperations {
+	private static final String EXTENSION_DELIMITER = "[.]";
+	private static final int NAME_INDEX = 0;
+	private static final int EXT_INDEX = 1;
+	
+	public static void renameFile(String filepath, String newName){
+		File oldFile = new File(filepath);
+		String directory = oldFile.getAbsolutePath().replace(oldFile.getName(), "");
+		
+		boolean succeeded = oldFile.renameTo(new File(directory + newName));
+		
+		if (!succeeded){
+			System.err.println("Could not rename the file!");
+		}
+	}
+	
+	public static void renameFilesWithAppendedName(String dirPath, String appendix){
+		File directory = new File(dirPath);
+		
+		for (File nextFile : directory.listFiles()){
+			String filename = nextFile.getName();
+			String[] nameParts = filename.split(EXTENSION_DELIMITER);
+			
+			String extension = nameParts[EXT_INDEX];
+			String name = nameParts[NAME_INDEX] + appendix + "." + extension;
+			
+			renameFile(nextFile.getAbsolutePath(), name);
+		}
+	}
+}

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import debug.CharacterViewDebug;
 import math.ComplexNumber;
 import featureExtraction.ChainCodeCreator;
 import featureExtraction.CrossingCalculator;
@@ -91,7 +92,9 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 30, 30);
 			
-			int[][] newValues = convertToScale(10, 10, scaledImg);
+			int[][] newValues = convertToScale(20, 20, scaledImg);
+			
+			//CharacterViewDebug.displayCharacterView(img, newValues, 15, 15);
 
 			for (int row = 0; row < newValues.length; row++){
 				for (int col = 0; col < newValues[0].length; col++){
@@ -100,10 +103,10 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			}
 			
 			
-		////	addFeaturePoints(inputList, scaledImg);
-		////	addVectorFeatures(inputList, scaledImg);
-		////	addCrossingFeatures(inputList, scaledImg);
-		////	addZoningFeatures(inputList, croppedLightValues);
+//			addFeaturePoints(inputList, scaledImg);
+//			addVectorFeatures(inputList, scaledImg);
+//			addCrossingFeatures(inputList, scaledImg);
+//			addZoningFeatures(inputList, croppedLightValues);
 			
 			input = new float[inputList.size()];
 			
@@ -164,11 +167,11 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 		int currentTjuncIndex = MAX_ENDPOINTS * 2;
 		
 		for (FeaturePoint nextPoint : points){
-			if (nextPoint.getType() == FeatureType.END_POINT){
+			if (nextPoint.getType() == FeatureType.END_POINT && currentEndPtIndex < (MAX_ENDPOINTS * 2)){
 				featurePoints[currentEndPtIndex++] = nextPoint.y();
 				featurePoints[currentEndPtIndex++] = nextPoint.x();
 			}
-			else if (nextPoint.getType() == FeatureType.T_JUNCTION){
+			else if (nextPoint.getType() == FeatureType.T_JUNCTION && currentTjuncIndex < featurePoints.length){
 				featurePoints[currentTjuncIndex++] = nextPoint.y();
 				featurePoints[currentTjuncIndex++] = nextPoint.x();
 			}

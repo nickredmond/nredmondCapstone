@@ -19,6 +19,8 @@ public class TrainingDataReader {
 	private static final char SPACE_CHAR = ' ';
 	private static final int SPACE_INT = 32;
 	
+	public static final String DELIMITER = "#BRK#";
+	
 	public static Set<CharacterTrainingExample> createTestSetFromFile(CharacterType type) throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader("metaDataFiles/" + type.toString() +
 				"/testImageLocations.txt"));
@@ -34,7 +36,7 @@ public class TrainingDataReader {
 		String nextLine = null;
 		
 		while ((nextLine = reader.readLine()) != null){
-			String[] lineParts = nextLine.split("#BRK#");
+			String[] lineParts = nextLine.split(DELIMITER);
 			
 			if (lineParts.length > 0){
 				char nextCharacter = lineParts[CHAR_INDEX].charAt(0);

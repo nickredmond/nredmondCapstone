@@ -19,6 +19,17 @@ public class ImageReader {
 		reader = new CharacterReader(network, translator);
 	}
 	
+	public String convertTranslationToText(List<TranslationResult> translation){
+		StringBuilder builder = new StringBuilder();
+		
+		for (TranslationResult nextResult : translation){
+			String nextCharacter = (nextResult.toString().equals("\r\n")) ? "\r\n" : ((Character)nextResult.getResult()).toString();
+			builder.append(nextCharacter);
+		}
+		
+		return builder.toString();
+	}
+	
 	public List<TranslationResult> readTextFromImage(BufferedImage image){
 		ImagePreprocessor processor = new ImagePreprocessor();
 		BufferedImage trimmedImage = processor.trimMargins(image);
