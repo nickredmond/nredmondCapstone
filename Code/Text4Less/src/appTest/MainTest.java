@@ -1,16 +1,17 @@
 package appTest;
 
-import imageProcessing.FeatureExtractionIOTranslator;
-import imageProcessing.INetworkIOTranslator;
 import io.CharacterType;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import neuralNetwork.MatrixBackpropTrainer;
+import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import app.MultiNetworkReader;
@@ -21,7 +22,7 @@ public class MainTest {
 //		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/b2.jpg")));
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/b3.jpg")));
-		
+
 		MainTest.runApp();
 	}
 	

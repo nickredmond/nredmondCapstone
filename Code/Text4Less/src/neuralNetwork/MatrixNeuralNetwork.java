@@ -17,8 +17,8 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 	private float[][] inputDeltas, outputDeltas;
 	private float[][][] hiddenDeltas;
 	
-	private final float MAX_RANDOM_WEIGHT = 0.05f;
-	
+	private final float MAX_RANDOM_WEIGHT = 0.5f;
+
 	public MatrixNeuralNetwork(int numberInputs, int numberHiddenLayers, int numberHiddenNeurons,
 			int numberOutputs, boolean useRandomWeights){
 		inputValues = new float[numberInputs + 1];
@@ -45,22 +45,30 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 		return hiddenErrors.length;
 	}
 	
+	public float[] getOutputForInput(float[] input){
+		float[] output = forwardPropagate(input);
+		float[] copiedOutput = new float[output.length];
+		System.arraycopy(output, 0, copiedOutput, 0, output.length);
+		return copiedOutput;
+	}
+	
 	public float[] forwardPropagate(float[] input){
 		for (int k = 1; k < inputValues.length; k++){
 			inputValues[k] = input[k-1];
 		}
 		
-		calculateActivationsForLayer(inputValues, hiddenValues[0], inputWeights);
+		calculateActivationsForLayer(inputValues, hiddenValues[0], inputWeights, hiddenValues[0].length - 1, 1);
 		for (int l = 0; l < hiddenWeights.length; l++){
-			calculateActivationsForLayer(hiddenValues[l], hiddenValues[l+1], hiddenWeights[l]);
+			calculateActivationsForLayer(hiddenValues[l], hiddenValues[l+1], hiddenWeights[l], hiddenValues[l+1].length - 1, 1);
 		}
-		calculateActivationsForLayer(hiddenValues[hiddenValues.length - 1], outputValues, outputWeights);
+		calculateActivationsForLayer(hiddenValues[hiddenValues.length - 1], outputValues, outputWeights, outputValues.length, 0);
 		
 		return outputValues;
 	}
 	
-	private void calculateActivationsForLayer(float[] previousLayerVals, float[] currentLayerVals, float[][] weights){
-		float[] zValues = new float[currentLayerVals.length - 1];
+	private void calculateActivationsForLayer(float[] previousLayerVals, float[] currentLayerVals, 
+			float[][] weights, int layerLength, int additive){
+		float[] zValues = new float[layerLength];
 		
 		for (int k = 0; k < zValues.length; k++){
 			float zValue = 0.0f;
@@ -74,7 +82,7 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 		
 		SigmoidActivationCalculator calc = new SigmoidActivationCalculator();
 		for (int k = 0; k < zValues.length; k++){
-			currentLayerVals[k+1] = calc.calculateActivationValue(zValues[k]);
+			currentLayerVals[k+additive] = calc.calculateActivationValue(zValues[k]);
 		}
 	}
 	

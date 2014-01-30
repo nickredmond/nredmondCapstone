@@ -361,4 +361,10 @@ public class NeuralNetwork implements Serializable, INeuralNetwork {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public float[] getOutputForInput(float[] input) {
+		// TODO Auto-generated method stub
+		return forwardPropagate(input);
+	}
 }

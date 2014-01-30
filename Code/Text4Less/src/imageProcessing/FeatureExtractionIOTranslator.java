@@ -91,36 +91,19 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 30, 30);
 			
-			
-		//	FeatureExtractionDebug.printImg(scaledImg);
-		//	System.out.println();
-			
-			//FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(zernikeLightValues), zernikeLightValues);
-			
-			addFeaturePoints(inputList, scaledImg);
-			
-		//	addHuMomentFeatures(inputList, scaledImg);
-		//	addProfilingFeatures(inputList, scaledImg, percentages);
-			addVectorFeatures(inputList, scaledImg);
-			
-		//	addChainCodeFeatures(inputList, scaledImg);
+			int[][] newValues = convertToScale(10, 10, scaledImg);
 
-			addCrossingFeatures(inputList, scaledImg);
-//			
-//			inputList.add(getHeightToWidthRatio(croppedLightValues));
+			for (int row = 0; row < newValues.length; row++){
+				for (int col = 0; col < newValues[0].length; col++){
+					inputList.add((float) newValues[row][col]);
+				}
+			}
 			
-			//addZernikeFeatures(inputList, croppedLightValues);
 			
-			//--- I disregarded the features below ---//
-			
-//			inputList.add(getVerticalSymmetryValue(croppedLightValues));
-//			inputList.add(getHorizontalSymmetryValue(croppedLightValues));
-//			
-//			addPercentDimensionFeatures(inputList, croppedLightValues, percentages);
-			addZoningFeatures(inputList, croppedLightValues);
-			
-//			FeatureExtractionDebug.printCentroidOnImage(MomentCalculator.calculateCentroid(paddedShiz), paddedShiz);
-//			System.out.println("h: " + squareShiz.length + " w: " + squareShiz[0].length);
+		////	addFeaturePoints(inputList, scaledImg);
+		////	addVectorFeatures(inputList, scaledImg);
+		////	addCrossingFeatures(inputList, scaledImg);
+		////	addZoningFeatures(inputList, croppedLightValues);
 			
 			input = new float[inputList.size()];
 			

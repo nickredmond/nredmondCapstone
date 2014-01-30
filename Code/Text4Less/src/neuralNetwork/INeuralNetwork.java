@@ -25,6 +25,7 @@ public interface INeuralNetwork {
 	
 	public int getNumberHiddenLayers();
 	public float[] forwardPropagate(float[] input);
+	public float[] getOutputForInput(float[] input);
 	
 	public INeuralNetwork cloneNetwork();
 	

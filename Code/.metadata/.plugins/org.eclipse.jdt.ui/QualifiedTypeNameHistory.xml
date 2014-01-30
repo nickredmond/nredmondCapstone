@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="junit.framework.Assert"/>
-<fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="io.CharacterUnicodeReader"/>
@@ -31,10 +30,11 @@
 <fullyQualifiedTypeName name="app.ComplexNumberMath"/>
 <fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureType"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="app.GeneralMath"/>
+<fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>
