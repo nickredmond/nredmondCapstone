@@ -1,0 +1,9 @@
+package stuff;
+
+public class GpuMain {
+
+	public static void main(String[] args) {
+		cl_platform_id[] platforms = new cl_platform_id[1];
+	}
+
+}

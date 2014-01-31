@@ -11,12 +11,10 @@
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
 <fullyQualifiedTypeName name="appTest.ImageTestPanel"/>
-<fullyQualifiedTypeName name="app.ImageReader"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="imageProcessing.ReceptorChooser"/>
 <fullyQualifiedTypeName name="app.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
@@ -36,5 +34,14 @@
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="io.FileOperations"/>
+<fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
+<fullyQualifiedTypeName name="app.ImageReader"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.jocl.cl_platform_id"/>
+<fullyQualifiedTypeName name="org.jocl.Sizeof"/>
+<fullyQualifiedTypeName name="org.jocl.Pointer"/>
+<fullyQualifiedTypeName name="org.jocl.CL"/>
 </qualifiedTypeNameHistroy>

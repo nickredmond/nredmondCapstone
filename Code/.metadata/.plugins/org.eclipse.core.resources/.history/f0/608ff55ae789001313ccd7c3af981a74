@@ -1,0 +1,49 @@
+package stuff;
+
+import org.jocl.CL;
+import org.jocl.Pointer;
+import org.jocl.Sizeof;
+import org.jocl.cl_command_queue;
+import org.jocl.cl_context;
+import org.jocl.cl_context_properties;
+import org.jocl.cl_device_id;
+import org.jocl.cl_platform_id;
+
+public class GpuMain {
+	
+	private static String programString =
+			 "__kernel void "+
+		        "sampleKernel(__global const float *a,"+
+		        "             __global float *c)"+
+		        "{"+
+		        "    c = 1.0f / (1.0f + exp(a));"+
+		        "}";
+
+	public static void main(String[] args) {
+		cl_platform_id[] platforms = new cl_platform_id[1];
+		CL.clGetPlatformIDs(platforms.length, platforms, null);
+		
+		cl_context_properties contextProps = new cl_context_properties();
+		contextProps.addProperty(CL.CL_CONTEXT_PLATFORM, platforms[0]);
+		
+		cl_context gpuContext = CL.clCreateContextFromType(contextProps, CL.CL_DEVICE_TYPE_GPU, null, null, null);
+		
+		if (gpuContext == null){
+			System.out.println("NO GPU CONTEXT AVAILABLE");
+		}
+		
+		CL.setExceptionsEnabled(true);
+		
+		long[] numBytes = new long[1];
+		CL.clGetContextInfo(gpuContext, CL.CL_CONTEXT_DEVICES, 0, null, numBytes);
+		int numDevices = (int)numBytes[0] / Sizeof.cl_device_id;
+		
+		System.out.println("Number of GPUs: " + numDevices);
+		
+		cl_device_id[] devices = new cl_device_id[numDevices];
+		CL.clGetContextInfo(gpuContext, CL.CL_CONTEXT_DEVICES, numBytes[0], Pointer.to(devices), null);
+		
+		cl_command_queue commandQueue = CL.clCreateCommandQueue(gpuContext, devices[0], 0, null);
+	}
+
+}

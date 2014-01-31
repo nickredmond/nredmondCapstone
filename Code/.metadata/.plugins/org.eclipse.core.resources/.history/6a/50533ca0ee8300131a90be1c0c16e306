@@ -1,7 +1,0 @@
-package app;
-
-public class GeneralMath {
-	public static float arcTangent(float value){
-		return 0.0f;
-	}
-}

@@ -1,7 +1,0 @@
-package app;
-
-public class ComplexNumberMath {
-	public static ComplexNumber multiplyByScalar(ComplexNumber number, float scalar){
-		
-	}
-}
