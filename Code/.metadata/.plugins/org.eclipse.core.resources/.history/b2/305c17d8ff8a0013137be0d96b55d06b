@@ -1,0 +1,47 @@
+package threading;
+
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import neuralNetwork.ErrorValue;
+import neuralNetwork.INetworkTrainer;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.TrainingExample;
+
+public class TrainingExampleThreadPool {
+	private final int DEFAULT_POOL_SIZE = 8;
+	
+	private int threadPoolSize;	
+	private ExecutorService service;
+	private Set<TrainingExample> trainingSet;
+	private INetworkTrainer trainer;
+	private INeuralNetwork network;
+	
+	public TrainingExampleThreadPool(Set<TrainingExample> trainingSet, INeuralNetwork network,
+			INetworkTrainer trainer){
+		threadPoolSize = DEFAULT_POOL_SIZE;
+		
+		this.trainingSet = trainingSet;
+		this.trainer = trainer;
+		this.network = network;
+	}
+	
+	public void setPoolSize(int poolSize){
+		threadPoolSize = poolSize;
+	}
+	
+	public float execute(){
+		ErrorValue errorSum = new ErrorValue();
+		service = Executors.newFixedThreadPool(threadPoolSize);
+		
+		for (TrainingExample nextExample : trainingSet){
+			Runnable nextTrainingThread = new TrainingExampleThread(network, trainer, nextExample, errorSum);
+			service.execute(nextTrainingThread);
+		}
+		service.shutdown();
+		
+		System.out.println("err: " + errorSum);
+		return errorSum.getError();
+	}
+}

@@ -2,6 +2,9 @@ package neuralNetwork;
 
 import java.util.Set;
 
+import threading.DeltaValues;
+import threading.TrainingExampleThreadPool;
+
 public class MatrixBackpropTrainer implements INetworkTrainer {
 	private float learningRate, regularizationParam;
 	private final float MAX_ERROR = 0.01f;
@@ -21,7 +24,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		do{
 			previousError = mse;
 			mse = performTrainingIteration(trainingSet, network);
-		}while(previousError >= mse);
+		}while(mse <= previousError);
 	}
 
 	private float performTrainingIteration(Set<TrainingExample> trainingSet, INeuralNetwork network) {
@@ -30,6 +33,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		for (TrainingExample nextExample : trainingSet){
 			error += calculateErrorsAndDeltas(network, nextExample);
 		}
+		
 		changeWeights(network, trainingSet.size(), regularizationParam);
 		
 		error = error / (2 * trainingSet.size());
@@ -69,7 +73,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		}
 	}
 
-	private float calculateErrorsAndDeltas(INeuralNetwork network,
+	public float calculateErrorsAndDeltas(INeuralNetwork network,
 			TrainingExample nextExample) {
 		float[] output = network.forwardPropagate(nextExample.getInput());
 		float outputErr = calculateOutputError(network, output, nextExample.getOutput(), false);

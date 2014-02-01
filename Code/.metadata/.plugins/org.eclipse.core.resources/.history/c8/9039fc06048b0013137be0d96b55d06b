@@ -1,0 +1,15 @@
+package threading;
+
+import java.util.List;
+
+public class DeltaValues {
+	private List<Integer[][]> inputDeltas, hiddenDeltas, outputDeltas;
+
+	public List<Integer[][]> getInputDeltas() {
+		return inputDeltas;
+	}
+
+	public void setInputDeltas(List<Integer[][]> inputDeltas) {
+		this.inputDeltas = inputDeltas;
+	}
+}

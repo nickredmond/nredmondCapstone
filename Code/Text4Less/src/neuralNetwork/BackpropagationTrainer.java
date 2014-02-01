@@ -57,11 +57,7 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		float trainingError = 0.0f;
 		
 		for (TrainingExample nextExample : trainingSet){
-			List<Neuron> outputNeurons = network.getOutputLayer().getNeurons();
-			trainingError += calculateOutputErrors(network, nextExample, outputNeurons, false);
-
-			List<NetworkLayer> hiddenLayers = network.getHiddenLayers();
-			calculateHiddenErrorsAndDeltas(hiddenLayers, network.getOutputLayer());
+			trainingError += calculateErrorsAndDeltas(network, nextExample);
 		}
 		
 		trainingError = trainingError / (2 * trainingSet.size());
@@ -158,6 +154,18 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		}
 		
 		return totalError;
+	}
+
+	@Override
+	public float calculateErrorsAndDeltas(INeuralNetwork network,
+			TrainingExample example) {
+		List<Neuron> outputNeurons = network.getOutputLayer().getNeurons();
+		float trainingError = calculateOutputErrors(network, example, outputNeurons, false);
+
+		List<NetworkLayer> hiddenLayers = network.getHiddenLayers();
+		calculateHiddenErrorsAndDeltas(hiddenLayers, network.getOutputLayer());
+		
+		return trainingError;
 	}
 
 }

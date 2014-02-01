@@ -10,6 +10,9 @@ import io.NeuralNetworkIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 
@@ -23,18 +26,21 @@ import app.MultiNetworkReader;
 
 public class MainTest {
 
-	public static void main(String[] args) throws IOException {		
+	public static void main(String[] args) throws IOException, URISyntaxException {	
 //		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/u.jpg")));
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/u3.jpg")));
 
-		readFromSavedNetwork("myNetwork");
+	//	readFromSavedNetwork("myNetwork");
+		runApp();
+		
+		//renameCharacters(CharacterType.ASCII, 5);
 	}
 	
 	private static void renameCharacters(CharacterType type, int setNumber) throws IOException{
-//		String dir = "C:/Users/nredmond/Documents/testData";
-//		String appendix = setNumber.toString();
-//		FileOperations.renameFilesWithAppendedName(dir, appendix);
+		String dir = "C:/Users/nredmond/Documents/testData";
+		String appendix = ((Integer)setNumber).toString();
+		FileOperations.renameFilesWithAppendedName(dir, appendix);
 		
 		FileOperations.addAlphanumericsToMetadataFile(type, setNumber);
 	}

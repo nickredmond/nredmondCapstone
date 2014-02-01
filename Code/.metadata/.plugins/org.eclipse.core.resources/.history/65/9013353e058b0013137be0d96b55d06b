@@ -1,0 +1,78 @@
+package threading;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DeltaValues {
+	private List<Float[][]> inputDeltas, outputDeltas;
+	private List<Float[][][]> hiddenDeltas;
+	
+	private int[][] inputTotal, outputTotal;
+	private int[][][] hiddenTotal;
+	
+	private ErrorValue errorValue;
+	
+	public DeltaValues(){
+		inputDeltas = new ArrayList<Float[][]>();
+		hiddenDeltas = new ArrayList<Float[][][]>();
+		outputDeltas = new ArrayList<Float[][]>();
+		
+		errorValue = new ErrorValue();
+	}
+
+	public List<Float[][]> getInputDeltas() {
+		return inputDeltas;
+	}
+
+	public void setInputDeltas(List<Float[][]> inputDeltas) {
+		this.inputDeltas = inputDeltas;
+	}
+
+	public List<Float[][][]> getHiddenDeltas() {
+		return hiddenDeltas;
+	}
+
+	public void setHiddenDeltas(List<Float[][][]> hiddenDeltas) {
+		this.hiddenDeltas = hiddenDeltas;
+	}
+
+	public List<Float[][]> getOutputDeltas() {
+		return outputDeltas;
+	}
+
+	public void setOutputDeltas(List<Float[][]> outputDeltas) {
+		this.outputDeltas = outputDeltas;
+	}
+
+	public int[][] getInputTotal() {
+		return inputTotal;
+	}
+
+	public void setInputTotal(int[][] inputTotal) {
+		this.inputTotal = inputTotal;
+	}
+
+	public int[][] getOutputTotal() {
+		return outputTotal;
+	}
+
+	public void setOutputTotal(int[][] outputTotal) {
+		this.outputTotal = outputTotal;
+	}
+
+	public int[][][] getHiddenTotal() {
+		return hiddenTotal;
+	}
+
+	public void setHiddenTotal(int[][][] hiddenTotal) {
+		this.hiddenTotal = hiddenTotal;
+	}
+
+	public ErrorValue getError() {
+		return errorValue;
+	}
+
+	public void setError(ErrorValue error) {
+		this.errorValue = error;
+	}
+}

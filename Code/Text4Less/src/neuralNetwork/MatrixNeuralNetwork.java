@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
+import math.GpuNetworkCalculator;
+import math.INetworkCalculator;
+
 public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 	private float[] inputValues, outputValues;
 	private float[][] hiddenValues;
@@ -18,6 +21,8 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 	private float[][][] hiddenDeltas;
 	
 	private final float MAX_RANDOM_WEIGHT = 0.5f;
+	
+	private INetworkCalculator calculator;
 
 	public MatrixNeuralNetwork(int numberInputs, int numberHiddenLayers, int numberHiddenNeurons,
 			int numberOutputs, boolean useRandomWeights){
@@ -39,6 +44,8 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 		if (useRandomWeights){
 			initializeRandomWeights();
 		}
+		
+		//calculator = new GpuNetworkCalculator();
 	}
 	
 	public int getNumberHiddenLayers(){
@@ -195,8 +202,37 @@ public class MatrixNeuralNetwork implements INeuralNetwork, Serializable {
 	
 	@Override
 	public INeuralNetwork cloneNetwork() {
-		return new MatrixNeuralNetwork(
+		INeuralNetwork network = new MatrixNeuralNetwork(
 				inputValues.length - 1, hiddenValues.length, hiddenValues[0].length - 1, outputValues.length, true);
+		
+		float[] newInput = new float[inputValues.length];
+		float[] newOutput = new float[outputValues.length];
+		float[][] newHidden = new float[hiddenValues.length][hiddenValues[0].length];
+		
+		float[][] newInWeights = new float[inputWeights.length][inputWeights[0].length];
+		float[][][] newHiddenWeights = (hiddenWeights.length > 0) ? 
+			new float[hiddenWeights.length][hiddenWeights[0].length][hiddenWeights[0][0].length] : new float[0][0][0];
+		float[][] newOutWeights = new float[outputWeights.length][outputWeights[0].length];
+		
+		System.arraycopy(inputValues, 0, newInput, 0, newInput.length);
+		System.arraycopy(outputValues, 0, newOutput, 0, newOutput.length);
+		
+		for (int i = 0; i < newHidden.length; i++){
+			System.arraycopy(hiddenValues[i], 0, newHidden[i], 0, newHidden[i].length);
+		}
+		for (int i = 0; i < newInWeights.length; i++){
+			System.arraycopy(inputWeights[i], 0, newInWeights[i], 0, newInWeights[i].length);
+		}
+		for (int i = 0; i < newHiddenWeights.length; i++){
+			for (int j = 0; j < newHiddenWeights[0].length; j++){
+				System.arraycopy(hiddenWeights[i][j], 0, newHiddenWeights[i][j], 0, newHiddenWeights[i][j].length);
+			}
+		}
+		for (int i = 0; i < newOutWeights.length; i++){
+			System.arraycopy(outputWeights[i], 0, newOutWeights[i], 0, newOutWeights[i].length);
+		}
+		
+		return network;
 	}
 	
 	// -- IGNORE THIS STUFF -- //
