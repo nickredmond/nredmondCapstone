@@ -31,8 +31,8 @@ public class MainTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {	
 //		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/u.jpg")));
-//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/u3.jpg")));
+//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera2.jpg")));
+//		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));
 		
 		runApp();
 		//FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII, 6);
@@ -40,7 +40,7 @@ public class MainTest {
 		//testSpellCheck();
 		
 		//writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
-		//renameCharacters(CharacterType.ASCII, 6);
+		//renameCharacters(CharacterType.ASCII, 8);
 	}
 	
 	private static void writeTrainingData(String imgFilepath) throws IOException{
@@ -84,7 +84,7 @@ public class MainTest {
 	}
 	
 	private static void runApp() throws IOException{
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
 		CharacterType[] types = {CharacterType.ASCII};
 		
 		String result = MultiNetworkReader.getTextFromImage(img, types);

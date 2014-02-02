@@ -94,7 +94,7 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			
 			//int[][] newValues = convertToScale(20, 20, scaledImg);
 			
-			CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
+			//CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
 
 			for (int row = 0; row < scaledImg.length; row++){
 				for (int col = 0; col < scaledImg[0].length; col++){
