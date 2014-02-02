@@ -1,0 +1,9 @@
+package spellCheck;
+
+public class DictionaryCreatorUtil {
+	
+	
+	public static void createCommonPriorityDictionary(){
+		
+	}
+}

@@ -17,6 +17,8 @@ public class FileOperations {
 	private static final int NUM_CHARS_ALPHABET = 26;
 	private static final int NUMBER_DIGITS = 10;
 	
+	public static final String TRAINING_DATA_DIR = "C:/Users/nredmond/Documents/testData";
+	
 	public static void renameFile(String filepath, String newName){
 		File oldFile = new File(filepath);
 		String directory = oldFile.getAbsolutePath().replace(oldFile.getName(), "");
@@ -46,6 +48,7 @@ public class FileOperations {
 		File metadataFile = new File("metaDataFiles/" + type.toString() +
 				"/characterImageLocations.txt");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(metadataFile, true));
+		writer.write("\r\n");
 		
 		String set = (setNumber == 0) ? "" : new Integer(setNumber).toString();
 		

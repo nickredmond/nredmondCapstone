@@ -14,9 +14,13 @@ import neuralNetwork.INeuralNetwork;
 
 public class ImageReader {
 	private CharacterReader reader;
+	private ICharacterImageHandler handler;
+	private List<TranslationResult> result;
 	
-	public ImageReader(INeuralNetwork network, INetworkIOTranslator translator){
+	public ImageReader(INeuralNetwork network, INetworkIOTranslator translator, boolean doTranslation){
 		reader = new CharacterReader(network, translator);
+		result = new ArrayList<TranslationResult>();
+		handler = (doTranslation ? new TranslationHandler(result, reader) : new TrainingDataCreationHandler());
 	}
 	
 	public String convertTranslationToText(List<TranslationResult> translation){
@@ -35,14 +39,13 @@ public class ImageReader {
 		BufferedImage trimmedImage = processor.trimMargins(image);
 		
 		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
-		List<TranslationResult> result = new ArrayList<TranslationResult>();
+		result.clear();
 		
 		for (BufferedImage nextLine : lines){
 			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
 			
 			for (BufferedImage nextCharacter : characters){
-				TranslationResult translation = reader.readCharacter(nextCharacter);
-				result.add(translation);
+				handler.handleImage(nextCharacter);
 			}
 			result.add(new NewLineTranslationResult());
 		}

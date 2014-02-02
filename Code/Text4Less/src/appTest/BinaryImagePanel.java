@@ -42,4 +42,21 @@ public class BinaryImagePanel extends JPanel {
 			}
 		}
 	}
+	
+	private Color getCellColor(float value){
+		Color color = null;
+		
+		if (value > 0.9f){
+			color = Color.BLACK;
+		}
+		else if (value > 0.6f){
+			color = Color.DARK_GRAY;
+		}
+		else if (value > 0.3f){
+			color = Color.LIGHT_GRAY;
+		}
+		else color = Color.WHITE;
+		
+		return color;
+	}
 }

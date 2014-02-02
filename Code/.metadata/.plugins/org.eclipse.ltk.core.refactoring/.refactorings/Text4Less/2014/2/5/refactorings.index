@@ -7,3 +7,6 @@
 1391233645793	Encapsulate field 'hiddenTotal'
 1391233663851	Encapsulate field 'error'
 1391233680023	Rename field 'error'
+1391292889438	Delete elements
+1391299085864	Rename local variable 'j'
+1391299091907	Rename local variable 'i'

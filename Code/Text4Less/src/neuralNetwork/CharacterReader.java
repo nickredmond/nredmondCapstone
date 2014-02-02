@@ -16,14 +16,7 @@ public class CharacterReader {
 		this.translator = translator;
 	}
 	
-	public TranslationResult readCharacter(BufferedImage img){
-//        try {
-//            ImageIO.write(img, "jpg", new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII4\\" + System.nanoTime() + ".jpg"));
-//	    } catch (IOException e) {
-//	            // TODO Auto-generated catch block
-//	            e.printStackTrace();
-//	    }
-		
+	public TranslationResult readCharacter(BufferedImage img){		
 		float[] input = translator.translateImageToNetworkInput(img);		
 		float[] output = network.forwardPropagate(input);
 		

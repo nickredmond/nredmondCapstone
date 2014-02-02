@@ -1,0 +1,13 @@
+package app;
+
+public class SpellChecker {
+	public static String correctSpelling(String word){
+		IDictionary dictionary = DictionaryFactory.getDictionary();
+		
+		if (!dictionary.contains(word)){
+			
+		}
+		
+		return null;
+	}
+}

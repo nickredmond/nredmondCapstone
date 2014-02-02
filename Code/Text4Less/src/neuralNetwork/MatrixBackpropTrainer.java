@@ -9,7 +9,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 	private float learningRate, regularizationParam;
 	private final float MAX_ERROR = 0.01f;
 	
-	private float previousError;
+	private float previousError, previousCve;
 	private int numberIterations = 0; // use this later
 	
 	public MatrixBackpropTrainer(float learningRate, float regParam){
@@ -21,10 +21,27 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 	public void trainWithTrainingSet(INeuralNetwork network,
 			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
 		float mse = 1000.0f;
+		float cve = 1000.0f;
+		
 		do{
 			previousError = mse;
+			previousCve = cve;
+			
 			mse = performTrainingIteration(trainingSet, network);
-		}while(mse <= previousError);
+			cve = crossValidate(testSet, network);
+			System.out.println("MSE: " + mse + ", CVE: " + cve);
+		}while(mse > 0.01);
+	}
+	
+	private float crossValidate(Set<TrainingExample> testSet, INeuralNetwork network){
+		float outputErr = 0;
+		
+		for (TrainingExample nextExample : testSet){
+			float[] output = network.forwardPropagate(nextExample.getInput());
+			outputErr += calculateOutputError(network, output, nextExample.getOutput(), false);
+		}
+		
+		return outputErr / (2 * testSet.size());
 	}
 
 	private float performTrainingIteration(Set<TrainingExample> trainingSet, INeuralNetwork network) {
@@ -37,7 +54,6 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		changeWeights(network, trainingSet.size(), regularizationParam);
 		
 		error = error / (2 * trainingSet.size());
-		System.out.println("MSE: " + error);
 		return error;
 	}
 
@@ -83,12 +99,12 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		int layerSize = network.getHiddenValues(0).length;
 		
 		float[] lastHiddenError = calculateError(network, 
-				layerSize, network.getOutputWeights(), network.getOutputErrors());
+				layerSize, network.getOutputWeights(), network.getOutputErrors(), false);
 		network.setHiddenError(network.getNumberHiddenLayers() - 1, lastHiddenError);
 		
 		for (int l = network.getNumberHiddenLayers() - 2; l >= 0; l--){
 			float[] nextError = network.getHiddenErrors(l+1);
-			float[] error = calculateError(network, layerSize, network.getHiddenWeights(l), nextError);
+			float[] error = calculateError(network, layerSize, network.getHiddenWeights(l), nextError, true);
 			network.setHiddenError(l, error);
 			
 			setHiddenDeltas(network, l);
@@ -163,14 +179,14 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		return errorSum;
 	}
 	
-	private float[] calculateError(INeuralNetwork network, int layerSize, float[][] weights, float[] nextLayerError){
+	private float[] calculateError(INeuralNetwork network, int layerSize, float[][] weights, float[] nextLayerError, boolean isHidden){
 		float[] error = new float[layerSize];
 		
 		for (int i = 0; i < error.length; i++){
 			float errorSum = 0.0f;
 			
-			for (int k = 0; k < nextLayerError.length; k++){
-				errorSum += weights[i][k] * nextLayerError[k];
+			for (int k = 0; k < nextLayerError.length && k < (isHidden ? weights[i].length - 1 : weights[i].length); k++){
+				errorSum += weights[i][k] * nextLayerError[(isHidden ? k+1 : k)];
 			}
 			
 			error[i] = errorSum;

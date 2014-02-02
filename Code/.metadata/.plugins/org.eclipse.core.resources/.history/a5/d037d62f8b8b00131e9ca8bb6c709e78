@@ -1,0 +1,11 @@
+package app;
+
+import java.awt.image.BufferedImage;
+
+public class TrainingDataCreationHandler implements ICharacterImageHandler {
+	
+	@Override
+	public void handleImage(BufferedImage img){
+		
+	}
+}

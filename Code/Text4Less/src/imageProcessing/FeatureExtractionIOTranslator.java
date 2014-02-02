@@ -90,18 +90,17 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			List<Float> inputList = new ArrayList<Float>();
 			
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
-			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 30, 30);
+			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 20, 20);
 			
-			int[][] newValues = convertToScale(20, 20, scaledImg);
+			//int[][] newValues = convertToScale(20, 20, scaledImg);
 			
-			//CharacterViewDebug.displayCharacterView(img, newValues, 15, 15);
+			CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
 
-			for (int row = 0; row < newValues.length; row++){
-				for (int col = 0; col < newValues[0].length; col++){
-					inputList.add((float) newValues[row][col]);
+			for (int row = 0; row < scaledImg.length; row++){
+				for (int col = 0; col < scaledImg[0].length; col++){
+					inputList.add((float) scaledImg[row][col]);
 				}
-			}
-			
+			}			
 			
 //			addFeaturePoints(inputList, scaledImg);
 //			addVectorFeatures(inputList, scaledImg);
