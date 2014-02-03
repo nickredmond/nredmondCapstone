@@ -6,6 +6,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import debug.FeatureExtractionDebug;
+
 public class BinaryImagePanel extends JPanel {
 	private int[][] lightValues;
 	
@@ -14,7 +16,7 @@ public class BinaryImagePanel extends JPanel {
 		this.setSize(new Dimension(width, height));
 	}
 	
-	public void setData(int[][] values){
+	public void setData(int[][] values){		
 		if (lightValues.length == values.length && lightValues[0].length == values[0].length){
 			lightValues = values;
 		}
@@ -22,7 +24,7 @@ public class BinaryImagePanel extends JPanel {
 	}
 	
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g){		
 		int width = this.getSize().width;
 		int height = this.getSize().height;
 		int cellHeight = (height / lightValues.length);

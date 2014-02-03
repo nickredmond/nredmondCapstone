@@ -1,0 +1,26 @@
+package threading;
+
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
+
+import app.CorrelationHandler;
+
+
+public class CorrelationThreadPool {
+	CorrelationHandler handler;
+	Map<BufferedImage, Integer> mappedImages;
+	
+	public CorrelationThreadPool(CorrelationHandler handler){
+		this.handler = handler;
+		mappedImages = new HashMap<BufferedImage, Integer>();
+	}
+	
+	public void addImage(BufferedImage image, int index){
+		mappedImages.put(image, index);
+	}
+	
+	public void execute(){
+		
+	}
+}

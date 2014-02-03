@@ -28,7 +28,7 @@ public class MultiNetworkReader {
 		for (int i = 0; i < types.length; i++){
 			INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, types[i], new MatrixBackpropTrainer(0.05f, 0.02f));
 			//NeuralNetworkIO.writeNetwork(trainedNetwork, "myNetwork");
-			ImageReader reader = new ImageReader(trainedNetwork, translator, true);
+			ImageReader reader = new ImageReader(trainedNetwork, translator);
 			results.add(reader.readTextFromImage(img));
 		}
 		

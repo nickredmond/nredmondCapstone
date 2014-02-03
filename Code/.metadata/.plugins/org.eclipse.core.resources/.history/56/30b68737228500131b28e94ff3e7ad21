@@ -1,6 +1,0 @@
-package featureExtraction;
-
-public enum FeatureType {
-	T_JUNCTION,
-	END_POINT
-}

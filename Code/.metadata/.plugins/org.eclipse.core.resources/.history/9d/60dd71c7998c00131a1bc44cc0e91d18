@@ -1,0 +1,21 @@
+package threading;
+
+import java.awt.image.BufferedImage;
+
+import app.CorrelationHandler;
+
+public class CorrelationThread implements Runnable{
+	private CorrelationHandler handler;
+	private BufferedImage img;
+	
+	public CorrelationThread(CorrelationHandler handler, BufferedImage img){
+		this.handler = handler;
+		this.img = img;
+	}
+
+	@Override
+	public void run() {
+		handler.handleImage(img);
+	}
+
+}

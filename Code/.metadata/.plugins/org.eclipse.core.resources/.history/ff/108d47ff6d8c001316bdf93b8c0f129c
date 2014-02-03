@@ -1,0 +1,13 @@
+package app;
+
+import imageProcessing.TranslationResult;
+
+import java.util.List;
+
+import neuralNetwork.CharacterReader;
+
+public class ImageHandlerFactory {
+	public static ICharacterImageHandler getImageHandler(List<TranslationResult> results, CharacterReader reader){
+		
+	}
+}

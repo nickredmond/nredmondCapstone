@@ -6,7 +6,6 @@
 <fullyQualifiedTypeName name="io.CharacterUnicodeReader"/>
 <fullyQualifiedTypeName name="neuralNetwork.CharacterTrainingExample"/>
 <fullyQualifiedTypeName name="io.TrainingDataReader"/>
-<fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
@@ -31,17 +30,24 @@
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="io.FileOperations"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
 <fullyQualifiedTypeName name="app.ImageReader"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.jocl.cl_platform_id"/>
 <fullyQualifiedTypeName name="org.jocl.Sizeof"/>
 <fullyQualifiedTypeName name="org.jocl.Pointer"/>
 <fullyQualifiedTypeName name="org.jocl.CL"/>
+<fullyQualifiedTypeName name="io.FileOperations"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.ExcludeCategory"/>
+<fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.IncludeCategory"/>
+<fullyQualifiedTypeName name="app.EditDistanceCalculator"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="app.SpellChecker"/>
+<fullyQualifiedTypeName name="io.CharacterType"/>
+<fullyQualifiedTypeName name="spellCheck.DictionaryCreatorUtil"/>
 </qualifiedTypeNameHistroy>

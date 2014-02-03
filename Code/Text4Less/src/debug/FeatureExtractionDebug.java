@@ -1,12 +1,32 @@
 package debug;
 
+import imageProcessing.FeatureExtractionIOTranslator;
+import imageProcessing.INetworkIOTranslator;
+
 import java.awt.Point;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import featureExtraction.FeaturePoint;
 
 public class FeatureExtractionDebug {
+	public static float getCorrelation(BufferedImage first, BufferedImage second){
+		final float MAX_DIFFERENCE = 1.0f;
+		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+		
+		float[] input1 = translator.translateImageToNetworkInput(first);
+		float[] input2 = translator.translateImageToNetworkInput(second);
+		
+		float differenceSum = 0.0f;
+		
+		for (int i = 0; i < input1.length; i++){
+			differenceSum += Math.abs(input1[i] - input2[i]);
+		}
+		
+		float differenceAvg = differenceSum / input1.length;
+		return MAX_DIFFERENCE - differenceAvg;
+	}
+	
 	public static void printCentroidOnImage(Point centroid, int[][] imageValues){
 		boolean hasPrintedDivider = false;
 		
@@ -35,6 +55,18 @@ public class FeatureExtractionDebug {
 		for (int row = 0; row < lightValues.length; row++){
 			for (int col = 0; col < lightValues[row].length; col++){
 				System.out.print(lightValues[row][col] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void printFloatImg(float[][] values){
+		for (int row = 0; row < values.length; row++){
+			for (int col = 0; col < values[row].length; col++){
+				Float nextValue = new Float(values[row][col]);
+				String nextFloatString = nextValue.toString();
+				
+				System.out.print(nextFloatString.substring(0, 3) + " ");
 			}
 			System.out.println();
 		}

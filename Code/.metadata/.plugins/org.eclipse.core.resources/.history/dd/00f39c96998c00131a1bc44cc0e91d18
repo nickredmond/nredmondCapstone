@@ -1,0 +1,12 @@
+package threading;
+
+import app.ICharacterImageHandler;
+
+public class CorrelationThreadPool {
+	ICharacterImageHandler handler;
+	List<BufferedImage>
+	
+	public void execute(){
+		
+	}
+}

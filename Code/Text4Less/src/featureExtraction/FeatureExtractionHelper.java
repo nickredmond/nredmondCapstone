@@ -20,6 +20,19 @@ public class FeatureExtractionHelper {
 		return surroundingPixels;
 	}
 	
+	public static List<Point> getBlackNeighbors(int[][] imageValues, int row, int col){
+		List<Point> surroundingPixels = getSurroundingPixels(imageValues, row, col);
+		List<Point> blackNeighbors = new ArrayList<Point>();
+		
+		for (Point nextPoint : surroundingPixels){
+			if (nextPoint.x >= 0 && nextPoint.y >= 0 && imageValues[nextPoint.y][nextPoint.x] > 0){
+				blackNeighbors.add(nextPoint);
+			}
+		}
+		
+		return blackNeighbors;
+	}
+	
 	public static List<Integer> getSurroundingValuesFromPoints(int[][] correctedVectorValues, int row, int col){
 		List<Point> surroundingPixels = getSurroundingPixels(correctedVectorValues, row, col);
 		List<Integer> surroundingPoints = new ArrayList<Integer>();

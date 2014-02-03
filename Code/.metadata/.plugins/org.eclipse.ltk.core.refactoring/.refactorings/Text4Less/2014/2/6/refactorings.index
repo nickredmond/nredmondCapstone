@@ -4,3 +4,6 @@
 1391315639737	Rename type 'DictionaryCreatorTest'
 1391315644427	Rename type 'DictionaryCreator'
 1391315678021	Move compilation unit
+1391388284874	Rename local variable 'smallestCorrelation'
+1391388494835	Rename type 'TranslationHandlerFactory'
+1391388988871	Rename local variable 'bufferedReader'

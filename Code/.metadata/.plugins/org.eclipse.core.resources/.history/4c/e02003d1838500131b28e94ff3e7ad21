@@ -1,5 +1,0 @@
-package featureExtraction;
-
-public enum VectorDirection {
-
-}

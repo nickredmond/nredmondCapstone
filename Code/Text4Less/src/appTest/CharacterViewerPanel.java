@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import debug.FeatureExtractionDebug;
+
 public class CharacterViewerPanel extends JPanel {
 	public JLabel image;
 	public BinaryImagePanel binaryPanel;

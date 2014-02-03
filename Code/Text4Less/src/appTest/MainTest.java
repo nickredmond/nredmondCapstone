@@ -18,6 +18,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import debug.FeatureExtractionDebug;
 import spellCheck.DictionaryCreatorUtil;
 import spellCheck.EditDistanceCalculator;
 import spellCheck.SpellChecker;
@@ -34,18 +35,29 @@ public class MainTest {
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera2.jpg")));
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));
 		
-		runApp();
+	//	runApp();
 		//FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII, 6);
 
-		//testSpellCheck();
+	//	writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
+	//	renameCharacters(CharacterType.ASCII, 9);
 		
-		//writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
-		//renameCharacters(CharacterType.ASCII, 8);
+	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII, 2);
+		
+	//	correlate(CharacterType.ASCII, "ZZZZZZ", "I");
+	//	correlate(CharacterType.ASCII, "ZZZZZZ", "lowert");
+	}
+	
+	private static void correlate(CharacterType type, String firstName, String secondName) throws IOException{
+		BufferedImage img1 = ImageIO.read(new File("trainingImages/" + type.toString() + "/" + firstName + ".jpg"));
+		BufferedImage img2 = ImageIO.read(new File("trainingImages/" + type.toString() + "/" + secondName + ".jpg"));
+		float correlation = FeatureExtractionDebug.getCorrelation(img1, img2);
+		
+		System.out.println("Correlation between " + firstName + " and " + secondName + ": " + correlation);
 	}
 	
 	private static void writeTrainingData(String imgFilepath) throws IOException{
 		BufferedImage img = ImageIO.read(new File(imgFilepath));
-		ImageReader reader = new ImageReader(null, null, false);
+		ImageReader reader = new ImageReader(null, null);
 		reader.readTextFromImage(img);
 	}
 	
@@ -60,7 +72,7 @@ public class MainTest {
 	private static void readFromSavedNetwork(String networkName) throws IOException{
 		INeuralNetwork savedNetwork = NeuralNetworkIO.readNetwork(networkName);
 		INetworkIOTranslator t = new FeatureExtractionIOTranslator();
-		ImageReader reader = new ImageReader(savedNetwork, t, true);
+		ImageReader reader = new ImageReader(savedNetwork, t);
 		
 		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		List<TranslationResult> translation = reader.readTextFromImage(img);
@@ -84,10 +96,22 @@ public class MainTest {
 	}
 	
 	private static void runApp() throws IOException{
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		CharacterType[] types = {CharacterType.ASCII};
 		
-		String result = MultiNetworkReader.getTextFromImage(img, types);
+		new ReadAnimation().start();
+		
+		long start = System.nanoTime();
+		ImageReader reader = new ImageReader(null, new FeatureExtractionIOTranslator());
+		List<TranslationResult> translation = reader.readTextFromImage(img);
+		String result = reader.convertTranslationToText(translation);
+		long end = System.nanoTime();
+		
+		long seconds = (end - start) / 1000000000;
+		
+		System.out.println("Time to read: " + seconds + " seconds");
+		
+	//	String result = MultiNetworkReader.getTextFromImage(img, types);
 		System.out.println("RESULT: " + result);
 		System.out.println();
 		
@@ -115,5 +139,24 @@ public class MainTest {
 		}
 		
 		System.out.println();
+	}
+	
+	private static class ReadAnimation extends Thread{
+		@Override
+		public void run(){
+			final int numDots = 5;
+			final int sleepTime = 500;
+			System.out.print("Reading");
+			
+			for (int i = 0; i < numDots; i++){
+				System.out.print(".");
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println();
+		}
 	}
 }
