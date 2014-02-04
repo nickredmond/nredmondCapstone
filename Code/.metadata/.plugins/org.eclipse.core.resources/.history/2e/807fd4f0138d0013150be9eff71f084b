@@ -1,0 +1,8 @@
+package appTest;
+
+public class RejectedImagesPanel {
+	
+	public RejectedImagesPanel(List<BufferedImage> images){
+		
+	}
+}

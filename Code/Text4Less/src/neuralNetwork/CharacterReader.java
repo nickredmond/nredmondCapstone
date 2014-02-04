@@ -5,7 +5,7 @@ import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
 
-import debug.CharacterViewDebug;
+import app.CharacterResult;
 
 public class CharacterReader {
 	private INeuralNetwork network;
@@ -16,12 +16,13 @@ public class CharacterReader {
 		this.translator = translator;
 	}
 	
-	public TranslationResult readCharacter(BufferedImage img){		
+	public CharacterResult readCharacter(BufferedImage img){		
 		float[] input = translator.translateImageToNetworkInput(img);		
 		float[] output = network.forwardPropagate(input);
 		
 		TranslationResult result = translator.translateNetworkOutputToCharacter(output);
+		CharacterResult charResult = new CharacterResult(img, result);
 		
-		return result;
+		return charResult;
 	}
 }

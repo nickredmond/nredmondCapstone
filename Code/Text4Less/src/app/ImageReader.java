@@ -17,20 +17,31 @@ import threading.CorrelationThreadPool;
 public class ImageReader {
 	private CharacterReader reader;
 	private ICharacterImageHandler handler;
-	private List<TranslationResult> result;
+	private List<CharacterResult> result;
+	
+	public static final float MINIMUM_REQUIRED_CONFIDENCE = 0.93f;
 	
 	public ImageReader(INeuralNetwork network, INetworkIOTranslator translator) throws IOException{
 		reader = new CharacterReader(network, translator);
-		result = new ArrayList<TranslationResult>();
+		setData();
+	}
+	
+	public ImageReader(INetworkIOTranslator translator) throws IOException{
+		reader = new CharacterReader(null, translator);
+		setData();
+	}
+	
+	private void setData() throws IOException{
+		result = new ArrayList<CharacterResult>();
 		handler = ImageHandlerFactory.getImageHandler(result, reader);
 	}
 	
-	public String convertTranslationToText(List<TranslationResult> translation){
+	public String convertTranslationToText(List<CharacterResult> translation){
 		StringBuilder builder = new StringBuilder();
 		
-		for (TranslationResult nextResult : translation){
+		for (CharacterResult nextResult : translation){
 			if (nextResult != null){
-			String nextCharacter = (nextResult.toString().equals("\r\n")) ? "\r\n" : ((Character)nextResult.getResult()).toString();
+			String nextCharacter = (nextResult.getResult().toString().equals("\r\n")) ? "\r\n" : ((Character)nextResult.getResult().getCharacter()).toString();
 			builder.append(nextCharacter);
 			}
 		}
@@ -38,16 +49,20 @@ public class ImageReader {
 		return builder.toString();
 	}
 	
-	public List<TranslationResult> readTextFromImage(BufferedImage image){
-		List<TranslationResult> results = null;
+	public List<CharacterResult> readTextFromImage(BufferedImage image){
+		List<CharacterResult> results = null;
 		
-		results =  (handler.getClass() == CorrelationHandler.class) ? readMultithreadedTextFromImage(image) :
+		results =  (handler.getClass() == LeastDistanceHandler.class) ? readMultithreadedTextFromImage(image) :
 			readSinglethreadedTextFromImage(image);
 		
 		return results;
 	}
 	
-	private List<TranslationResult> readSinglethreadedTextFromImage(BufferedImage image){
+//	public List<BufferedImage> getRejectedImages(){
+//		return handler.getRejectedImages();
+//	}
+	
+	private List<CharacterResult> readSinglethreadedTextFromImage(BufferedImage image){
 		ImagePreprocessor processor = new ImagePreprocessor();
 		BufferedImage trimmedImage = processor.trimMargins(image);
 		
@@ -60,13 +75,13 @@ public class ImageReader {
 			for (BufferedImage nextCharacter : characters){
 				handler.handleImage(nextCharacter);
 			}
-			result.add(new NewLineTranslationResult());
+			result.add(new CharacterResult(null, new NewLineTranslationResult()));
 		}
 		
 		return result;
 	}
 	
-	private List<TranslationResult> readMultithreadedTextFromImage(BufferedImage image){
+	private List<CharacterResult> readMultithreadedTextFromImage(BufferedImage image){
 		ImagePreprocessor processor = new ImagePreprocessor();
 		BufferedImage trimmedImage = processor.trimMargins(image);
 		
@@ -76,8 +91,8 @@ public class ImageReader {
 		
 		for (BufferedImage nextLine : lines){
 			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
-			List<TranslationResult> lineResult = new ArrayList<TranslationResult>(characters.size());
-			CorrelationHandler lineHandler = new CorrelationHandler(lineResult);
+			List<CharacterResult> lineResult = new ArrayList<CharacterResult>(characters.size());
+			LeastDistanceHandler lineHandler = new LeastDistanceHandler(lineResult);
 			
 			CorrelationThreadPool pool = new CorrelationThreadPool(lineHandler);
 			
@@ -90,7 +105,7 @@ public class ImageReader {
 			pool.execute();
 			
 			result.addAll(lineResult);
-			result.add(new NewLineTranslationResult());
+			result.add(new CharacterResult(null, new NewLineTranslationResult()));
 		}
 		
 		return result;

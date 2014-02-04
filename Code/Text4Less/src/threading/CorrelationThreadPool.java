@@ -7,14 +7,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import neuralNetwork.TrainingExample;
-import app.CorrelationHandler;
+import app.LeastDistanceHandler;
 
 
 public class CorrelationThreadPool {
-	CorrelationHandler handler;
+	LeastDistanceHandler handler;
 	Map<BufferedImage, Integer> mappedImages;
 	
-	public CorrelationThreadPool(CorrelationHandler handler){
+	public CorrelationThreadPool(LeastDistanceHandler handler){
 		this.handler = handler;
 		mappedImages = new HashMap<BufferedImage, Integer>();
 	}

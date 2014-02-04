@@ -44,10 +44,13 @@
 <fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.ExcludeCategory"/>
 <fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.IncludeCategory"/>
 <fullyQualifiedTypeName name="app.EditDistanceCalculator"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.SpellChecker"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="spellCheck.DictionaryCreatorUtil"/>
+<fullyQualifiedTypeName name="featureExtraction.FeatureExtractionHelper"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="app.CorrelationHandler"/>
+<fullyQualifiedTypeName name="threading.CorrelationThreadPool"/>
 </qualifiedTypeNameHistroy>

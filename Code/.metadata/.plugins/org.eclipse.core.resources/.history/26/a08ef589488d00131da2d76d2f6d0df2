@@ -1,0 +1,16 @@
+package app;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class InputReader {
+	public static ReadResult readImageInput(BufferedImage image, List<ImageReadMethod> readMethods){
+		
+	}
+	
+	private static ReadResult
+	
+	private static void setConfigStatus(ImageReadMethod type){
+		
+	}
+}

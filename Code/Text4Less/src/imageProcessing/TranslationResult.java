@@ -4,6 +4,8 @@ public class TranslationResult {
 	private char result;
 	private float confidence;
 	
+	public static final String NEWLINE_VALUE = "\r\n";
+	
 	public TranslationResult(char result, float confidence){
 		this.result = result;
 		this.confidence = confidence;
@@ -13,7 +15,7 @@ public class TranslationResult {
 		result = ' ';
 	}
 	
-	public char getResult() {
+	public char getCharacter() {
 		return result;
 	}
 	public float getConfidence() {
