@@ -1,0 +1,80 @@
+package debug;
+
+import imageProcessing.INetworkIOTranslator;
+import imageProcessing.ImagePreprocessor;
+import imageProcessing.NewLineTranslationResult;
+import io.CharacterType;
+import io.TrainingDataReader;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import app.CharacterResult;
+import neuralNetwork.CharacterTrainingExample;
+
+public class CorrelationDebug {
+	public static correlateAgainstTestCharacters(String expectedText, BufferedImage testImage){
+//		String expectedText = "One night and one more time " +
+//				"Xanks Xr the memories thanks Xr the memories " +
+//				"See he tastes like you onX sweeter " +
+//				"30 perceX predicXd accuracy on this CRAX foX";
+		
+		char chosenCharacter = 'A';
+		float highestCorrelation = -1.0f;
+		boolean found = false;
+		int index = 0;
+		
+		Set<CharacterTrainingExample> examples = null;
+		try {
+			examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		} catch (IOException e) {
+			System.out.println("FAILED TO CREATE TRAINING SET.");
+			e.printStackTrace();
+		}
+		
+		ImagePreprocessor processor = new ImagePreprocessor();
+		BufferedImage trimmedImage = processor.trimMargins(testImage);
+		
+		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
+		
+		for (BufferedImage nextLine : lines){
+			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
+			
+			for (BufferedImage nextCharacter : characters){
+				System.out.println("--- SHOULD BE '" + expectedText.charAt(index) + "'");
+				
+				Iterator<CharacterTrainingExample> iter = examples.iterator();
+				while(iter.hasNext()){
+					CharacterTrainingExample nextExample = iter.next();
+					
+					BufferedImage nextTrainingImg = nextExample.getCharacterImage();
+					float nextCorrelation = FeatureExtractionDebug.getCorrelation(nextCharacter, nextTrainingImg);
+					System.out.println("\tcorrelation to '" + nextExample.getCharacterValue() + "' is: " + nextCorrelation);
+					
+					if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
+						highestCorrelation = nextCorrelation;
+						chosenCharacter = nextExample.getCharacterValue();
+					}
+				}
+				
+				index++;
+			}
+		}
+		
+		BufferedImage
+	}
+	
+	private boolean isSpace(BufferedImage image, INetworkIOTranslator translator){
+		float[] input = translator.translateImageToNetworkInput(image);
+		boolean isSpace = true;
+		
+		for (int i = 0; i < input.length && isSpace; i++){
+			isSpace = input[i] == 0;
+		}
+		
+		return isSpace;
+	}
+}

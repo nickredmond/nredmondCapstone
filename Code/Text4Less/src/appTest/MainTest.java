@@ -1,7 +1,5 @@
 package appTest;
 
-import imageProcessing.FeatureExtractionIOTranslator;
-import imageProcessing.INetworkIOTranslator;
 import io.CharacterType;
 import io.FileOperations;
 import io.NeuralNetworkIO;
@@ -16,17 +14,25 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import networkIOtranslation.AlphaNumericIOTranslator;
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixBackpropTrainer;
+import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import spellCheck.SpellChecker;
+import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
 import app.ImageReadMethod;
 import app.ImageReader;
 import app.InputReader;
 import app.MultiNetworkReader;
+import app.NetworkFactory;
 import app.ReadResult;
+import debug.CorrelationDebug;
 import debug.FeatureExtractionDebug;
 
 public class MainTest {
@@ -37,22 +43,50 @@ public class MainTest {
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));
 		
 //		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.TRAINING_DATA_CREATION);
-//		writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
-	//	renameCharacters(CharacterType.ASCII, 10);
+	//	writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
+	//	renameCharacters(CharacterType.ASCII, 1);
 		
-	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII3, 0);
+//		FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII, 10);
+		
+//		ImagePreprocessor proc = new ImagePreprocessor();
+//		BufferedImage testMe = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
+//		int fontSize = proc.getFontSize(testMe);
+//		System.out.println("Calculated font size: " + fontSize);
 		
 	// ---------------------------------------------------------------------------------------------------------------- //
 	
-//		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-//		INeuralNetwork network = new MatrixNeuralNetwork(((FeatureExtractionIOTranslator)translator).getInputLength(),
-//				1, 100, 7, true);
-//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII, new MatrixBackpropTrainer(0.05f, 0.02f));
+//		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+//		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
+//				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII, new MatrixBackpropTrainer(0.05f, 0.04f));
+//		
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "alphaNum1");
+		readFromSavedNetwork("alphaNum1");
+		
+	//	correlate(CharacterType.ASCII, "lowern7", "moreStuff");
 		
 		// BREAK //
 		
+	//	readWithInputReader();
+		
+		// BREAK //
+		
+	//	runSomeShit();
+	}
+	
+	private static void runSomeShit() throws IOException{
+		BufferedImage test = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest.png"));
+		String expectedText = "One night and one more time " +
+		"Xanks Xr the memories thanks Xr the memories " +
+		"See he tastes like you onX sweeter " +
+		"30 perceX predicXd accuracy on this CRAX foX";
+		
+		CorrelationDebug.correlateAgainstTestCharacters(expectedText, test);
+	}
+	
+	private static void readWithInputReader() throws IOException{
 		List<ImageReadMethod> readMethods = new ArrayList<ImageReadMethod>();
-		//readMethods.add(ImageReadMethod.NEURAL_NETWORK);
+		readMethods.add(ImageReadMethod.NEURAL_NETWORK);
 		readMethods.add(ImageReadMethod.LEAST_DISTANCE);
 		
 		System.out.println("Reading... (shh... be patient.)");
@@ -67,9 +101,6 @@ public class MainTest {
 		System.out.println("AFTER SPELL CHECK: " + correctedResult);
 		
 		System.out.println("\r\nNumber characters rejected: " + yes.getRejections().size());
-		
-	//	NeuralNetworkIO.writeNetwork(trainedNetwork, "sizeTwelveNetwork");
-	//	readFromSavedNetwork("sizeTwelveNetwork");
 	}
 	
 	private static void correlate(CharacterType type, String firstName, String secondName) throws IOException{
@@ -81,6 +112,7 @@ public class MainTest {
 	}
 	
 	private static void writeTrainingData(String imgFilepath) throws IOException{
+		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.TRAINING_DATA_CREATION);
 		BufferedImage img = ImageIO.read(new File(imgFilepath));
 		ImageReader reader = new ImageReader(null, null);
 		reader.readTextFromImage(img);
@@ -96,12 +128,12 @@ public class MainTest {
 	
 	private static void readFromSavedNetwork(String networkName) throws IOException{
 		INeuralNetwork savedNetwork = NeuralNetworkIO.readNetwork(networkName);
-		INetworkIOTranslator t = new FeatureExtractionIOTranslator();
+		INetworkIOTranslator t = new AlphaNumericIOTranslator();
 		ImageReader reader = new ImageReader(savedNetwork, t);
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		String result = reader.convertTranslationToText(translation);
 		

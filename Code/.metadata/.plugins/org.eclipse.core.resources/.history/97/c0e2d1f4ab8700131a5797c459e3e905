@@ -1,5 +1,0 @@
-package imageProcessing;
-
-public class NewLineTranslationResult extends TranslationResult{
-
-}

@@ -1,12 +1,11 @@
 package debug;
 
-import imageProcessing.FeatureExtractionIOTranslator;
-import imageProcessing.INetworkIOTranslator;
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import networkIOtranslation.INetworkIOTranslator;
 import featureExtraction.FeaturePoint;
 
 public class FeatureExtractionDebug {

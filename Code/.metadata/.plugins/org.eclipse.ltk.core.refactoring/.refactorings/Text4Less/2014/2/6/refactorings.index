@@ -18,3 +18,6 @@
 1391484057993	Rename type 'CorrelationHandler'
 1391484079362	Encapsulate field 'isRejected'
 1391485764855	Rename method 'getResult'
+1391540835381	Rename local variable 'numberCharacters'
+1391585225086	Delete element
+1391585240859	Move compilation units

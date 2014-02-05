@@ -1,0 +1,5 @@
+package networkIOtranslation;
+
+public class AlphaNumericIOTranslator implements INetworkIOTranslator{
+
+}

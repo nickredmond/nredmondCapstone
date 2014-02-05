@@ -1,10 +1,10 @@
 package neuralNetwork;
 
-import imageProcessing.INetworkIOTranslator;
 import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
 
+import networkIOtranslation.INetworkIOTranslator;
 import app.CharacterResult;
 
 public class CharacterReader {
@@ -17,7 +17,7 @@ public class CharacterReader {
 	}
 	
 	public CharacterResult readCharacter(BufferedImage img){		
-		float[] input = translator.translateImageToNetworkInput(img);		
+		float[] input = translator.translateImageToNetworkInput(img);	
 		float[] output = network.forwardPropagate(input);
 		
 		TranslationResult result = translator.translateNetworkOutputToCharacter(output);

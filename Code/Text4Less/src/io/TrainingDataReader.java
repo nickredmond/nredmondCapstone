@@ -42,7 +42,6 @@ public class TrainingDataReader {
 				char nextCharacter = lineParts[CHAR_INDEX].charAt(0);
 				String nextFilename = lineParts[FILENAME_INDEX];
 				
-				//System.out.println(nextFilename);
 				BufferedImage nextImage = 
 						ImageIO.read(new File(imagePath + nextFilename + ".jpg"));
 				

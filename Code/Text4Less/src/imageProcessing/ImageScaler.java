@@ -2,6 +2,7 @@ package imageProcessing;
 
 import java.awt.image.BufferedImage;
 
+import networkIOtranslation.NetworkIOTranslator;
 import debug.FeatureExtractionDebug;
 
 public class ImageScaler {

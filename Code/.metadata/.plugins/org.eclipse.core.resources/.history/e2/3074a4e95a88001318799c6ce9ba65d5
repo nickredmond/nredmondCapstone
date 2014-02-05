@@ -1,5 +1,0 @@
-package neuralNetwork;
-
-public interface IActivationFunctionCalculator {
-	public static float calculateActivationValue(float zValue);
-}

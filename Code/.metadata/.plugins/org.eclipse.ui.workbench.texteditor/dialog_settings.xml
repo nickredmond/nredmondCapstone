@@ -3,18 +3,19 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="312" key="DIALOG_WIDTH"/>
 		<item value="558" key="DIALOG_Y_ORIGIN"/>
-		<item value="1252" key="DIALOG_X_ORIGIN"/>
 		<item value="392" key="DIALOG_HEIGHT"/>
+		<item value="1252" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="NoiseRemover" key="selection"/>
+		<item value="FeatureExtractionIOTranslator" key="selection"/>
 		<list key="findhistory">
+			<item value="FeatureExtractionIOTranslator"/>
 			<item value="NoiseRemover"/>
 			<item value="NoiseRemove"/>
 			<item value="printImg"/>
@@ -22,13 +23,12 @@
 			<item value="System.out.println"/>
 			<item value="factorial"/>
 			<item value="getLightValues"/>
-			<item value="img"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="trimmedImg"/>
 			<item value="img"/>
 			<item value="3"/>
-			<item value=""/>
 			<item value="#BRK#"/>
 		</list>
 	</section>

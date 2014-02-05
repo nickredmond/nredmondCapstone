@@ -1,0 +1,37 @@
+package networkIOtranslation;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+
+public class AlphaNumericIOTranslator implements INetworkIOTranslator{
+	private final float THRESHOLD = 0.5f;
+
+	@Override
+	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
+		int characterClass = -1;
+		
+		for (int i = 0; i < output.length; i++){
+			if (output[i] >= THRESHOLD){
+				if (characterClass != -1){
+					System.out.println("FAILED TRANSLATION");
+				}
+				
+				characterClass = i;
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	public int[] translateCharacterToNetworkOutput(char c) {
+		return null;
+	}
+
+	@Override
+	public float[] translateImageToNetworkInput(BufferedImage img) {
+		return new FeatureExtractionIOTranslator().translateImageToNetworkInput(img);
+	}
+
+}

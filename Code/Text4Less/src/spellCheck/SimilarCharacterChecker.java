@@ -13,13 +13,18 @@ public class SimilarCharacterChecker {
 	public boolean canFixWord(String word){
 		boolean canFix = false;
 		
-		String attempt1 = word.replace('I', 'l');
+		String[] attempts = {word.replace('I', 'l'), word.replace('1', 'l')};
 		
-		if (dictionary.contains(attempt1)){
-			canFix = true;
-			cache = attempt1;
+		for (int i = 0; i < attempts.length && !canFix; i++){
+			if (dictionary.contains(attempts[i])){
+				canFix = true;
+				cache = attempts[i];
+			}
 		}
-		else cache = "";
+		
+		if (!canFix){
+			cache = "";
+		}
 		
 		hasFixedWord = false;
 		return canFix;

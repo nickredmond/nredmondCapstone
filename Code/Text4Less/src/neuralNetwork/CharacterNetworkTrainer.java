@@ -1,13 +1,12 @@
 package neuralNetwork;
 
-import imageProcessing.INetworkIOTranslator;
-
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import networkIOtranslation.INetworkIOTranslator;
 import debug.CharacterViewDebug;
 
 public class CharacterNetworkTrainer {

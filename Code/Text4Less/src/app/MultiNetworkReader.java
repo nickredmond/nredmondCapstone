@@ -1,30 +1,27 @@
 package app;
 
-import imageProcessing.FeatureExtractionIOTranslator;
-import imageProcessing.INetworkIOTranslator;
 import imageProcessing.TranslationResult;
 import io.CharacterType;
-import io.NeuralNetworkIO;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-
+import networkIOtranslation.AlphaNumericIOTranslator;
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
-import appTest.RejectedImagesPanel;
 
 public class MultiNetworkReader {	
 	public static String getTextFromImage(BufferedImage img, CharacterType[] types) throws IOException{
 		//String[] results = new String[types.length];
 		List<List<CharacterResult>> results = new ArrayList<List<CharacterResult>>();
 		
-		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
-		INeuralNetwork network = new MatrixNeuralNetwork(((FeatureExtractionIOTranslator)translator).getInputLength(), 1, 100, 7, true);
+		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(), 1, 100, 7, true);
 		
 		for (int i = 0; i < types.length; i++){
 			INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, types[i], new MatrixBackpropTrainer(0.05f, 0.02f));

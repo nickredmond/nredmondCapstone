@@ -1,6 +1,5 @@
 package app;
 
-import imageProcessing.INetworkIOTranslator;
 import imageProcessing.ImagePreprocessor;
 import imageProcessing.NewLineTranslationResult;
 import imageProcessing.TranslationResult;
@@ -10,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterReader;
 import neuralNetwork.INeuralNetwork;
 import threading.CorrelationThreadPool;

@@ -1,7 +1,5 @@
 package app;
 
-import imageProcessing.FeatureExtractionIOTranslator;
-import imageProcessing.INetworkIOTranslator;
 import imageProcessing.TranslationResult;
 import io.NeuralNetworkIO;
 
@@ -10,10 +8,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import networkIOtranslation.AlphaNumericIOTranslator;
+import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 
 public class InputReader {
-	private static final String TRAINED_NETWORK_NAME = "sizeTwelveNetwork";
+	private static final String TRAINED_NETWORK_NAME = "alphaNum1";
 	
 	public static ReadResult readImageInput(BufferedImage image, List<ImageReadMethod> readMethods) throws IOException{
 		List<CharacterResult> nnTranslation = new ArrayList<CharacterResult>();
@@ -21,7 +21,7 @@ public class InputReader {
 		
 		List<CharacterResult> finalTranslation = null;//new ArrayList<CharacterResult>();
 		
-		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 		
 		if (readMethods.contains(ImageReadMethod.NEURAL_NETWORK)){
 			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
@@ -51,6 +51,14 @@ public class InputReader {
 			}
 		}
 		
+		float confidence = 0.0f;
+		for (CharacterResult nextResult : finalTranslation){
+			confidence += nextResult.getResult().getConfidence();
+		}
+		confidence /= finalTranslation.size();
+		
+		System.out.println("Confidence: " + confidence);
+		
 		return convertTranslationToResult(finalTranslation);
 	}
 	
@@ -79,7 +87,7 @@ public class InputReader {
 
 	public static ReadResult readImageInputFromNeuralNetwork(BufferedImage image, INeuralNetwork network) throws IOException{
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
-		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
+		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 		ImageReader reader = new ImageReader(network, translator);
 		
 		List<CharacterResult> nnTranslation = reader.readTextFromImage(image);

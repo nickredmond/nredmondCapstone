@@ -1,0 +1,7 @@
+package app;
+
+public class AlphaNumericCharacterConverter {
+	public int convertCharacterToClassNumber(char character){
+		
+	}
+}

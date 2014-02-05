@@ -1,0 +1,27 @@
+package debug;
+
+import imageProcessing.INetworkIOTranslator;
+
+import java.awt.image.BufferedImage;
+
+public class CorrelationDebug {
+	public static correlateAgainstTestCharacters(){
+		String expectedText = "One night and one more time " +
+				"Thanks for the memories thanks for the memories " +
+				"See he tastes like you only sweeter " +
+				"30 percent predicted accuracy on this CRAZY font";
+		
+		
+	}
+	
+	private boolean isSpace(BufferedImage image, INetworkIOTranslator translator){
+		float[] input = translator.translateImageToNetworkInput(image);
+		boolean isSpace = true;
+		
+		for (int i = 0; i < input.length && isSpace; i++){
+			isSpace = input[i] == 0;
+		}
+		
+		return isSpace;
+	}
+}

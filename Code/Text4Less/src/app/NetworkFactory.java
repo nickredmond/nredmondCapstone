@@ -1,12 +1,12 @@
 package app;
 
-import imageProcessing.INetworkIOTranslator;
 import io.CharacterType;
 import io.TrainingDataReader;
 
 import java.io.IOException;
 import java.util.Set;
 
+import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterNetworkTrainer;
 import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INetworkTrainer;
