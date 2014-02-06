@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="io.CharacterUnicodeReader"/>
 <fullyQualifiedTypeName name="neuralNetwork.CharacterTrainingExample"/>
-<fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
@@ -57,7 +56,8 @@
 <fullyQualifiedTypeName name="app.InputReader"/>
 <fullyQualifiedTypeName name="app.ImageHandlerFactory"/>
 <fullyQualifiedTypeName name="app.ImageReadMethod"/>
-<fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
+<fullyQualifiedTypeName name="io.TrainingDataReader"/>
+<fullyQualifiedTypeName name="io.CharacterType"/>
 </qualifiedTypeNameHistroy>

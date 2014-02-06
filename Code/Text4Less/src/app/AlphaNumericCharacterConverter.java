@@ -45,7 +45,7 @@ public class AlphaNumericCharacterConverter implements ICharacterConverter {
 		}
 		else if (classNumber > (LOWER_END - LOWER_START) + (UPPER_END - UPPER_START + 1) &&
 				classNumber <= (NUMERIC_END - NUMERIC_START) + (LOWER_END - LOWER_START + 1) + (UPPER_END - UPPER_START + 1)){
-			asciiValue = NUMERIC_START + ((LOWER_END - LOWER_START) + (UPPER_END - UPPER_START + 1) + 1);
+			asciiValue = NUMERIC_START + (classNumber - ((LOWER_END - LOWER_START) + (UPPER_END - UPPER_START + 1) + 1));
 		}
 		else if (classNumber == SPACE_INDEX){
 			asciiValue = SPACE_VALUE;

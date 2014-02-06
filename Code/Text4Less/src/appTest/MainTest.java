@@ -43,10 +43,10 @@ public class MainTest {
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));
 		
 //		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.TRAINING_DATA_CREATION);
-	//	writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest.png");
-	//	renameCharacters(CharacterType.ASCII, 1);
+	//	writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest4.png");
+	//	renameCharacters(CharacterType.ASCII2, 2);
 		
-//		FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII, 10);
+	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII2, 10);
 		
 //		ImagePreprocessor proc = new ImagePreprocessor();
 //		BufferedImage testMe = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
@@ -57,13 +57,15 @@ public class MainTest {
 	
 //		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 //		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
-//				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII, new MatrixBackpropTrainer(0.05f, 0.04f));
+//				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
 //		
-//		NeuralNetworkIO.writeNetwork(trainedNetwork, "alphaNum1");
-		readFromSavedNetwork("alphaNum1");
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
+		readFromSavedNetwork("yoloSwaggins");
 		
-	//	correlate(CharacterType.ASCII, "lowern7", "moreStuff");
+//		float correlation = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 9, 10);
+//		float correlation2 = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 2, 3);
+//		System.out.println("correlation: " + correlation + " " + correlation2);
 		
 		// BREAK //
 		
@@ -72,6 +74,8 @@ public class MainTest {
 		// BREAK //
 		
 	//	runSomeShit();
+		
+	//	correlate(CharacterType.ASCII2, "loweru2", "loweru22");
 	}
 	
 	private static void runSomeShit() throws IOException{
@@ -86,12 +90,12 @@ public class MainTest {
 	
 	private static void readWithInputReader() throws IOException{
 		List<ImageReadMethod> readMethods = new ArrayList<ImageReadMethod>();
-		readMethods.add(ImageReadMethod.NEURAL_NETWORK);
+	//	readMethods.add(ImageReadMethod.NEURAL_NETWORK);
 		readMethods.add(ImageReadMethod.LEAST_DISTANCE);
 		
 		System.out.println("Reading... (shh... be patient.)");
 		
-		BufferedImage image = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest.png"));
+		BufferedImage image = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
 		ReadResult yes = InputReader.readImageInput(image, readMethods);
 		
 		String result = yes.getTranslationString();
@@ -133,7 +137,7 @@ public class MainTest {
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		String result = reader.convertTranslationToText(translation);
 		

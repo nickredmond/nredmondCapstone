@@ -13,7 +13,7 @@ import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 
 public class InputReader {
-	private static final String TRAINED_NETWORK_NAME = "alphaNum1";
+	private static final String TRAINED_NETWORK_NAME = "testThis";
 	
 	public static ReadResult readImageInput(BufferedImage image, List<ImageReadMethod> readMethods) throws IOException{
 		List<CharacterResult> nnTranslation = new ArrayList<CharacterResult>();

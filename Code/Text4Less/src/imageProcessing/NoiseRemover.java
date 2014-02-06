@@ -25,6 +25,15 @@ public class NoiseRemover {
 						noiseRemovedValues[blackNeighbor.y][blackNeighbor.x] = 0;
 					}
 				}
+				else if (blackNeighbors.size() == 2 && (imageValues.length > 30 || imageValues[0].length > 30)){
+					Point blackNeighbor = blackNeighbors.get(0);
+					List<Point> neighborsBlackNeighbors = 
+							FeatureExtractionHelper.getBlackNeighbors(noiseRemovedValues, blackNeighbor.y, blackNeighbor.x);
+					if (neighborsBlackNeighbors.size() == 2){
+						noiseRemovedValues[row][col] = 0;
+						noiseRemovedValues[blackNeighbor.y][blackNeighbor.x] = 0;
+					}
+				}
 			}
 		}
 	}

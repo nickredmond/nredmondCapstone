@@ -84,6 +84,8 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 		int[][] lightValues = getLightValues(img);
 		NoiseRemover.removeNoise(lightValues);
 		
+	//	CharacterViewDebug.displayCharacterView(img, lightValues, lightValues.length, lightValues[0].length);
+		
 		int[][] croppedLightValues = cropLightValues(lightValues);
 		float[] input = new float[inputLength];
 		
@@ -121,7 +123,7 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			addProfilingFeatures(inputList, croppedLightValues, percentages);
 			addVectorFeatures(inputList, croppedLightValues);
 			addCrossingFeatures(inputList, croppedLightValues);
-			addFeaturePoints(inputList, croppedLightValues);
+//			addFeaturePoints(inputList, croppedLightValues);
 			
 		//	CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
 			

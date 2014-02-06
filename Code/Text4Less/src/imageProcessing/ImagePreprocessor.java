@@ -160,8 +160,12 @@ public class ImagePreprocessor {
 			}
 			else if (isInLine && nextRgbValue <= maxRowWhitespaceValue){
 				nextEndValue = row;
-				CropValueSet nextLineValues = new CropValueSet(nextStartValue - SPLIT_PIXEL_BUFFER, 
-						nextEndValue + SPLIT_PIXEL_BUFFER);
+				
+				int cropStart = (nextStartValue - SPLIT_PIXEL_BUFFER >= 0) ? nextStartValue - SPLIT_PIXEL_BUFFER : 0;
+				int cropEnd = (nextEndValue + SPLIT_PIXEL_BUFFER < document.getHeight()) ? nextEndValue + SPLIT_PIXEL_BUFFER : document.getHeight() - 1;
+				
+				CropValueSet nextLineValues = new CropValueSet(cropStart, 
+						cropEnd);
 				lineValues.add(nextLineValues);
 				isInLine = false;
 			}
@@ -231,7 +235,10 @@ public class ImagePreprocessor {
 		}
 		
 		CropValueSet nextSet = new CropValueSet(startValue, line.getWidth() - 1);
-		characters.add(nextSet);
+		
+		if (nextSet.getEndValue() > nextSet.getStartValue()){
+			characters.add(nextSet);
+		}
 		
 		return convertCropValuesToImages(characters, line, ImageCropper.LEFT_RIGHT_CROPPER);
 	}

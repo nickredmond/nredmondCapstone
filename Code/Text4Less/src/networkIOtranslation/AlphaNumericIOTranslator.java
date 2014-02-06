@@ -12,7 +12,7 @@ public class AlphaNumericIOTranslator implements INetworkIOTranslator{
 	@Override
 	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
 		int characterClass = -1;
-		float maxConfidence = 0.0f;
+		float maxConfidence = -2.0f;
 		char result = ' ';
 		
 		for (int i = 0; i < output.length; i++){
@@ -45,6 +45,7 @@ public class AlphaNumericIOTranslator implements INetworkIOTranslator{
 		}
 		
 		int[] output = new int[AlphaNumericCharacterConverter.NUMBER_CLASSES];
+		
 		output[classNumber] = 1;
 		
 		return output;

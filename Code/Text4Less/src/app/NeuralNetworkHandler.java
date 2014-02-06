@@ -9,7 +9,7 @@ import java.util.List;
 import neuralNetwork.CharacterReader;
 
 public class NeuralNetworkHandler implements ICharacterImageHandler {
-	private final float MIN_CONFIDENCE = 0.93f;
+	private final float MIN_CONFIDENCE = 0.6f;
 	private List<CharacterResult> results;
 	private CharacterReader reader;
 	
