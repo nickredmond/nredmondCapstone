@@ -1,0 +1,43 @@
+package ui;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class ResultPanel extends JPanel {
+	private JButton saveButton;
+	private JScrollPane resultArea;
+	private JTextArea textArea;
+	
+	private MainWindow window;
+	
+	public ResultPanel(MainWindow window){
+		this.window = window;
+		
+		setupPanel();
+	}
+	
+	public void setResultText(String text){
+		textArea.setEditable(true);
+		textArea.setText(text);
+	}
+	
+	private void setupPanel(){
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		JLabel title = new JLabel("RESULTS:");
+		
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		resultArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		saveButton = new JButton("Save Text");
+		
+		this.add(title);
+		this.add(resultArea);
+		this.add(saveButton);
+	}
+}

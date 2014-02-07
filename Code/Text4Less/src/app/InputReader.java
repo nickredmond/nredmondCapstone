@@ -34,7 +34,7 @@ public class InputReader {
 		if (readMethods.contains(ImageReadMethod.LEAST_DISTANCE)){
 			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.LEAST_DISTANCE);
 			ImageReader reader = new ImageReader(translator);
-			
+
 			ldTranslation = reader.readTextFromImage(image);
 			finalTranslation = ldTranslation;
 		}

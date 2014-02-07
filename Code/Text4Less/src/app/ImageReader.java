@@ -88,7 +88,6 @@ public class ImageReader {
 		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
 		result.clear();
 		
-		
 		for (BufferedImage nextLine : lines){
 			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
 			List<CharacterResult> lineResult = new ArrayList<CharacterResult>(characters.size());

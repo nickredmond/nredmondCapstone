@@ -1,0 +1,85 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class ResultPanel extends JPanel {
+	private JButton saveButton;
+	private JScrollPane resultArea;
+	private JTextArea textArea;
+	
+	private MainWindow window;
+	
+	public ResultPanel(MainWindow window){
+		this.window = window;
+		
+		setupPanel();
+	}
+	
+	public void setResultText(String text){
+		textArea.setEnabled(true);
+		textArea.setText(text);
+	}
+	
+	public void reset(){
+		textArea.setText("");
+		textArea.setEnabled(false);
+		saveButton.setEnabled(false);
+	}
+	
+	private void setupPanel(){
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		JLabel title = new JLabel("RESULTS:");
+		
+		textArea = new JTextArea();
+		textArea.setEnabled(false);
+		textArea.setLineWrap(true);
+		resultArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		saveButton = new JButton("Save Text");
+		
+		this.add(title);
+		this.add(resultArea);
+		this.add(saveButton);
+	}
+	
+	private class ButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == saveButton){
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+				JFileChooser chooser = new JFileChooser();
+				chooser.addChoosableFileFilter(filter);
+				int returnValue = chooser.showSaveDialog(ResultPanel.this);
+				
+				if (returnValue == JFileChooser.APPROVE_OPTION){
+					File savedFile = chooser.getSelectedFile();
+
+					try{
+						BufferedWriter writer = new BufferedWriter(new FileWriter(savedFile));
+						writer.write(textArea.getText());
+						writer.close();
+					}catch(IOException e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+	}
+}

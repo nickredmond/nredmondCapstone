@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -20,6 +22,8 @@ public class ImageLoaderPanel extends JPanel {
 	
 	private MainWindow window;
 	
+	private final int MAX_IMAGE_WIDTH = 400;
+	
 	public ImageLoaderPanel(MainWindow window){
 		this.window = window;
 		
@@ -32,13 +36,30 @@ public class ImageLoaderPanel extends JPanel {
 	}
 	
 	public void setPreviewImage(File imageFile){
+	//	ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
+		Image iconImg = null;
 		try {
-			BufferedImage image = ImageIO.read(imageFile);
-			imagePreview.setText("");
-			imagePreview.setIcon(new ImageIcon(image));
+			iconImg = ImageIO.read(imageFile);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		float percentHeightToWidth = (float)iconImg.getHeight(null) / iconImg.getWidth(null);
+		
+		int newWidth = (iconImg.getWidth(null) > MAX_IMAGE_WIDTH) ? MAX_IMAGE_WIDTH : iconImg.getWidth(null);
+		int newHeight = (int)(percentHeightToWidth * newWidth);
+		
+		System.out.println("stuff: " + newWidth + " " + newHeight + " " + MAX_IMAGE_WIDTH + " " + iconImg.getHeight(null));
+		
+		BufferedImage baseImg = new BufferedImage(newWidth,
+				newHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics g = baseImg.createGraphics();
+		g.drawImage(iconImg, 0, 0, newWidth, newHeight, null);
+		ImageIcon finalIcon = new ImageIcon(baseImg);
+		
+		imagePreview.setText("");
+		imagePreview.setIcon(finalIcon);
 	}
 
 	private void setupPreviewPanel() {
