@@ -1,0 +1,12 @@
+package ui;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class ImageLoader {
+	private MainWindow window;
+	
+	public void loadImage(){
+		
+	}
+}

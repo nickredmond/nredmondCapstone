@@ -1,0 +1,87 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+import app.ImageReadMethod;
+
+public class AdvancedOptionsWindow extends JFrame {
+	//JMenu classificationMethods;
+	private JList<JCheckBox> classificationMethods;
+	private JButton saveChangesButton;
+	private Map<String, ImageReadMethod> readMethods;
+	private MainWindow window;
+	
+	private JCheckBox nnCheckbox, ldCheckBox;
+	
+	public AdvancedOptionsWindow(MainWindow window){
+		this.window = window;
+		
+		initializeReadMethods();
+		setupClassificationOptions();
+		setupSaveButton();
+		
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.getContentPane().add(classificationMethods);
+		this.getContentPane().add(saveChangesButton);
+		
+		this.pack();
+		this.setVisible(true);
+	}
+	
+	private void setupSaveButton(){
+		saveChangesButton = new JButton("Save Changes");
+		saveChangesButton.addActionListener(new ButtonListener());
+	}
+	
+	private void setupClassificationOptions() {
+		JCheckBox[] checkBoxes = new JCheckBox[readMethods.size()];
+		
+		int index = 0;
+		for (String nextMethodString : readMethods.keySet()){
+			checkBoxes[index] = new JCheckBox(nextMethodString);
+			index++;
+		}
+		
+		classificationMethods = new JList<JCheckBox>(checkBoxes);
+		classificationMethods.setCellRenderer(new CheckBoxListCellRenderer());
+	}
+
+	private void initializeReadMethods(){
+		readMethods = new HashMap<String, ImageReadMethod>();
+		readMethods.put("Neural Network", ImageReadMethod.NEURAL_NETWORK);
+		readMethods.put("Least Distance", ImageReadMethod.LEAST_DISTANCE);
+	}
+	
+	private class ButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == saveChangesButton){
+				List<ImageReadMethod> selectedMethods = new ArrayList<ImageReadMethod>();
+				List<JCheckBox> selectedBoxes = classificationMethods.getSelectedValuesList();
+				
+				for (JCheckBox nextBox : selectedBoxes){
+					String selectionString = nextBox.getText();
+					System.out.println(selectionString);
+					selectedMethods.add(readMethods.get(selectionString));
+				}
+				
+				window.advancedOptionsSaveChangesClicked(selectedMethods);
+				
+				AdvancedOptionsWindow.this.dispose();
+			}
+		}
+		
+	}
+}

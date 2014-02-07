@@ -1,0 +1,16 @@
+package ui;
+
+import javax.swing.JFileChooser;
+
+public class ImageLoader {
+	private MainWindow window;
+	
+	public ImageLoader(MainWindow window){
+		this.window = window;
+	}
+	
+	public void loadImage(){
+		JFileChooser chooser = new JFileChooser();
+		int returnValue = chooser.showOpenDialog(window);
+	}
+}

@@ -13,24 +13,21 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 import networkIOtranslation.AlphaNumericIOTranslator;
-import networkIOtranslation.FeatureExtractionIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
-import neuralNetwork.MatrixBackpropTrainer;
-import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import spellCheck.SpellChecker;
-import app.AlphaNumericCharacterConverter;
+import ui.MainWindow;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
 import app.ImageReadMethod;
 import app.ImageReader;
 import app.InputReader;
 import app.MultiNetworkReader;
-import app.NetworkFactory;
 import app.ReadResult;
 import debug.CorrelationDebug;
 import debug.FeatureExtractionDebug;
@@ -38,6 +35,10 @@ import debug.FeatureExtractionDebug;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {	
+		MainWindow window = new MainWindow();
+	}
+	
+	private static void engineTestStuff() throws IOException{
 //		INetworkIOTranslator translator = new FeatureExtractionIOTranslator();
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera2.jpg")));
 //		translator.translateImageToNetworkInput(ImageIO.read(new File("trainingImages/ASCII/lowera3.jpg")));

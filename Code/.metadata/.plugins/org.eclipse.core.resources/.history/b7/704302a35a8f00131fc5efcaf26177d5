@@ -1,0 +1,33 @@
+package ui;
+
+import java.io.File;
+import java.util.List;
+
+import app.ImageReadMethod;
+
+public class MainWindow {
+	
+	public void advancedOptionsSaveChangesClicked(List<ImageReadMethod> readMethods){
+		
+	}
+	
+	public void imageLoaded(File selectedImage){
+		
+	}
+	
+	public void imageLoadFailed(String message){
+		
+	}
+	
+	public void advancedOptionsClicked(){
+		
+	}
+	
+	public void loadImageClicked(){
+		
+	}
+	
+	public void translateClicked(){
+		
+	}
+}
