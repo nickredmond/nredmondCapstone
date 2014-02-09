@@ -1,0 +1,62 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import neuralNetwork.INeuralNetwork;
+
+public class CustomNetworkWindow extends JFrame {
+	private JTextField numberLayersBox, numberNeuronsBox;
+	private JButton trainButton, saveButton;
+	
+	private INeuralNetwork customNetwork;
+	
+	public CustomNetworkWindow(){
+		setupTextFieldPanels();
+		setupButtons();
+	}
+
+	private void setupButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void setupTextFieldPanels() {
+		JPanel numberLayersPanel = new JPanel();
+		JPanel numberNeuronsPanel = new JPanel();
+		
+		JLabel layersLabel = new JLabel("Number of hidden layers:");
+		JLabel neuronsLabel = new JLabel("Number of neurons per hidden layer:");
+		
+		numberLayersPanel.setLayout(new BoxLayout(numberLayersPanel, BoxLayout.X_AXIS));
+		numberLayersPanel.setLayout(new BoxLayout(numberNeuronsPanel, BoxLayout.X_AXIS));
+		
+		numberLayersBox = new JTextField();
+		numberNeuronsBox = new JTextField();
+		
+		numberLayersPanel.add(layersLabel);
+		numberLayersPanel.add(numberLayersBox);
+		
+		numberNeuronsPanel.add(neuronsLabel);
+		numberNeuronsPanel.add(numberNeuronsBox);
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == trainButton){
+				
+			}
+			else if (evt.getSource() == saveButton){
+				
+			}
+		}
+	}
+}

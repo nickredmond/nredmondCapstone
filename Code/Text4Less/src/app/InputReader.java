@@ -13,7 +13,13 @@ import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 
 public class InputReader {
-	private static final String TRAINED_NETWORK_NAME = "testThis";
+	public static final String TRAINED_NETWORK_NAME = "testThis";
+	
+	private static INeuralNetwork currentNetwork;
+	
+	public static void setNetwork(INeuralNetwork network){
+		currentNetwork = network;
+	}
 	
 	public static ReadResult readImageInput(BufferedImage image, List<ImageReadMethod> readMethods) throws IOException{
 		List<CharacterResult> nnTranslation = new ArrayList<CharacterResult>();
@@ -25,7 +31,7 @@ public class InputReader {
 		
 		if (readMethods.contains(ImageReadMethod.NEURAL_NETWORK)){
 			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
-			INeuralNetwork savedNetwork = NeuralNetworkIO.readNetwork(TRAINED_NETWORK_NAME);
+			INeuralNetwork savedNetwork = ((currentNetwork == null) ? NeuralNetworkIO.readNetwork(TRAINED_NETWORK_NAME) : currentNetwork);
 			ImageReader reader = new ImageReader(savedNetwork, translator);
 			
 			nnTranslation = reader.readTextFromImage(image);

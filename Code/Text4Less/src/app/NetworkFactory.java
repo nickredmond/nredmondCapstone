@@ -13,8 +13,16 @@ import neuralNetwork.INetworkTrainer;
 import neuralNetwork.INeuralNetwork;
 
 public class NetworkFactory {
+	private static int iterations;
+	private static float mse;
+	
 	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
 			CharacterType type, INetworkTrainer networkTrainer) throws IOException{
+		return getTrainedNetwork(originalNetwork, translator, type, networkTrainer, 1000, 0.05f);
+	}
+	
+	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
+			CharacterType type, INetworkTrainer networkTrainer, int numIterations, float errorGoal) throws IOException{
 		INeuralNetwork networkCopy = originalNetwork.cloneNetwork();
 		
 		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(type);
@@ -28,6 +36,9 @@ public class NetworkFactory {
 			trainer.addTestExample(nextExample);
 		}
 		
+		networkTrainer.setErrorGoal(errorGoal);
+		networkTrainer.setIterations(numIterations);
+		
 		long before = System.nanoTime();
 		trainer.trainNeuralNetwork(networkCopy, networkTrainer);
 		long after = System.nanoTime();
@@ -37,6 +48,17 @@ public class NetworkFactory {
 		
 		System.out.println("Training time: " + secs + " seconds");
 		
+		mse = networkTrainer.getAchievedError();
+		iterations = networkTrainer.getIterations();
+		
 		return networkCopy;
+	}
+	
+	public static float getMinErrAchieved(){
+		return mse;
+	}
+	
+	public static int getNumIterationsPerformed(){
+		return iterations;
 	}
 }

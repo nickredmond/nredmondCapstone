@@ -1,0 +1,20 @@
+package ui;
+
+import javax.swing.JFrame;
+
+public class LoadingScreen extends JFrame implements Runnable {
+	private String text;
+	private int maxNumberDots, currentDotNumber;
+	
+	private final int DEFAULT_MAX_DOTS = 5;
+	
+	public LoadingScreen(){
+		maxNumberDots = DEFAULT_MAX_DOTS;
+		currentDotNumber = 0;
+	}
+
+	@Override
+	public void run() {
+		
+	}
+}

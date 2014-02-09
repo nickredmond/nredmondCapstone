@@ -168,4 +168,28 @@ public class BackpropagationTrainer implements INetworkTrainer {
 		return trainingError;
 	}
 
+	@Override
+	public void setIterations(int iterations) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getIterations() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setErrorGoal(float errorGoal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public float getAchievedError() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

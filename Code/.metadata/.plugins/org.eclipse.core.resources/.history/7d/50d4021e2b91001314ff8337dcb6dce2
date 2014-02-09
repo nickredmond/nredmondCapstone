@@ -1,0 +1,13 @@
+package ui;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class HomeWindow extends JFrame{
+	private JButton translateButton, trainNetButton;
+	
+	public HomeWindow(){
+		setupButton(translateButton);
+		setupButton(trainNetButton);
+	}
+}

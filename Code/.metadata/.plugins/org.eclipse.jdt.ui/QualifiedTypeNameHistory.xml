@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
-<fullyQualifiedTypeName name="java.io.InputStream"/>
-<fullyQualifiedTypeName name="io.CharacterUnicodeReader"/>
-<fullyQualifiedTypeName name="neuralNetwork.CharacterTrainingExample"/>
-<fullyQualifiedTypeName name="java.lang.Boolean"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
-<fullyQualifiedTypeName name="java.awt.Graphics"/>
-<fullyQualifiedTypeName name="appTest.ImageTestPanel"/>
-<fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
-<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="imageProcessing.ReceptorChooser"/>
 <fullyQualifiedTypeName name="app.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
@@ -41,23 +30,34 @@
 <fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.ExcludeCategory"/>
 <fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.IncludeCategory"/>
 <fullyQualifiedTypeName name="app.EditDistanceCalculator"/>
-<fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="app.SpellChecker"/>
 <fullyQualifiedTypeName name="spellCheck.DictionaryCreatorUtil"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureExtractionHelper"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="app.CorrelationHandler"/>
 <fullyQualifiedTypeName name="threading.CorrelationThreadPool"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="imageProcessing.TranslationResult"/>
 <fullyQualifiedTypeName name="neuralNetwork.MatrixNeuralNetwork"/>
 <fullyQualifiedTypeName name="app.CharacterResult"/>
-<fullyQualifiedTypeName name="app.InputReader"/>
 <fullyQualifiedTypeName name="app.ImageHandlerFactory"/>
 <fullyQualifiedTypeName name="app.ImageReadMethod"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
 <fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
+<fullyQualifiedTypeName name="ui.ImageLoaderPanel"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="app.InputReader"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.awt.Graphics"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="java.io.FileFilter"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
 </qualifiedTypeNameHistroy>

@@ -6,15 +6,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import app.CharacterResult;
 
 public class ResultPanel extends JPanel {
 	private JButton saveButton;
@@ -29,10 +33,14 @@ public class ResultPanel extends JPanel {
 		setupPanel();
 	}
 	
-	public void setResultText(String text){
+	public void setResultText(String text, List<CharacterResult> rejections){
 		textArea.setEnabled(true);
 		textArea.setText(text);
 		saveButton.setEnabled(true);
+		
+		String message = "The system rejected " + rejections.size() + " characters because it was not " +
+				"\r\nconfident enough in their translations.";
+		JOptionPane.showMessageDialog(this, message, "Rejected Characters", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void reset(){

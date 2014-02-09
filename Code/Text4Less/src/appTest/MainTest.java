@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
@@ -21,7 +20,7 @@ import neuralNetwork.INeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import spellCheck.SpellChecker;
-import ui.MainWindow;
+import ui.HomeWindow;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
 import app.ImageReadMethod;
@@ -35,7 +34,7 @@ import debug.FeatureExtractionDebug;
 public class MainTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {	
-		MainWindow window = new MainWindow();
+		new HomeWindow();
 	}
 	
 	private static void engineTestStuff() throws IOException{

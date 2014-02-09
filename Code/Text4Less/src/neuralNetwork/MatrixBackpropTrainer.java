@@ -9,12 +9,32 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 	private float learningRate, regularizationParam;
 	private final float MAX_ERROR = 0.01f;
 	
+	private float errorGoal = MAX_ERROR;
+	private int maxIterations = 100000;
+	
 	private float previousError, previousCve;
-	private int numberIterations = 0; // use this later
+	private int numberIterationsPerformed = 0;
+	private float errorAchieved = 1.0f;
 	
 	public MatrixBackpropTrainer(float learningRate, float regParam){
 		this.learningRate = learningRate;
 		regularizationParam = regParam;
+	}
+	
+	public void setIterations(int iterations){
+		maxIterations = iterations;
+	}
+	
+	public int getIterations(){
+		return numberIterationsPerformed;
+	}
+	
+	public void setErrorGoal(float errorGoal){
+		this.errorGoal = errorGoal;
+	}
+	
+	public float getAchievedError(){
+		return errorAchieved;
 	}
 	
 	@Override
@@ -30,7 +50,10 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 			mse = performTrainingIteration(trainingSet, network);
 			cve = crossValidate(testSet, network);
 			System.out.println("MSE: " + mse + ", CVE: " + cve);
-		}while(mse > 0.05f);
+			numberIterationsPerformed++;
+		}while(mse > errorGoal && numberIterationsPerformed < maxIterations);
+		
+		errorAchieved = mse;
 	}
 	
 	private float crossValidate(Set<TrainingExample> testSet, INeuralNetwork network){

@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import neuralNetwork.INeuralNetwork;
 import app.ImageReadMethod;
 import app.InputReader;
 import app.ReadResult;
@@ -21,6 +22,9 @@ public class MainWindow extends JFrame{
 	private List<ImageReadMethod> selectedReadMethods;
 	private final ImageReadMethod DEFAULT_READ_METHOD = ImageReadMethod.NEURAL_NETWORK;
 	private File imageFile;
+	
+	private INeuralNetwork chosenNetwork;
+	private String networkName = null;
 	
 	public MainWindow(){
 		selectedReadMethods = new ArrayList<ImageReadMethod>();
@@ -33,13 +37,15 @@ public class MainWindow extends JFrame{
 		this.getContentPane().add(loaderPanel);
 		this.getContentPane().add(resultPanel);
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
 	}
 	
-	public void advancedOptionsSaveChangesClicked(List<ImageReadMethod> readMethods){
+	public void advancedOptionsSaveChangesClicked(List<ImageReadMethod> readMethods, INeuralNetwork chosenNetwork,
+			String networkName){
 		selectedReadMethods = readMethods;
+		this.chosenNetwork = chosenNetwork;
+		this.networkName = networkName;
 	}
 	
 	public void imageLoaded(File selectedImage){
@@ -53,7 +59,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void advancedOptionsClicked(){
-		new AdvancedOptionsWindow(this, selectedReadMethods);
+		new AdvancedOptionsWindow(this, selectedReadMethods, chosenNetwork, networkName);
 	}
 	
 	public void loadImageClicked(){
@@ -66,14 +72,27 @@ public class MainWindow extends JFrame{
 		}
 		else{
 			BufferedImage image;
-			try {
-				image = ImageIO.read(imageFile);
+				Thread t = new Thread(){
+				public void run(){
+				try {
+				LoadingScreen loading = new LoadingScreen("Reading image", 400, 250);
+				
+				System.out.println("yes");
+				
+				BufferedImage image = ImageIO.read(imageFile);
+				InputReader.setNetwork(chosenNetwork);
 				ReadResult result = InputReader.readImageInput(image, selectedReadMethods);
 				String resultText = result.getTranslationString();
-				resultPanel.setResultText(resultText);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				resultPanel.setResultText(resultText, result.getRejections());
+				
+				loading.closeScreen();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				}
+				};
+				
+				t.start();
 		}
 	}
 }
