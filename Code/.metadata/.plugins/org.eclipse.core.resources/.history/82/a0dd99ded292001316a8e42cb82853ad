@@ -1,0 +1,45 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import featureExtraction.ImageThinner;
+
+public class ImageSegmenter {
+	public static List<BufferedImage> segmentLineIntoCharacters(BufferedImage line){
+		int[][] binaryValues = ImageBinarizer.convertImageToBinaryValues(line);
+		ImageThinner thinner = new ImageThinner();
+		thinner.thinImage(binaryValues);
+		
+		int lastCharacterEndingCol = 0;
+		boolean isInCharacter = false;
+		
+		List<BufferedImage> characters = new ArrayList<BufferedImage>();
+		
+		for (int col = 0; col < binaryValues[0].length; col++){
+			boolean foundBlack = false;
+			
+			for (int row = 0; row < binaryValues.length && !foundBlack; row++){
+				foundBlack = (binaryValues[row][col] == 1);
+			}
+			
+			if (foundBlack && !isInCharacter){
+				isInCharacter = true;
+				System.out.println("switched to true");
+			}
+			else if (!foundBlack && isInCharacter){
+				isInCharacter = false;
+				System.out.println("switched to false");
+			}
+			
+			if ((foundBlack && !isInCharacter) || (!foundBlack && isInCharacter)){
+				lastCharacterEndingCol = col;
+				BufferedImage nextCharacter = line.getSubimage(lastCharacterEndingCol+1, 0, col - lastCharacterEndingCol, line.getHeight());
+				characters.add(nextCharacter);
+			}
+		}
+
+		return characters;
+	}
+}

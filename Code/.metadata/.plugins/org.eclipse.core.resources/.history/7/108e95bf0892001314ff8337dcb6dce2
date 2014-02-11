@@ -1,0 +1,7 @@
+package appTest;
+
+import javax.swing.JPanel;
+
+public class SegmentationPanel extends JPanel {
+	
+}

@@ -1,0 +1,7 @@
+package imageProcessing;
+
+public class ImageBinarizer {
+	public static int[][] convertImageToBinaryValues(BufferedImage image){
+		
+	}
+}

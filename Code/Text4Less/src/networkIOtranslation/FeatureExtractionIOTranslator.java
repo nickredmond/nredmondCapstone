@@ -1,5 +1,6 @@
 package networkIOtranslation;
 
+import imageProcessing.ImageBinarizer;
 import imageProcessing.ImageScaler;
 import imageProcessing.NoiseRemover;
 import imageProcessing.TranslationResult;
@@ -36,14 +37,7 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 	private final float MID_DIMENSION_PERCENT = 0.5f;
 	private final float BOTTOM_DIMENSION_PERCENT = 0.8f;
 	
-	private final float GAMMA = 2.2f;
-	private final float R_LUMINANCE = 0.2126f;
-	private final float G_LUMINANCE = 0.7152f;
-	private final float B_LUMINANCE = 0.0722f;
-	
 	private final int MAX_NUMBER_CROSSINGS = 4;
-	
-	private final int DARK_BOUNDARY = 5000;
 	
 	private final int MAX_ENDPOINTS = 4;
 	private final int MAX_T_JUNCS = 4;
@@ -81,7 +75,7 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
 		
-		int[][] lightValues = getLightValues(img);
+		int[][] lightValues = ImageBinarizer.convertImageToBinaryValues(img);
 		NoiseRemover.removeNoise(lightValues);
 		
 	//	CharacterViewDebug.displayCharacterView(img, lightValues, lightValues.length, lightValues[0].length);
@@ -426,40 +420,6 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 		endingRow = (endingRow < lightValues.length - 1) ? endingRow + 1 : endingRow;
 		
 		return new Rectangle(startingRow, startingCol, endingCol - startingCol, endingRow - startingRow);
-	}
-
-	public int[][] getLightValues(BufferedImage img){
-		int[][] lightValues = new int[img.getHeight()][img.getWidth()];
-		
-		for (int x = 0; x < img.getWidth(); x++){
-			for (int y = 0; y < img.getHeight(); y++){
-				int rgbValue = img.getRGB(x, y);
-				int rVal = (rgbValue >> 16) & 0xff;
-				int gVal = (rgbValue >> 8) & 0xff;
-				int bVal = (rgbValue) & 0xff;
-				
-				float rLinear = (float) Math.pow(rVal, GAMMA);
-				float gLinear = (float) Math.pow(gVal, GAMMA);
-				float bLinear = (float) Math.pow(bVal, GAMMA);
-				
-				float luminance = (R_LUMINANCE * rLinear) + (G_LUMINANCE + gLinear) +
-						(B_LUMINANCE * bLinear);
-				
-				int lightness = (int) (116 * Math.pow(luminance, 0.3333) - 16);
-				lightValues[y][x] = (lightness < DARK_BOUNDARY) ? 0 : 1;
-			}
-		}
-		
-		invertLightValues(lightValues);
-		return lightValues;
-	}
-	
-	private void invertLightValues(int[][] lightValues) {
-		for (int row = 0; row < lightValues.length; row++){
-			for (int col = 0; col < lightValues[row].length; col++){
-				lightValues[row][col] = ((lightValues[row][col] == 0) ? 1 : 0);
-			}
-		}
 	}
 	
 	private float getSumOfFeatures(List<Float> input){

@@ -1,3 +1,7 @@
+T#BRK#segT
+U#BRK#segU
+H#BRK#segH
+W#BRK#segW
  #BRK#space2
 A#BRK#A2
 a#BRK#lowerA2

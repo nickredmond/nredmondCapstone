@@ -1,5 +1,6 @@
 package appTest;
 
+import imageProcessing.ImageBinarizer;
 import io.CharacterType;
 import io.FileOperations;
 import io.NeuralNetworkIO;
@@ -17,24 +18,41 @@ import javax.imageio.ImageIO;
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixBackpropTrainer;
+import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import spellCheck.SpellChecker;
-import ui.HomeWindow;
+import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
 import app.ImageReadMethod;
 import app.ImageReader;
 import app.InputReader;
 import app.MultiNetworkReader;
+import app.NetworkFactory;
 import app.ReadResult;
 import debug.CorrelationDebug;
 import debug.FeatureExtractionDebug;
+import featureExtraction.ImageThinner;
 
 public class MainTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {	
-		new HomeWindow();
+		// new HomeWindow();
+		
+//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/segTest.png"));
+//		SegmentationDebug.displaySegmentationHistogram(img);
+		
+		writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest3.png");
+	//	engineTestStuff();
+		
+//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest4.png"));
+//		int[][] binaryValues = ImageBinarizer.convertImageToBinaryValues(img);
+//		ImageThinner thinner = new ImageThinner();
+//		thinner.thinImage(binaryValues);
+		
+	//	FeatureExtractionDebug.printImg(binaryValues);
 	}
 	
 	private static void engineTestStuff() throws IOException{
@@ -55,13 +73,13 @@ public class MainTest {
 		
 	// ---------------------------------------------------------------------------------------------------------------- //
 	
-//		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-//		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
-//				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
-//		
-//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
-		readFromSavedNetwork("yoloSwaggins");
+		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
+				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
+		
+		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
+	//	readFromSavedNetwork("yoloSwaggins");
 		
 //		float correlation = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 9, 10);
 //		float correlation2 = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 2, 3);

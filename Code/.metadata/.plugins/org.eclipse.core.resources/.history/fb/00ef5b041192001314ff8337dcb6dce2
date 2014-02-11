@@ -1,0 +1,79 @@
+package imageProcessing;
+
+import io.CharacterType;
+import io.TrainingDataReader;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
+import debug.FeatureExtractionDebug;
+
+public class NeighboringImageHypothesizer {
+	private static final float MIN_CONFIDENCE_REQUIRED = 0.95f;
+	private static final CharacterType TRAINING_TYPE = CharacterType.ASCII;
+	
+	public static List<BufferedImage> combineImagesThatFormCharacters(List<BufferedImage> line) throws IOException{
+		for (int i = 0; i < line.size() - 1; i++){
+			BufferedImage left = line.get(i);
+			BufferedImage right = line.get(i+1);
+			
+			if (isSpaceImage(right)){
+				i++;
+			}
+			else{
+				BufferedImage combined = new BufferedImage(left.getWidth()+right.getWidth(), left.getHeight(), BufferedImage.TYPE_INT_RGB);
+				
+				for (int col = 0; col < combined.getWidth(); col++){
+					for (int row = 0; row < left.getHeight(); row++){
+						int rgb = (col < left.getWidth()) ? left.getRGB(col, row) : right.getRGB(col + left.getWidth(), row);
+						combined.setRGB(col, row, rgb);
+					}
+				}
+				
+				float bestCorrelation = getBestCorrelationFor(combined);
+				
+				if (bestCorrelation >= MIN_CONFIDENCE_REQUIRED){
+					
+				}
+			}
+		}
+	}
+	
+	private static float getBestCorrelationFor(BufferedImage combined) throws IOException {
+		float highestCorrelation = -1.0f;
+		boolean found = false;
+		
+		Set<CharacterTrainingExample> examples = TrainingDataReader.createTrainingSetFromFile(TRAINING_TYPE);
+		Iterator<CharacterTrainingExample> iter = examples.iterator();
+		
+		while(iter.hasNext() && !found){
+			CharacterTrainingExample nextExample = iter.next();
+			
+			BufferedImage nextTrainingImg = nextExample.getCharacterImage();
+			float nextCorrelation = FeatureExtractionDebug.getCorrelation(combined, nextTrainingImg);
+			
+			if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
+				highestCorrelation = nextCorrelation;
+			}
+			
+			found = (highestCorrelation >= 0.99f);
+		}
+		return highestCorrelation;
+	}
+
+	private static boolean isSpaceImage(BufferedImage image){
+		float[] features = new FeatureExtractionIOTranslator().translateImageToNetworkInput(image);
+		boolean isSpace = true;
+		
+		for (int i = 0; i < features.length && isSpace; i++){
+			isSpace = (features[i] == 0);
+		}
+		
+		return isSpace;
+	}
+}

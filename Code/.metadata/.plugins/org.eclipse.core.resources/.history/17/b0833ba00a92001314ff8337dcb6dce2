@@ -1,0 +1,13 @@
+package debug;
+
+import java.awt.image.BufferedImage;
+
+public class SegmentationDebug {
+	public static void displaySegmentationHistogram(BufferedImage image){
+		
+	}
+	
+	private static int[] getHistogramForImage(BufferedImage image){
+		
+	}
+}

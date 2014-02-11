@@ -1,0 +1,20 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+import featureExtraction.ImageThinner;
+
+public class ImageSegmenter {
+	public static List<BufferedImage> segmentLineIntoCharacters(BufferedImage line){
+		int[][] binaryValues = ImageBinarizer.convertImageToBinaryValues(line);
+		ImageThinner thinner = new ImageThinner();
+		thinner.thinImage(binaryValues);
+		
+		int lastCharacterEndingCol = 0;
+		
+		for (int col = 0; col < binaryValues[0].length; col++){
+			
+		}
+	}
+}

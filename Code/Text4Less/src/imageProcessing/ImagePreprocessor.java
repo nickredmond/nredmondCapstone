@@ -63,7 +63,7 @@ public class ImagePreprocessor {
 		
 		maxRowWhitespaceValue = maxWhitespaceRowValue;
 		
-		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.ROW_VALUE_READER, 
+		ValueRange cropValues = getCropValueSet(original, RgbValueReader.ROW_VALUE_READER, 
 				original.getHeight(), maxWhitespaceRowValue);
 		
 		int endValue = (cropValues.getEndValue() < original.getHeight()) ? cropValues.getEndValue() : original.getHeight() - 1;
@@ -84,7 +84,7 @@ public class ImagePreprocessor {
 				getRgbValueLimits(RgbValueReader.COLUMN_VALUE_READER, original, original.getWidth());
 		long maxWhitespaceColValue = 
 				(long) (colLimits.getLowestRgbValue() + (WHITESPACE_MARGIN * colLimits.getRgbRange()));		
-		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.COLUMN_VALUE_READER,
+		ValueRange cropValues = getCropValueSet(original, RgbValueReader.COLUMN_VALUE_READER,
 				original.getWidth(), maxWhitespaceColValue);
 		
 		int endValue = (cropValues.getEndValue() < original.getWidth()) ? cropValues.getEndValue() : original.getWidth() - 1;
@@ -100,7 +100,7 @@ public class ImagePreprocessor {
 		return trimmedImg;
 	}
 	
-	private CropValueSet getCropValueSet(BufferedImage original, RgbValueReader reader,
+	private ValueRange getCropValueSet(BufferedImage original, RgbValueReader reader,
 			int maxPosition, long maxWhitespaceValue){
 		int startValue = 0;
 		int endValue = 0;
@@ -121,7 +121,7 @@ public class ImagePreprocessor {
 			}
 		}
 		
-		return new CropValueSet(startValue, endValue + 5);
+		return new ValueRange(startValue, endValue + 5);
 	}
 	
 	private RgbLimitSet getRgbValueLimits(RgbValueReader reader, BufferedImage img, int maxPosition){
@@ -144,7 +144,7 @@ public class ImagePreprocessor {
 	
 	
 	public List<BufferedImage> splitIntoLines(BufferedImage document){
-		List<CropValueSet> lineValues = new LinkedList<CropValueSet>();
+		List<ValueRange> lineValues = new LinkedList<ValueRange>();
 		RgbValueReader reader = RgbValueReader.ROW_VALUE_READER;
 		boolean isInLine = false;
 		
@@ -164,7 +164,7 @@ public class ImagePreprocessor {
 				int cropStart = (nextStartValue - SPLIT_PIXEL_BUFFER >= 0) ? nextStartValue - SPLIT_PIXEL_BUFFER : 0;
 				int cropEnd = (nextEndValue + SPLIT_PIXEL_BUFFER < document.getHeight()) ? nextEndValue + SPLIT_PIXEL_BUFFER : document.getHeight() - 1;
 				
-				CropValueSet nextLineValues = new CropValueSet(cropStart, 
+				ValueRange nextLineValues = new ValueRange(cropStart, 
 						cropEnd);
 				lineValues.add(nextLineValues);
 				isInLine = false;
@@ -183,10 +183,10 @@ public class ImagePreprocessor {
 	}
 	
 	private List<BufferedImage> convertCropValuesToImages(
-			List<CropValueSet> lineValues, BufferedImage image, ImageCropper cropper) {
+			List<ValueRange> lineValues, BufferedImage image, ImageCropper cropper) {
 		List<BufferedImage> croppedImages = new LinkedList<BufferedImage>();
 		
-		for (CropValueSet nextSet : lineValues){
+		for (ValueRange nextSet : lineValues){
 			int valueDifference = nextSet.getEndValue() - nextSet.getStartValue();
 			
 			BufferedImage nextCroppedImage = cropper.cropWithValues(nextSet.getStartValue(), 
@@ -201,7 +201,7 @@ public class ImagePreprocessor {
 	
 	
 	public List<BufferedImage> splitIntoCharacters(BufferedImage line){
-		List<CropValueSet> characters = new LinkedList<CropValueSet>();
+		List<ValueRange> characters = new LinkedList<ValueRange>();
 		RgbValueReader reader = RgbValueReader.COLUMN_VALUE_READER;
 		int startValue = 0;
 		boolean reachedCharacter = false;
@@ -218,7 +218,7 @@ public class ImagePreprocessor {
 			long rgbValue = reader.readRgbValue(line, col);
 			
 			if (rgbValue <= maxWhitespaceColValue && reachedCharacter){				
-				CropValueSet nextSet = new CropValueSet(startValue, col);
+				ValueRange nextSet = new ValueRange(startValue, col);
 				characters.add(nextSet);
 				reachedCharacter = false;
 				startValue = col;
@@ -227,14 +227,14 @@ public class ImagePreprocessor {
 				reachedCharacter = true;
 				
 				if (col - startValue > averageWhitespaceLength){
-					CropValueSet nextSet = new CropValueSet(startValue, col);
+					ValueRange nextSet = new ValueRange(startValue, col);
 					characters.add(nextSet);
 					startValue = col;
 				}
 			}
 		}
 		
-		CropValueSet nextSet = new CropValueSet(startValue, line.getWidth() - 1);
+		ValueRange nextSet = new ValueRange(startValue, line.getWidth() - 1);
 		
 		if (nextSet.getEndValue() > nextSet.getStartValue()){
 			characters.add(nextSet);
