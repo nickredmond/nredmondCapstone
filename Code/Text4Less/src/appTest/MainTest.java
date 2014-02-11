@@ -44,8 +44,8 @@ public class MainTest {
 //		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/segTest.png"));
 //		SegmentationDebug.displaySegmentationHistogram(img);
 		
-		writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest3.png");
-	//	engineTestStuff();
+		//writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest3.png");
+		engineTestStuff();
 		
 //		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest4.png"));
 //		int[][] binaryValues = ImageBinarizer.convertImageToBinaryValues(img);
@@ -73,13 +73,13 @@ public class MainTest {
 		
 	// ---------------------------------------------------------------------------------------------------------------- //
 	
-		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
-				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
-		
-		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
-	//	readFromSavedNetwork("yoloSwaggins");
+//		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+//		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
+//				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
+//		
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
+		readFromSavedNetwork("testThis");
 		
 //		float correlation = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 9, 10);
 //		float correlation2 = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 2, 3);
@@ -155,7 +155,7 @@ public class MainTest {
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		String result = reader.convertTranslationToText(translation);
 		
