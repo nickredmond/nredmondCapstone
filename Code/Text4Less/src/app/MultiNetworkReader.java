@@ -21,7 +21,7 @@ public class MultiNetworkReader {
 		List<List<CharacterResult>> results = new ArrayList<List<CharacterResult>>();
 		
 		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(), 1, 100, 7, true);
+		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(), 1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
 		
 		for (int i = 0; i < types.length; i++){
 			INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, types[i], new MatrixBackpropTrainer(0.05f, 0.02f));

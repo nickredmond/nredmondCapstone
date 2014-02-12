@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="app.ComplexNumberMath"/>
 <fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureType"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
-<fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 <fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
@@ -24,7 +22,6 @@
 <fullyQualifiedTypeName name="app.SpellChecker"/>
 <fullyQualifiedTypeName name="spellCheck.DictionaryCreatorUtil"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureExtractionHelper"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="app.CorrelationHandler"/>
 <fullyQualifiedTypeName name="threading.CorrelationThreadPool"/>
 <fullyQualifiedTypeName name="imageProcessing.TranslationResult"/>
@@ -45,19 +42,22 @@
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
-<fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="app.InputReader"/>
 <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
 <fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="appTest.SegmentationPanel"/>
 <fullyQualifiedTypeName name="appTest.SegmentationHistogramPanel"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="debug.SegmentationDebug"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
 <fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="imageProcessing.NeighboringImageHypothesizer"/>
+<fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
+<fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 </qualifiedTypeNameHistroy>

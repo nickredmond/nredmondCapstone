@@ -101,7 +101,9 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			
 			for (int row = 0; row < scaledImg.length; row++){
 				for (int col = 0; col < scaledImg[0].length; col++){
-					inputList.add((float) scaledImg[row][col]);
+					
+					float inputValue = (scaledImg[row][col] == 1) ? 0.5f : -0.5f;
+					inputList.add(inputValue);
 				}
 			}
 			
@@ -114,9 +116,9 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 //			FeatureExtractionDebug.printImg(scaledImg);
 //			System.out.println("------------------------------------------------------");
 						
-			addProfilingFeatures(inputList, croppedLightValues, percentages);
-			addVectorFeatures(inputList, croppedLightValues);
-			addCrossingFeatures(inputList, croppedLightValues);
+//			addProfilingFeatures(inputList, croppedLightValues, percentages);
+//			addVectorFeatures(inputList, croppedLightValues);
+//			addCrossingFeatures(inputList, croppedLightValues);
 //			addFeaturePoints(inputList, croppedLightValues);
 			
 		//	CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);

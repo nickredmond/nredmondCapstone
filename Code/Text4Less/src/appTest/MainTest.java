@@ -1,6 +1,5 @@
 package appTest;
 
-import imageProcessing.ImageBinarizer;
 import io.CharacterType;
 import io.FileOperations;
 import io.NeuralNetworkIO;
@@ -18,41 +17,35 @@ import javax.imageio.ImageIO;
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
-import neuralNetwork.MatrixBackpropTrainer;
-import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
+import receptors.Receptor;
+import receptors.ReceptorGenerator;
 import spellCheck.SpellChecker;
-import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
 import app.ImageReadMethod;
 import app.ImageReader;
 import app.InputReader;
 import app.MultiNetworkReader;
-import app.NetworkFactory;
 import app.ReadResult;
 import debug.CorrelationDebug;
 import debug.FeatureExtractionDebug;
-import featureExtraction.ImageThinner;
 
 public class MainTest {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {	
 		// new HomeWindow();
 		
-//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/segTest.png"));
-//		SegmentationDebug.displaySegmentationHistogram(img);
+	//	writeTrainingData("C:/Users/nredmond/Pictures/trainingData.png");
+	//	engineTestStuff();
 		
-		//writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest3.png");
-		engineTestStuff();
+		List<Receptor> rec = ReceptorGenerator.generateRandomReceptors(100);
 		
-//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest4.png"));
-//		int[][] binaryValues = ImageBinarizer.convertImageToBinaryValues(img);
-//		ImageThinner thinner = new ImageThinner();
-//		thinner.thinImage(binaryValues);
-		
-	//	FeatureExtractionDebug.printImg(binaryValues);
+		for (Receptor nextRec : rec){
+			System.out.println("startingX: " + nextRec.getStartingPoint().X() + " startingY: " + nextRec.getStartingPoint().Y() +
+					" endingX: " + nextRec.getEndingPoint().X() + " endingY: " + nextRec.getEndingPoint().Y());
+		}
 	}
 	
 	private static void engineTestStuff() throws IOException{
@@ -64,7 +57,7 @@ public class MainTest {
 	//	writeTrainingData("C:\\Users\\nredmond\\Pictures\\charTest4.png");
 	//	renameCharacters(CharacterType.ASCII2, 2);
 		
-	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII2, 10);
+	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII3, 6);
 		
 //		ImagePreprocessor proc = new ImagePreprocessor();
 //		BufferedImage testMe = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
@@ -78,8 +71,8 @@ public class MainTest {
 //				1, 200, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
 //		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
 //		
-//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
-		readFromSavedNetwork("testThis");
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins2");
+		readFromSavedNetwork("yoloSwaggins2");
 		
 //		float correlation = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 9, 10);
 //		float correlation2 = CorrelationDebug.getCorrelationBetweenTrainingSets(CharacterType.ASCII, 2, 3);
@@ -155,7 +148,7 @@ public class MainTest {
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\zyzzyva.png"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		String result = reader.convertTranslationToText(translation);
 		

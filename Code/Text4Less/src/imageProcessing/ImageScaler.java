@@ -8,7 +8,7 @@ import debug.FeatureExtractionDebug;
 public class ImageScaler {
 	public static int[][] scaleWithBilinearInterpolation(int[][] imageValues, int newWidth, int newHeight){
 		int[] linearizedImgValues = new int[imageValues.length * imageValues[0].length];
-		
+
 		int index = 0;
 		for (int row = 0; row < imageValues.length; row++){
 			for (int col = 0; col < imageValues[0].length; col++){
@@ -16,28 +16,28 @@ public class ImageScaler {
 				index++;
 			}
 		}
-		
+
 		int[] interpolatedValues = resizeBilinearly(linearizedImgValues, imageValues.length, imageValues[0].length, newWidth, newHeight);
-		
+
 		int[][] scaledImageValues = new int[newHeight][newWidth];
 		for (int row = 0; row < newHeight; row++){
 			for (int col = 0; col < newWidth; col++){
-				int currentIndex = (row * newHeight) + col;
+				int currentIndex = (row * newWidth) + col;
 				scaledImageValues[row][col] = interpolatedValues[currentIndex];
 			}
 		}
-		
+
 		return scaledImageValues;
 	}
-	
+
 	private static int[] resizeBilinearly(int[] imageValues, int oldHeight, int oldWidth, int newHeight, int newWidth){
 		int[] interpolatedValues = new int[newHeight * newWidth];
 		float widthRatio = ((float)(oldWidth - 1) / newWidth);
 		float heightRatio = ((float)(oldHeight - 1) / newHeight);
 		int currentIndex = 0;
-		
+
 //		float[][] stuff = new float[newHeight][newWidth];
-		
+
 		for (int row = 0; row < newHeight; row++){
 			for (int col = 0; col < newWidth; col++){
 				int currentX = (int)(widthRatio * col);
@@ -45,26 +45,26 @@ public class ImageScaler {
 				float xWidthDiff = (widthRatio * col) - currentX;
 				float yWidthDiff = (heightRatio * row) - currentY;
 				int boundaryPixelIndex = (currentY * oldWidth) + currentX;
-				
+
 				int pixelA = imageValues[boundaryPixelIndex];
 				int pixelB = imageValues[boundaryPixelIndex + 1];
 				int pixelC = imageValues[boundaryPixelIndex + oldWidth];
 				int pixelD = imageValues[boundaryPixelIndex + oldWidth + 1];
-				
+
 				float newPixelValue = (pixelA * (1 - xWidthDiff) * (1 - yWidthDiff)) +
 						(pixelB * xWidthDiff * (1 - yWidthDiff)) + (pixelC * yWidthDiff * (1 - xWidthDiff)) +
 						(pixelD * xWidthDiff * yWidthDiff);
 				int newPixelBinary = (newPixelValue >= 0.5f) ? 1 : 0;
-				
+
 //				stuff[row][col] = newPixelValue;
-				
+
 				interpolatedValues[currentIndex] = newPixelBinary;
 				currentIndex++;
 			}
 		}
-		
+
 //		FeatureExtractionDebug.printFloatImg(stuff);
-		
+
 		return interpolatedValues;
 	}
 	

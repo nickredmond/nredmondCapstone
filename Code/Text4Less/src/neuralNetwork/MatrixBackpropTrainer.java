@@ -51,6 +51,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 			cve = crossValidate(testSet, network);
 			System.out.println("MSE: " + mse + ", CVE: " + cve);
 			numberIterationsPerformed++;
+		//	System.out.println("error goal: " + errorGoal);
 		}while(mse > errorGoal && numberIterationsPerformed < maxIterations);
 		
 		errorAchieved = mse;
