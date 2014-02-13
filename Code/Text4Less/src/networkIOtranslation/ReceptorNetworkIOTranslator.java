@@ -2,41 +2,41 @@ package networkIOtranslation;
 
 import imageProcessing.TranslationResult;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import receptors.Receptor;
+import receptors.ReceptorFilter;
+
 public class ReceptorNetworkIOTranslator implements INetworkIOTranslator {
-	private List<Point> receptors;
+	private List<Receptor> receptors;
 	
-	public ReceptorNetworkIOTranslator(List<Point> receptors){
+	public ReceptorNetworkIOTranslator(List<Receptor> receptors){
 		this.receptors = receptors;
 	}
 	
 	@Override
 	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
-		return new NetworkIOTranslator().translateNetworkOutputToCharacter(output);
+		return new AlphaNumericIOTranslator().translateNetworkOutputToCharacter(output);
 	}
 
 	@Override
 	public int[] translateCharacterToNetworkOutput(char c) {
-		return new NetworkIOTranslator().translateCharacterToNetworkOutput(c);
+		return new AlphaNumericIOTranslator().translateCharacterToNetworkOutput(c);
 	}
 
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
-		float[] allInputs = new NetworkIOTranslator().translateImageToNetworkInput(img);
-		float[] receptorInputs = new float[receptors.size()];
+		float[] input = new float[receptors.size()];
 		
-		int imageWidth = 30;
-		
-		int index = 0;
-		for (Point nextReceptor : receptors){
-			receptorInputs[index] = allInputs[nextReceptor.x * imageWidth + nextReceptor.y];
-			index++;
+		for (int i = 0; i < input.length; i++){
+			Receptor nextReceptor = receptors.get(i);
+			boolean crosses = ReceptorFilter.crossesImage(nextReceptor, img);
+			
+			input[i] = (crosses ? 0.5f : -0.5f);
 		}
 		
-		return receptorInputs;
+		return input;
 	}
 
 }

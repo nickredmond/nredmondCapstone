@@ -3,6 +3,10 @@ package math;
 public class GeneralMath {
 	private final static int EXPANSION_ORDER = 39;
 	
+	public static float logarithm(float a, float x){
+		return (float)(Math.log(x) / Math.log(a));
+	}
+	
 	public static float arcTangent(float value){
 		float atan = 0.0f;
 		

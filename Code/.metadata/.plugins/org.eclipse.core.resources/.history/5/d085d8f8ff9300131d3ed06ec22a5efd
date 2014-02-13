@@ -1,0 +1,23 @@
+package receptors;
+
+import java.awt.image.BufferedImage;
+
+public class ReceptorFilter {
+	
+	public static boolean crossesImage(Receptor receptor, BufferedImage image){
+		boolean crosses = false;
+		
+		float slopeY = receptor.getEndingPoint().Y() - receptor.getStartingPoint().Y();
+		float slopeX = receptor.getEndingPoint().X() - receptor.getStartingPoint().X();
+		
+		float scaleFactor = 1.0f / slopeX;
+		
+		int xTravel = (int)(scaleFactor * slopeX);
+		int yTravel = (int)(scaleFactor * slopeY);
+		
+		int startingX = (int)(receptor.getStartingPoint().X() * image.getWidth());
+		int startingY = (int)(receptor.getStartingPoint().Y() * image.getWidth());
+		
+		return crosses;
+	}
+}

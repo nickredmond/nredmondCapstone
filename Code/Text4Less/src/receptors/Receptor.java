@@ -1,8 +1,9 @@
 package receptors;
 
-import java.awt.Point;
+import java.io.Serializable;
 
-public class Receptor {
+
+public class Receptor implements Serializable {
 	private FloatPoint startingPoint, endingPoint;
 	
 	public Receptor(FloatPoint startingPoint, FloatPoint endingPoint){

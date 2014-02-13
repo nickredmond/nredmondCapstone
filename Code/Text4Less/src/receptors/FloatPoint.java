@@ -1,6 +1,8 @@
 package receptors;
 
-public class FloatPoint {
+import java.io.Serializable;
+
+public class FloatPoint implements Comparable<FloatPoint>, Serializable {
 	private float x, y;
 	
 	public FloatPoint(float x, float y){
@@ -14,5 +16,19 @@ public class FloatPoint {
 	
 	public float Y(){
 		return y;
+	}
+
+	@Override
+	public int compareTo(FloatPoint otherPoint) {
+		int result = 0;
+		
+		if (this.y > otherPoint.y){
+			result = 1;
+		}
+		else if (this.y < otherPoint.y){
+			result = -1;
+		}
+		
+		return result;
 	}
 }

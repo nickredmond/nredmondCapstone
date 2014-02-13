@@ -1,0 +1,25 @@
+package debug;
+
+import app.AlphaNumericCharacterConverter;
+
+public class EntropyDebug {
+	public static void printDataMatrix(String[][] dataMatrix){
+		try{
+			int greatestLength = 0;
+			AlphaNumericCharacterConverter converter = new AlphaNumericCharacterConverter();
+			
+			for (int y = 0; y < dataMatrix.length; y++){
+				if (y == 0){
+					char nextClass = converter.convertClassNumberToCharacter(y);
+					System.out.print(nextClass + " | ");
+				}
+				
+				for (int x = 0; x < dataMatrix[0].length; x++){
+					
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+}

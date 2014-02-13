@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="app.ComplexNumberMath"/>
-<fullyQualifiedTypeName name="featureExtraction.MomentCalculator"/>
-<fullyQualifiedTypeName name="featureExtraction.FeatureType"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="featureExtraction.ChainCodeCreator"/>
-<fullyQualifiedTypeName name="app.GeneralMath"/>
 <fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
@@ -29,7 +23,6 @@
 <fullyQualifiedTypeName name="app.CharacterResult"/>
 <fullyQualifiedTypeName name="app.ImageHandlerFactory"/>
 <fullyQualifiedTypeName name="app.ImageReadMethod"/>
-<fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
 <fullyQualifiedTypeName name="ui.ImageLoaderPanel"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
@@ -50,14 +43,21 @@
 <fullyQualifiedTypeName name="appTest.SegmentationHistogramPanel"/>
 <fullyQualifiedTypeName name="debug.SegmentationDebug"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
-<fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="imageProcessing.NeighboringImageHypothesizer"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
+<fullyQualifiedTypeName name="debug.EntropyDebug"/>
+<fullyQualifiedTypeName name="io.TrainingDataReader"/>
+<fullyQualifiedTypeName name="receptors.ReceptorGenerator"/>
+<fullyQualifiedTypeName name="receptors.ReceptorFilter"/>
+<fullyQualifiedTypeName name="math.EntropyCalculator"/>
+<fullyQualifiedTypeName name="math.StatisticalMath"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,13 @@
+package debug;
+
+public class EntropyDebug {
+	public static void printDataMatrix(String[][] dataMatrix){
+		int greatestLength = 0;
+		
+		for (int y = 0; y < dataMatrix.length; y++){
+			for (int x = 0; x < dataMatrix[0].length; x++){
+				
+			}
+		}
+	}
+}

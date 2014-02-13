@@ -1,0 +1,45 @@
+package receptors;
+
+import java.awt.image.BufferedImage;
+
+import debug.FeatureExtractionDebug;
+
+public class ReceptorFilter {
+	
+	public static boolean crossesImage(Receptor receptor, BufferedImage image){
+		boolean crosses = false;
+		
+		float slopeY = receptor.getEndingPoint().Y() - receptor.getStartingPoint().Y();
+		float slopeX = receptor.getEndingPoint().X() - receptor.getStartingPoint().X();
+		
+		float scaleFactor = 1.0f / slopeX;
+		
+		int xTravel = (int)(scaleFactor * slopeX);
+		int yTravel = (int)(scaleFactor * slopeY);
+		
+		int startingX = (int)(receptor.getStartingPoint().X() * 30);
+		int startingY = (int)(receptor.getStartingPoint().Y() * 40);
+		
+		int[][] imageValues = new int[40][30];
+		
+		float currentY = startingY;
+		System.out.println("starting: " + startingX + " " + startingY);
+		for (int col = startingX; isInBounds(imageValues, col, currentY) && !crosses; col += xTravel){
+			
+			imageValues[col][(int)currentY] = 1;
+			
+			currentY += yTravel;
+		}
+		
+		FeatureExtractionDebug.printImg(imageValues);
+		
+		return crosses;
+	}
+	
+	private static boolean isInBounds(int[][] imageValues, int col, float currentY){
+		int currentYint = (int)currentY;
+		
+		return (col < imageValues[0].length && col >= 0 && currentYint < imageValues.length &&
+				currentYint >= 0);
+	}
+}
