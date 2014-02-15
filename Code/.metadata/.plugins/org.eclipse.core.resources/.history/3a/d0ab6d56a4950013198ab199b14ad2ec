@@ -1,0 +1,30 @@
+package ui;
+
+import javax.swing.JPanel;
+
+public class DrawingPanel extends JPanel{	
+	private DrawingArea area;
+	private ControlsPanel controls;
+	
+	public DrawingPanel(){
+		area = new DrawingArea();
+		controls = new ControlsPanel(this);
+		
+	}
+	
+	public void saveClicked(){
+		
+	}
+	
+	public void clearClicked(){
+		area.clearData();
+	}
+	
+	public void penSizeChanged(int penSize){
+		area.setPenSize(penSize);
+	}
+	
+	public void areaSizeChanged(int areaSize){
+		area.setDimensions(areaSize, areaSize);
+	}
+}

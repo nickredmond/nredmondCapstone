@@ -12,7 +12,7 @@ public class BinaryImagePanel extends JPanel {
 	private int[][] lightValues;
 	
 	public BinaryImagePanel(int dimensionX, int dimensionY, int width, int height){
-		lightValues = new int[dimensionX][dimensionY];
+		lightValues = new int[dimensionY][dimensionX];
 		this.setSize(new Dimension(width, height));
 	}
 	

@@ -4,7 +4,6 @@ import io.CharacterType;
 import io.FileOperations;
 import io.NeuralNetworkIO;
 import io.ReceptorIO;
-import io.TrainingDataReader;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,20 +13,19 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 import networkIOtranslation.AlphaNumericIOTranslator;
+import networkIOtranslation.FeatureExtractionIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
-import networkIOtranslation.ReceptorNetworkIOTranslator;
-import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import receptors.Receptor;
-import receptors.ReceptorFilter;
-import receptors.ReceptorGenerator;
 import spellCheck.SpellChecker;
+import ui.DrawingPanel;
 import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageHandlerFactory;
@@ -45,18 +43,34 @@ public class MainTest {
 	public static void main(String[] args) throws Exception {	
 		// new HomeWindow();
 		
+		JFrame f = new JFrame();
+		f.getContentPane().add(new DrawingPanel());
+		f.pack();
+		f.setVisible(true);
+		
+//		BufferedImage before = 
+//				ImageIO.read(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII2\\lowerb2.jpg"));
+//		
+//		int[][] beforeValues = ImageBinarizer.convertImageToBinaryValues(before);
+//		beforeValues = ImageNormalizer.cropImage(beforeValues);
+//		CharacterViewDebug.displayCharacterView(before, beforeValues, beforeValues[0].length, beforeValues.length);
+//		
+//		int[][] afterValues = ImageNormalizer.downSizeImage(beforeValues, 5, 7);
+//		
+//		CharacterViewDebug.displayCharacterView(null, afterValues, 5, 7);
+		
 	//	writeTrainingData("C:/Users/nredmond/Pictures/trainingData.png");
 	//	engineTestStuff();
 		
 	//	BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/trainingData.png"));
 		
-		Set<CharacterTrainingExample> examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-		List<Receptor> receptors = ReceptorGenerator.generateRandomReceptors(10000);
-		
-		List<Receptor> filtered = ReceptorFilter.filterReceptors(receptors, examples, 150);
-		ReceptorIO.saveReceptors(filtered, "myReceptors");
-		
-		System.out.println("finished");
+//		Set<CharacterTrainingExample> examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
+//		List<Receptor> receptors = ReceptorGenerator.generateRandomReceptors(1000);
+//		
+//		List<Receptor> filtered = ReceptorFilter.filterReceptors(receptors, examples, 100);
+//		ReceptorIO.saveReceptors(filtered, "myReceptors");
+//		
+//		System.out.println("finished");
 	}
 	
 	private static void engineTestStuff() throws IOException{
@@ -77,10 +91,18 @@ public class MainTest {
 		
 	// ---------------------------------------------------------------------------------------------------------------- //
 	
-		List<Receptor> receptors = ReceptorIO.readReceptors("myReceptors");
+//		List<Receptor> receptors = ReceptorIO.readReceptors("myReceptors");
+//		
+//		INetworkIOTranslator translator = new ReceptorNetworkIOTranslator(receptors);
+//		INeuralNetwork network = new MatrixNeuralNetwork(receptors.size(),
+//				1, 150, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
+//		
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins2");
+//		readFromSavedNetwork("yoloSwaggins2");
 		
-		INetworkIOTranslator translator = new ReceptorNetworkIOTranslator(receptors);
-		INeuralNetwork network = new MatrixNeuralNetwork(receptors.size(),
+		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(new FeatureExtractionIOTranslator().getInputLength(),
 				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
 		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
 		
@@ -157,12 +179,12 @@ public class MainTest {
 	private static void readFromSavedNetwork(String networkName) throws IOException{
 		INeuralNetwork savedNetwork = NeuralNetworkIO.readNetwork(networkName);
 		List<Receptor> receptors = ReceptorIO.readReceptors("myReceptors");
-		INetworkIOTranslator t = new ReceptorNetworkIOTranslator(receptors);
+		INetworkIOTranslator t = new AlphaNumericIOTranslator();
 		ImageReader reader = new ImageReader(savedNetwork, t);
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
+		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest3.png"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		String result = reader.convertTranslationToText(translation);
 		

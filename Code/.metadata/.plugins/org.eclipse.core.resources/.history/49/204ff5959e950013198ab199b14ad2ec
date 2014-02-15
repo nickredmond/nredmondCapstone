@@ -1,0 +1,81 @@
+package ui;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
+
+public class DrawingArea extends JPanel {
+	private final int AREA_HEIGHT = 300;
+	private final int AREA_WIDTH = 300;
+	
+	private final int DEFAULT_HEIGHT = 10;
+	private final int DEFAULT_WIDTH = 10;
+	
+	private int height, width;
+	private float cellWidth, cellHeight;
+	private int[][] data;
+	
+	public DrawingArea(){
+		setDimensions(DEFAULT_HEIGHT, DEFAULT_WIDTH);
+		
+		data = new int[height][width];
+		
+		this.addMouseMotionListener(new DragListener());
+		
+		this.setSize(new Dimension(AREA_WIDTH, AREA_HEIGHT));
+	}
+	
+	public void setDimensions(int height, int width){
+		this.height = height;
+		this.width = width;
+		
+		cellWidth = (float)AREA_WIDTH / width;
+		cellHeight = (float)AREA_HEIGHT / height;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		for (int x = 0; x < height; x++){
+			for (int y = 0; y < width; y++){
+				int startingX = (int) (y * cellWidth);
+				int endingX = (int)((y+1) * cellWidth) - 1;
+				int startingY = (int) (y * cellHeight);
+				int endingY = (int) ((y+1) * cellHeight) - 1;
+				
+				System.out.println(startingX + " " + endingX + " " + startingY + " " + endingY);
+				
+				Color cellColor = (data[y][y] == 1) ? Color.BLACK : Color.WHITE;
+				g.setColor(cellColor);
+				g.fillRect(startingX, endingX, (endingX - startingX), (endingY - startingY));
+			}
+		}
+	}
+	
+	private class DragListener implements MouseMotionListener{
+
+		@Override
+		public void mouseDragged(MouseEvent evt) {
+			Point mouseLocation = evt.getPoint();
+			Point areaLocation = DrawingArea.this.getLocation();
+		//	System.out.println(mouseLocation.x + " " + mouseLocation.y + " " + areaLocation.x + " " + areaLocation.y);
+			
+			Point relativeLocation = new Point(mouseLocation.x - areaLocation.x, mouseLocation.y - areaLocation.y);
+			
+			int cellX = (int) (relativeLocation.x / cellWidth);
+			int cellY = (int) (relativeLocation.y / cellHeight);
+			
+			data[cellY][cellX] = 1;
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+		}
+	}
+}

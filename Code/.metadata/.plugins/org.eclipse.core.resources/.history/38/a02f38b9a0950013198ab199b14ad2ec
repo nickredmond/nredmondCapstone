@@ -1,0 +1,14 @@
+package ui;
+
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+
+public class ControlsPanel extends JPanel {
+	private JSlider penSizeSlider, areaSizeSlider;
+	
+	private final int MAX_AREA_SIZE = 100;
+	private final int MIN_AREA_SIZE = 10;
+	
+	private final int MAX_PEN_WIDTH = 10;
+	private final int MIN_PEN_WIDTH = 1;
+}

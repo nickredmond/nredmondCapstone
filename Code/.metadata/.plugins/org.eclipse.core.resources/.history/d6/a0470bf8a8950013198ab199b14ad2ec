@@ -1,0 +1,27 @@
+package ui;
+
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class SaveImageWindow extends JFrame{
+	private JLabel selectedFolderLabel;
+	private JButton chooseFolderButton, saveButton;
+	private JTextField characterTextField;
+	
+	private File selectedFolder;
+	
+	public SaveImageWindow(){
+		setupWindow();
+	}
+
+	private void setupWindow() {
+		JPanel setFolderPanel = new JPanel();
+		selectedFolderLabel = new JLabel("Selected Training Set: ---");
+		chooseFolderButton = new JButton("Choose Folder...");
+	}
+}

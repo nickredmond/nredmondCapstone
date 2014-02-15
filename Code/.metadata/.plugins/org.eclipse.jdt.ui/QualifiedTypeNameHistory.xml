@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="neuralNetwork.SigmoidActivationCalculator"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
-<fullyQualifiedTypeName name="app.ImageReader"/>
-<fullyQualifiedTypeName name="org.jocl.cl_platform_id"/>
 <fullyQualifiedTypeName name="org.jocl.Sizeof"/>
 <fullyQualifiedTypeName name="org.jocl.Pointer"/>
 <fullyQualifiedTypeName name="org.jocl.CL"/>
@@ -49,8 +44,6 @@
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
 <fullyQualifiedTypeName name="debug.EntropyDebug"/>
@@ -60,4 +53,11 @@
 <fullyQualifiedTypeName name="math.EntropyCalculator"/>
 <fullyQualifiedTypeName name="math.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="imageProcessing.RowPatternTransformer"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="imageProcessing.ImageNormalizer"/>
 </qualifiedTypeNameHistroy>

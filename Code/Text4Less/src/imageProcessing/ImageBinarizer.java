@@ -10,6 +10,9 @@ public class ImageBinarizer {
 	
 	private static final int DARK_BOUNDARY = 5000;
 	
+	public static final int WHITE_RGB = -1;
+	public static final int BLACK_RGB = -16777216;
+	
 	public static int[][] convertImageToBinaryValues(BufferedImage img){
 		int[][] lightValues = new int[img.getHeight()][img.getWidth()];
 		
@@ -34,6 +37,19 @@ public class ImageBinarizer {
 		
 		invertLightValues(lightValues);
 		return lightValues;
+	}
+	
+	public static BufferedImage convertBinaryValuesToImage(int[][] imageValues){
+		BufferedImage img = new BufferedImage(imageValues[0].length, imageValues.length, BufferedImage.TYPE_INT_RGB);
+		
+		for (int row = 0; row < imageValues.length; row++){
+			for (int col = 0; col < imageValues[0].length; col++){
+				int rgb = (imageValues[row][col] == 1) ? BLACK_RGB : WHITE_RGB;
+				img.setRGB(col, row, rgb);
+			}
+		}
+		
+		return img;
 	}
 	
 	private static void invertLightValues(int[][] lightValues) {

@@ -18,7 +18,7 @@ public class NetworkFactory {
 	
 	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
 			CharacterType type, INetworkTrainer networkTrainer) throws IOException{
-		return getTrainedNetwork(originalNetwork, translator, type, networkTrainer, 10000, 0.05f);
+		return getTrainedNetwork(originalNetwork, translator, type, networkTrainer, 10000, 0.01f);
 	}
 	
 	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
@@ -26,8 +26,8 @@ public class NetworkFactory {
 		INeuralNetwork networkCopy = originalNetwork.cloneNetwork();
 		
 		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(type);
-		Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII3);
-		trainingSet.addAll(trainingSet2);
+//		Set<CharacterTrainingExample> trainingSet2 = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII3);
+//		trainingSet.addAll(trainingSet2);
 		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(type);
 		CharacterNetworkTrainer trainer = new CharacterNetworkTrainer(translator);
 		

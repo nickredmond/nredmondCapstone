@@ -171,6 +171,10 @@ public class ImagePreprocessor {
 			}
 		}
 		
+		if (lineValues.size() == 0){
+			lineValues.add(new ValueRange(0, document.getHeight()));
+		}
+		
 		List<BufferedImage> croppedImages = convertCropValuesToImages(lineValues, document,
 				ImageCropper.TOP_BOTTOM_CROPPER);
 		List<BufferedImage> trimmedImages = new LinkedList<BufferedImage>();

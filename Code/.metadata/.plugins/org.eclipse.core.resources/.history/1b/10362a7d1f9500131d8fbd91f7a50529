@@ -1,0 +1,43 @@
+package appTest;
+
+import imageProcessing.RowPatternTransformer;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+public class RowPatternTransTest {
+
+	@Test
+	public void test() {
+		int[] pattern1 = {0,1,1,1,0};
+		int[] pattern2 = {1,1,0,1,1};
+		int[] pattern3 = {1,1,1,1,1};
+		int[] pattern4 = {1,1,0,0,1};
+		int[] pattern5 = {0,0,0,0,0};
+		
+		int[] test1 = {0,1,0,1,0};
+		int[] test2 = {1,0,0,0,1};
+		int[] test3 = {1,0,1,0,1};
+		int[] test4 = {1,0,0,0,1};
+		int[] test5 = {0,0,0,0,0};
+		
+		int[] result1 = RowPatternTransformer.getTransformationFor(pattern1, 2);
+		int[] result2 = RowPatternTransformer.getTransformationFor(pattern2, 2);
+		int[] result3 = RowPatternTransformer.getTransformationFor(pattern3, 3);
+		int[] result4 = RowPatternTransformer.getTransformationFor(pattern4, 2);
+		int[] result5 = RowPatternTransformer.getTransformationFor(pattern5, 0);
+		
+		assert(Arrays.equals(test1, result1));
+		assert(Arrays.equals(test2, result2));
+		assert(Arrays.equals(test3, result3));
+		assert(Arrays.equals(test4, result4));
+		assert(Arrays.equals(test5, result5));
+		
+		int[] yes = {1,0,0,0,1};
+		int[] no = {1,1,0,0,1};
+		assert(Arrays.equals(yes, no));
+		assert(true == false);
+	}
+
+}
