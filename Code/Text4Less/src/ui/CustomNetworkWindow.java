@@ -34,13 +34,22 @@ public class CustomNetworkWindow extends JFrame {
 	private int numberNeurons, numberLayers, numberIterations;
 	private float mse;
 	
+	private TrainingSetSelectionPanel setSelectionPanel;
+	
 	public CustomNetworkWindow(){
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		setupTextFieldPanels();
+		setupTrainingDataSelectionPanel();
 		setupButtons();
 		
 		this.pack();
 		this.setVisible(true);
+	}
+
+	private void setupTrainingDataSelectionPanel() {
+		setSelectionPanel = new TrainingSetSelectionPanel(false);
+		setSelectionPanel.setSelectedFolder(new File("trainingImages/ASCII2"));
+		this.add(setSelectionPanel);
 	}
 
 	private void setupButtons() {
@@ -138,7 +147,10 @@ public class CustomNetworkWindow extends JFrame {
 						INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 						INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
 								numberLayers, numberNeurons, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-						customNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f),
+						
+						File selectedTrainingSet = setSelectionPanel.getSelectedFolder();
+						
+						customNetwork = NetworkFactory.getTrainedNetwork(network, translator, selectedTrainingSet, new MatrixBackpropTrainer(0.05f, 0.02f),
 								numberIterations, mse);
 						
 						trainButton.setEnabled(true);

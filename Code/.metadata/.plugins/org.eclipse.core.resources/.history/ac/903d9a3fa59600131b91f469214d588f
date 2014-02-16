@@ -1,0 +1,15 @@
+package ui;
+
+import javax.swing.JPanel;
+
+import neuralNetwork.INeuralNetwork;
+
+public class CharacterRecognitionPanel extends JPanel implements INetworkSelectionHandler{
+	private INeuralNetwork selectedNetwork;
+	
+	@Override
+	public void networkSelected(String networkName, INeuralNetwork network) {
+		selectedNetwork = network;
+	}
+
+}

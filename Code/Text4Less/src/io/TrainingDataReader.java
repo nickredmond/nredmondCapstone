@@ -11,6 +11,8 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import ui.TrainingDataNameAssigner;
+import app.AlphaNumericCharacterConverter;
 import neuralNetwork.CharacterTrainingExample;
 
 public class TrainingDataReader {
@@ -18,6 +20,10 @@ public class TrainingDataReader {
 	private static final int FILENAME_INDEX = 1;
 	private static final char SPACE_CHAR = ' ';
 	private static final int SPACE_INT = 32;
+	
+	private static final int LOWER_START_INDEX = 5;
+	
+	private static final String IMAGE_EXTENSION = "jpg";
 	
 	public static final String DELIMITER = "#BRK#";
 	
@@ -27,6 +33,79 @@ public class TrainingDataReader {
 		String imagePath = "trainingImages/" + type.toString() + "/testImages/";
 		
 		return readCharacterSet(reader, type, imagePath);
+	}
+	
+	public static Set<CharacterTrainingExample> createTriningSetFromFile(File trainingSetDirectory) throws IllegalStateException, IOException{
+		File[] trainingImageFiles = trainingSetDirectory.listFiles();
+		Set<CharacterTrainingExample> examples = new HashSet<CharacterTrainingExample>();
+		
+		for (int i = 0; i < trainingImageFiles.length; i++){
+			File nextFile = trainingImageFiles[i];
+			
+			if (!nextFile.isDirectory()){
+				String filename = nextFile.getName();
+				String[] nameParts = filename.split("[.]");
+				
+				String imageName = nameParts[0];
+				String extension = nameParts[1];
+				
+				if (!extension.equals("db")){
+					if (!extension.equals(IMAGE_EXTENSION)){
+						throw new IllegalStateException("Invalid file format");
+					}
+					
+				//	CharacterTrainingExample nextExample = new CharacterTrainingExample(img, value);
+					char nextCharacter = 'A';
+					
+					if (imageName.matches("^space[0-9]*$")){
+						nextCharacter = ' ';
+					}
+					else if (imageName.toLowerCase().startsWith("lower")){
+						if (imageName.length() > LOWER_START_INDEX){
+							char character = imageName.charAt(LOWER_START_INDEX);
+							int charValue = (int)character;
+							
+							if (charValue >= AlphaNumericCharacterConverter.UPPER_START && charValue <= AlphaNumericCharacterConverter.UPPER_END){
+								character = (char)(charValue + TrainingDataNameAssigner.UPPER_LOWER_DIFFERENCE);
+							}
+							if ((int)character < AlphaNumericCharacterConverter.LOWER_START || (int)character > AlphaNumericCharacterConverter.LOWER_END){
+								throw new IllegalStateException("Invalid file name");
+							}
+							
+							nextCharacter = character;
+						}
+						else throw new IllegalStateException("Invalid file name");
+					}
+					else if (imageName.toLowerCase().matches("^[a-z]{1}[0-9]*$")){
+						char character = imageName.charAt(0);
+						int charValue = (int)character;
+						
+						if (charValue >= AlphaNumericCharacterConverter.LOWER_START && charValue <= AlphaNumericCharacterConverter.LOWER_END){
+							character = (char)(charValue - TrainingDataNameAssigner.UPPER_LOWER_DIFFERENCE);
+						//	System.out.println("yes: " + imageName + " " + character);
+						}
+						if ((int)character < AlphaNumericCharacterConverter.UPPER_START || (int)character > AlphaNumericCharacterConverter.UPPER_END){
+						//	System.out.println(imageName + " " + charValue);
+							throw new IllegalStateException("Invalid file name");
+						}
+						
+						nextCharacter = character;
+					}
+					else if (imageName.matches("^[0-9]+")){
+						nextCharacter = imageName.charAt(0);
+					}
+					else{
+						System.out.println(imageName);
+						throw new IllegalStateException("Invalid file name");
+					}
+					
+					BufferedImage nextImage = ImageIO.read(nextFile);
+					examples.add(new CharacterTrainingExample(nextImage, nextCharacter));
+				}
+			}
+		}
+		
+		return examples;
 	}
 	
 	private static Set<CharacterTrainingExample> readCharacterSet(BufferedReader reader, CharacterType type,

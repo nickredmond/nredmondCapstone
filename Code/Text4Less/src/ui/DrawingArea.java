@@ -57,6 +57,10 @@ public class DrawingArea extends JPanel {
 		repaint();
 	}
 	
+	public int[][] getData(){
+		return data;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		g.setColor(Color.WHITE);

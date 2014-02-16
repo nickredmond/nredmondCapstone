@@ -1,0 +1,7 @@
+package ui;
+
+public class TrainingDataNameAssigner {
+	public static String assignName(File trainingDataDir){
+		
+	}
+}

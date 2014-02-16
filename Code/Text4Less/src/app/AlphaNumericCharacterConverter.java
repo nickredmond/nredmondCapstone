@@ -1,12 +1,12 @@
 package app;
 
 public class AlphaNumericCharacterConverter implements ICharacterConverter {
-	private final int UPPER_START = 65;
-	private final int UPPER_END = 90;
-	private final int LOWER_START = 97;
-	private final int LOWER_END = 122;
-	private final int NUMERIC_START = 48;
-	private final int NUMERIC_END = 57;
+	public static final int UPPER_START = 65;
+	public static final int UPPER_END = 90;
+	public static final int LOWER_START = 97;
+	public static final int LOWER_END = 122;
+	public static final int NUMERIC_START = 48;
+	public static final int NUMERIC_END = 57;
 	private final int SPACE_INDEX = 62;
 	private final char SPACE_VALUE = 32;
 	

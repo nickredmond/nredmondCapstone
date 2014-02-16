@@ -1,0 +1,16 @@
+package ui;
+
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+
+public class DigitalDrawingWindow extends JFrame {
+	private DrawingPanel drawing;
+	private CharacterRecognitionPanel recognition;
+	
+	
+	public void recognizeClicked(){
+		BufferedImage userImage = drawing.getUserImage();
+		recognition.setImage(userImage);
+	}
+}

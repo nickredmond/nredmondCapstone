@@ -24,25 +24,26 @@ import neuralNetwork.INeuralNetwork;
 import app.ImageReadMethod;
 import app.InputReader;
 
-public class AdvancedOptionsWindow extends JFrame {
-	private JButton saveChangesButton, chooseNetworkButton;
+public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHandler {
+	private JButton saveChangesButton;
 	private Map<String, ImageReadMethod> readMethods;
 	private MainWindow window;
 	
 	private JCheckBox nnCheckBox, ldCheckBox;
-	private JLabel chosenNetworkLabel;
 	
 	private List<ImageReadMethod> selectedReadMethods;
 	private INeuralNetwork chosenNetwork;
 	private String networkName;
 	
+	private NetworkSelectionPanel networkPanel;
+	
 	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, INeuralNetwork chosenNetwork, String networkName){
 		this(window, selectedMethods);
 		
 		if (chosenNetwork != null && networkName != null){
-			this.networkName = networkName;
 			this.chosenNetwork = chosenNetwork;
-			chosenNetworkLabel.setText(networkName);
+			this.networkName = networkName;
+			networkPanel.setNetwork(chosenNetwork, networkName);
 		}
 	}
 	
@@ -73,19 +74,8 @@ public class AdvancedOptionsWindow extends JFrame {
 	}
 	
 	private void setupNetworkToUsePanel() {
-		JPanel networkPanel = new JPanel();
-		networkPanel.setLayout(new BoxLayout(networkPanel, BoxLayout.X_AXIS));
-		
-		if (chosenNetwork == null){
-			chosenNetwork = NeuralNetworkIO.readNetwork(InputReader.TRAINED_NETWORK_NAME);		
-			chosenNetworkLabel = new JLabel(InputReader.TRAINED_NETWORK_NAME);
-		}
-		chooseNetworkButton = new JButton("Choose Different Network");
-		chooseNetworkButton.addActionListener(new ButtonListener());
-		
+		networkPanel = new NetworkSelectionPanel(this);
 		networkPanel.setBorder(BorderFactory.createTitledBorder("Chosen Neural Network"));
-		networkPanel.add(chosenNetworkLabel);
-		networkPanel.add(chooseNetworkButton);
 		this.getContentPane().add(networkPanel);
 	}
 
@@ -144,27 +134,13 @@ public class AdvancedOptionsWindow extends JFrame {
 				}
 				else selectedReadMethods.remove(readMethods.get(clickedBox.getText()));
 			}
-			else if (evt.getSource() == chooseNetworkButton){
-				chooseNetworkWithDialogue();
-			}
-		}
-
-		private void chooseNetworkWithDialogue() {
-			JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new File("savedNetworks/customNetworks"));
-			int result = chooser.showOpenDialog(AdvancedOptionsWindow.this);
-			
-			if (result == JFileChooser.APPROVE_OPTION){
-				String filePath = chooser.getSelectedFile().getAbsolutePath();
-				
-				if (filePath.endsWith(".ann")){
-					chosenNetwork = NeuralNetworkIO.readFromFilepath(filePath);
-					networkName = chooser.getSelectedFile().getName();
-					chosenNetworkLabel.setText(networkName);
-				}
-				else JOptionPane.showMessageDialog(AdvancedOptionsWindow.this, "Must select a neural network file.", "Invalid File", JOptionPane.ERROR_MESSAGE);
-			}
 		}
 		
+	}
+
+	@Override
+	public void networkSelected(String networkName, INeuralNetwork network) {
+		chosenNetwork = network;
+		this.networkName = networkName;
 	}
 }
