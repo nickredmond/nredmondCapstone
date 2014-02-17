@@ -21,6 +21,8 @@ public class ImageReader {
 	private ICharacterImageHandler handler;
 	private List<CharacterResult> result;
 	
+	private final int MIN_SEGMENT_LINE_HEIGHT = 18;
+	
 	public static final float MINIMUM_REQUIRED_CONFIDENCE = 0.93f;
 	
 	public ImageReader(INeuralNetwork network, INetworkIOTranslator translator) throws IOException{
@@ -71,9 +73,26 @@ public class ImageReader {
 		List<BufferedImage> lines = processor.splitIntoLines(trimmedImage);
 		result.clear();
 		
+		int maxLineHeight = 0;
+		
 		for (BufferedImage nextLine : lines){
-		//	List<BufferedImage> characters = ImageSegmenter.segmentLineIntoCharacters(nextLine);
-			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine);
+			try {
+				int lineHeight = processor.getLineHeight(nextLine);
+				if (lineHeight > maxLineHeight){
+					maxLineHeight = lineHeight;
+				}
+			} catch (IOException e) {
+				maxLineHeight = 0;
+				Logger.logMessage("Error occurred while obtaining line height from image. Line object: " + nextLine.toString() + 
+						"; Image height: " + ((nextLine == null) ? "null" : nextLine.getHeight()) +
+						"; Image width: " + ((nextLine == null) ? "null" : nextLine.getWidth()));
+			}
+			Logger.logMessage("testing the log file");
+		}
+		
+		for (BufferedImage nextLine : lines){
+			List<BufferedImage> characters = (maxLineHeight >= MIN_SEGMENT_LINE_HEIGHT) ? ImageSegmenter.segmentLineIntoCharacters(nextLine) : 
+				processor.splitIntoCharacters(nextLine);
 //			try {
 //				characters = NeighboringImageHypothesizer.combineImagesThatFormCharacters(characters);
 //			} catch (IOException e) {

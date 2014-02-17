@@ -1,0 +1,6 @@
+package app;
+
+public class Logger {
+	private static final String DEFAULT_LOG_FILEPATH = "appLog";
+	private static final String LOG_EXTENSION = ".txt";
+}

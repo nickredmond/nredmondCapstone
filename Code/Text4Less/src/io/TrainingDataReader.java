@@ -74,7 +74,9 @@ public class TrainingDataReader {
 							
 							nextCharacter = character;
 						}
-						else throw new IllegalStateException("Invalid file name");
+						else{
+							throw new IllegalStateException("Invalid file name");
+						}
 					}
 					else if (imageName.toLowerCase().matches("^[a-z]{1}[0-9]*$")){
 						char character = imageName.charAt(0);
@@ -120,9 +122,15 @@ public class TrainingDataReader {
 			if (lineParts.length > 0){
 				char nextCharacter = lineParts[CHAR_INDEX].charAt(0);
 				String nextFilename = lineParts[FILENAME_INDEX];
-			//	System.out.println(nextFilename);
-				BufferedImage nextImage = 
-						ImageIO.read(new File(imagePath + nextFilename + ".jpg"));
+
+				BufferedImage nextImage = null;
+				try{
+					nextImage = ImageIO.read(new File(imagePath + nextFilename + ".jpg"));
+				}
+				catch(IOException e){
+					System.out.println("Name that failed: " + nextFilename);
+					throw e;
+				}
 				
 				CharacterTrainingExample nextExample = new CharacterTrainingExample(nextImage, nextCharacter);
 				trainingSet.add(nextExample);

@@ -1,14 +1,17 @@
 package imageProcessing;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import debug.FeatureExtractionDebug;
+import math.StatisticalMath;
+import debug.SegmentationDataWindow;
+import debug.SegmentationDatum;
 import featureExtraction.ImageThinner;
 
 public class ImageSegmenter {
+	private static final float SPACE_THRESHOLD = 0.1f;
+	
 	public static List<BufferedImage> segmentLineIntoCharacters(BufferedImage line){
 		List<BufferedImage> textSegments = separateSpacesFromLine(line);
 		List<BufferedImage> characters = new ArrayList<BufferedImage>();
@@ -16,8 +19,84 @@ public class ImageSegmenter {
 		for (BufferedImage nextSegment : textSegments){
 			characters.addAll(segmentTextIntoCharacters(nextSegment));
 		}
+		
+//		int totalWidth = 0;
+//		int numberCharacters = 0;
+//		
+//		// TEST CODE //
+//		List<SegmentationDatum> segmentationData = new ArrayList<SegmentationDatum>();
+//		List<Float> widths = new ArrayList<Float>();
+//		List<int[][]> stuff = new ArrayList<int[][]>();
+//		// END TEST //
+//		
+//		for (BufferedImage nextCharacter : characters){
+//			int[][] imageValues = ImageBinarizer.convertImageToBinaryValues(nextCharacter);
+//			int totalBlackPixels = 0;
+//			
+//			for (int i = 0; i < imageValues.length; i++){
+//				for (int j = 0; j < imageValues[0].length; j++){
+//					if (imageValues[i][j] == 1){
+//						totalBlackPixels++;
+//					}
+//				}
+//			}
+//			
+//			float percentBlack = (float)totalBlackPixels / (imageValues.length * (imageValues[0].length));
+//			if (percentBlack >= SPACE_THRESHOLD){
+//				totalWidth += imageValues[0].length;
+//				numberCharacters++;
+//				
+//				// TEST CODE //
+//				widths.add((float)imageValues[0].length);
+//				stuff.add(imageValues);
+//				// END TEST //
+//			}
+//		}
+		
+//		float avgWidth = (float)totalWidth / numberCharacters;
+//		
+//		// TEST CODE //
+//		float stdDev = StatisticalMath.standardDeviation(widths);
+//		float mean = StatisticalMath.average(widths);
+//		System.out.println("avg: " + mean + " " + avgWidth);
+//		for (int[][] nextImage : stuff){
+//			float numDevs = StatisticalMath.numberStandardDeviationsFromMean(stdDev, mean, nextImage[0].length);
+//			SegmentationDatum datum = new SegmentationDatum(ImageBinarizer.convertBinaryValuesToImage(nextImage), stdDev, numDevs);
+//			segmentationData.add(datum);
+//		}
+//		// END TEST //	
+//		
+//		new SegmentationDataWindow(segmentationData);
+//		
+//		List<BufferedImage> finalCharacters = new ArrayList<BufferedImage>();
+//		
+//		for (BufferedImage nextImage : characters){
+//			if (nextImage.getWidth() > avgWidth){
+//				finalCharacters.addAll(splitSegment(nextImage));
+//			}
+//			else finalCharacters.add(nextImage);
+//		}
+		
 
 		return characters;
+	}
+	
+	private static List<BufferedImage> splitSegment(BufferedImage segment){
+		List<BufferedImage> splitImages = new ArrayList<BufferedImage>();
+		
+		BufferedImage leftHalf = segment.getSubimage(0, 0, segment.getWidth() / 2, segment.getHeight());
+		
+		int rightWidth = segment.getWidth() / 2;
+		if ((segment.getWidth()) / 2 + 1 + rightWidth > segment.getWidth()){
+			rightWidth--;
+		}
+		
+		BufferedImage rightHalf = segment.getSubimage((segment.getWidth() / 2) + 1, 0, rightWidth, segment.getHeight());
+		
+		splitImages.add(leftHalf);
+		splitImages.add(rightHalf);
+		
+		return splitImages;
 	}
 
 	private static List<BufferedImage> segmentTextIntoCharacters(BufferedImage text){

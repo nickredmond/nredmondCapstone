@@ -1,0 +1,46 @@
+package debug;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+
+public class SegmentationDataWindow extends JFrame{
+	
+	public SegmentationDataWindow(List<SegmentationDatum> segData){
+		JScrollPane scroller = new JScrollPane();
+		JPanel main = new JPanel();
+		
+		for (int i = 0; i < 100; i++){
+			JPanel p = new JPanel();
+			JLabel l = new JLabel("Fuck the police, no justice no peace. They got me face down in the middle of the street.");
+			l.setBackground(Color.cyan);
+			p.add(l);
+		//	p.setPreferredSize(new Dimension(800, 50));
+			p.setBackground(Color.red);
+			main.add(p);
+		}
+		main.setBackground(Color.yellow);
+		main.setPreferredSize(new Dimension(800, 600));
+		scroller = new JScrollPane(main);
+		
+//		scroller.setVisible(true);
+//		
+//		JViewport v = new JViewport();
+//		v.setViewSize(new Dimension(800,600));
+//		scroller.setViewport(v);
+		
+		scroller.setBackground(Color.orange);
+//		this.getContentPane().setLayout(null);
+		this.getContentPane().add(scroller);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		repaint();
+	}
+}
