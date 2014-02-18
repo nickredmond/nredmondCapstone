@@ -1,9 +1,11 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,7 +16,7 @@ import javax.swing.event.ChangeListener;
 
 public class ControlsPanel extends JPanel {
 	private JSlider penSizeSlider, areaSizeSlider;
-	private JButton saveButton, clearButton;
+	private JButton saveButton, clearButton, eraseButton, drawButton;
 	private DrawingPanel parent;
 	
 	private final int MAX_AREA_SIZE = 100;
@@ -22,6 +24,8 @@ public class ControlsPanel extends JPanel {
 	
 	private final int MAX_PEN_WIDTH = 9;
 	private final int MIN_PEN_WIDTH = 1;
+	
+	private boolean isErasing = false;
 	
 	public ControlsPanel(DrawingPanel parent){
 		this.parent = parent;
@@ -38,9 +42,13 @@ public class ControlsPanel extends JPanel {
 		
 		saveButton = new JButton("Save Image");
 		clearButton = new JButton("Clear");
+		eraseButton = new JButton("Erase");
+		drawButton = new JButton("Draw");
 		
 		saveButton.addActionListener(new ButtonListener());
 		clearButton.addActionListener(new ButtonListener());
+		eraseButton.addActionListener(new ButtonListener());
+		drawButton.addActionListener(new ButtonListener());
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(penLabel);
@@ -49,6 +57,13 @@ public class ControlsPanel extends JPanel {
 		this.add(areaSizeSlider);
 		this.add(saveButton);
 		this.add(clearButton);
+		
+		JPanel drawingFunctionsPanel = new JPanel();
+		drawingFunctionsPanel.setLayout(new BoxLayout(drawingFunctionsPanel, BoxLayout.X_AXIS));
+		drawingFunctionsPanel.add(drawButton);
+		drawingFunctionsPanel.add(eraseButton);
+		
+		this.add(drawingFunctionsPanel);
 	}
 
 	private void setupAreaSlider() {
@@ -104,6 +119,16 @@ public class ControlsPanel extends JPanel {
 			}
 			else if (evt.getSource() == clearButton){
 				parent.clearClicked();
+			}
+			else if (evt.getSource() == eraseButton){
+				eraseButton.setBorder(BorderFactory.createLineBorder(Color.PINK, 3));
+				drawButton.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+				parent.erasingStateChanged(true);
+			}
+			else if (evt.getSource() == drawButton){
+				drawButton.setBorder(BorderFactory.createLineBorder(Color.PINK, 3));
+				eraseButton.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+				parent.erasingStateChanged(false);
 			}
 		}
 	}

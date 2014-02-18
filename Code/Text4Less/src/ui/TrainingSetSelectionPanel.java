@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import app.AlphaNumericCharacterConverter;
+import appTest.MainTest;
 
 public class TrainingSetSelectionPanel extends JPanel {
 	private JPanel addFolderPanel;
@@ -79,7 +80,7 @@ public class TrainingSetSelectionPanel extends JPanel {
 			if (evt.getSource() == chooseFolderButton){
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				chooser.setCurrentDirectory(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages"));
+				chooser.setCurrentDirectory(new File(new MainTest().getWorkingDirectory() + "/trainingImages"));
 				
 				int result = chooser.showOpenDialog(TrainingSetSelectionPanel.this);
 				
@@ -96,7 +97,7 @@ public class TrainingSetSelectionPanel extends JPanel {
 				String folderName = newSetField.getText();
 				
 				if (folderName.length() > 0 && !folderName.contains(".")){
-					File trainingDataDir = new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/" + folderName);
+					File trainingDataDir = new File(new MainTest().getWorkingDirectory() + "/trainingImages/" + folderName);
 					boolean success = trainingDataDir.mkdir();
 					
 					addFolderPanel.setVisible(false);

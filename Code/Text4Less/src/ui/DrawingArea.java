@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -22,17 +23,21 @@ public class DrawingArea extends JPanel {
 	private float cellWidth, cellHeight;
 	private int[][] data;
 	
+	private int currentDataDrawingValue;
+	
 	DrawingPanel parent;
 	
 	public DrawingArea(DrawingPanel parent){
 		setDimensions(DEFAULT_HEIGHT, DEFAULT_WIDTH);
 		
+		currentDataDrawingValue = 1;
 		data = new int[height][width];
 		penSize = DEFAULT_PEN_SIZE;
 		
 		this.parent = parent;
 		
 		this.addMouseMotionListener(new DragListener());
+		this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		
 		this.setSize(new Dimension(AREA_WIDTH, AREA_HEIGHT));
 	}
@@ -59,6 +64,10 @@ public class DrawingArea extends JPanel {
 	
 	public int[][] getData(){
 		return data;
+	}
+	
+	public void setErase(boolean isErasing){
+		currentDataDrawingValue = (isErasing ? 0 : 1);
 	}
 	
 	@Override
@@ -110,7 +119,7 @@ public class DrawingArea extends JPanel {
 			for (int y = startingY; y <= endingY; y++){
 				for (int x = startingX; x <= endingX; x++){
 					if (x >= 0 && x < width && y >= 0 && y < height){
-						data[y][x] = 1;
+						data[y][x] = currentDataDrawingValue;
 					}
 				}
 			}

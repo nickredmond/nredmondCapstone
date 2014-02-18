@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +18,7 @@ import javax.imageio.ImageIO;
 
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterTrainingExample;
+import app.LeastDistanceCalculator;
 
 public class CorrelationDebug {
 	public static float getCorrelationBetweenTrainingSets(CharacterType type, int firstSetNum, int secondSetNum) throws IOException{
@@ -66,7 +66,7 @@ public class CorrelationDebug {
 			CharacterTrainingExample example1 = list1.get(i);
 			CharacterTrainingExample example2 = list2.get(i);
 			
-			totalCorrts += FeatureExtractionDebug.getCorrelation(example1.getCharacterImage(), example2.getCharacterImage());
+			totalCorrts += LeastDistanceCalculator.getCorrelation(example1.getCharacterImage(), example2.getCharacterImage());
 		}
 		
 		return totalCorrts / list1.size();
@@ -108,7 +108,7 @@ public class CorrelationDebug {
 					CharacterTrainingExample nextExample = iter.next();
 					
 					BufferedImage nextTrainingImg = nextExample.getCharacterImage();
-					float nextCorrelation = FeatureExtractionDebug.getCorrelation(nextCharacter, nextTrainingImg);
+					float nextCorrelation = LeastDistanceCalculator.getCorrelation(nextCharacter, nextTrainingImg);
 					
 					if (nextExample.getCharacterValue() == expectedText.charAt(index)){
 						System.out.println("correlation between same chars: " + nextCorrelation);

@@ -1,5 +1,7 @@
 package app;
 
+import imageHandling.ImageHandlerFactory;
+import imageHandling.ImageReadMethod;
 import imageProcessing.TranslationResult;
 import io.NeuralNetworkIO;
 
@@ -14,6 +16,7 @@ import neuralNetwork.INeuralNetwork;
 
 public class InputReader {
 	public static final String TRAINED_NETWORK_NAME = "testThis";
+	private static final String[] DEFAULT_NETWORKS = {"yoloSwaggins", "yoloSwaggins2"};
 	
 	private static INeuralNetwork currentNetwork;
 	
@@ -31,11 +34,45 @@ public class InputReader {
 		
 		if (readMethods.contains(ImageReadMethod.NEURAL_NETWORK)){
 			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
-			INeuralNetwork savedNetwork = ((currentNetwork == null) ? NeuralNetworkIO.readNetwork(TRAINED_NETWORK_NAME) : currentNetwork);
-			ImageReader reader = new ImageReader(savedNetwork, translator);
-			
-			nnTranslation = reader.readTextFromImage(image);
-			finalTranslation = nnTranslation;
+						
+			if (currentNetwork == null){	
+				float maxConfidence = 0.0f;
+				List<CharacterResult> translation = null;
+				
+				for (int i = 0; i < DEFAULT_NETWORKS.length; i++){
+					INeuralNetwork nextNetwork = NeuralNetworkIO.readNetwork(DEFAULT_NETWORKS[i]);
+					ImageReader reader = new ImageReader(nextNetwork, translator);
+					List<CharacterResult> results = reader.readTextFromImage(image);
+					
+					float totalConfidence = 0.0f;
+					
+					for (CharacterResult nextResult : results){
+						totalConfidence += nextResult.getResult().getConfidence();
+					}
+					
+					float avgConfidence = totalConfidence / results.size();
+					if (avgConfidence > maxConfidence){
+						translation = results;
+						maxConfidence = avgConfidence;
+					}
+					
+					System.out.println("avg: " + avgConfidence + " " + DEFAULT_NETWORKS[i]);
+				}
+				
+				if (translation == null){
+					Logger.logMessage("Most confident translation was not set during default multi-network reading (Source: InputReader).");
+				}
+				else{
+					nnTranslation = translation;
+					finalTranslation = translation;
+				}
+			}
+			else{
+				ImageReader reader = new ImageReader(currentNetwork, translator);
+				
+				nnTranslation = reader.readTextFromImage(image);
+				finalTranslation = nnTranslation;
+			}
 		}
 		if (readMethods.contains(ImageReadMethod.LEAST_DISTANCE)){
 			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.LEAST_DISTANCE);

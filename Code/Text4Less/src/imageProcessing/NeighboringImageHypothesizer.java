@@ -17,7 +17,7 @@ import neuralNetwork.CharacterReader;
 import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INeuralNetwork;
 import app.CharacterResult;
-import debug.FeatureExtractionDebug;
+import app.LeastDistanceCalculator;
 
 public class NeighboringImageHypothesizer {
 	private static final float MIN_CONFIDENCE_REQUIRED = 0.8f;
@@ -117,7 +117,7 @@ public class NeighboringImageHypothesizer {
 			CharacterTrainingExample nextExample = iter.next();
 			
 			BufferedImage nextTrainingImg = nextExample.getCharacterImage();
-			float nextCorrelation = FeatureExtractionDebug.getCorrelation(combined, nextTrainingImg);
+			float nextCorrelation = LeastDistanceCalculator.getCorrelation(combined, nextTrainingImg);
 			
 			if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
 				highestCorrelation = nextCorrelation;

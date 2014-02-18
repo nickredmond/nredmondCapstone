@@ -37,7 +37,7 @@ public class TrainingDataNameAssigner {
 			
 			String nextName = nameParts[0];
 			
-			Character indexCharacter = (nextName.length() > trainingImgNumberIndex) ? nextName.charAt(trainingImgNumberIndex) : '0';
+			String indexCharacter = (nextName.length() > trainingImgNumberIndex) ? nextName.substring(trainingImgNumberIndex) : "0";
 			char trainingImgChar = (nextName.startsWith(LOWER_PREFIX)) ? nextName.charAt(LOWER_CHAR_INDEX) : nextName.charAt(NORMAL_CHAR_INDEX);
 			
 			if (isLower && ((int)trainingImgChar >= AlphaNumericCharacterConverter.UPPER_START && 
@@ -45,7 +45,8 @@ public class TrainingDataNameAssigner {
 				trainingImgChar = (char) ((int)trainingImgChar + UPPER_LOWER_DIFFERENCE);
 			}
 			
-			if (trainingImgChar == character && indexCharacter.toString().matches("^[0-9]$")){
+			if (trainingImgChar == character && indexCharacter.toString().matches("^[0-9]+$")){
+				System.out.println("yes: " + indexCharacter + " " + nextFilename);
 				int nextTrainingImgNumber = Integer.parseInt(indexCharacter.toString());
 				takenNumbers.add(nextTrainingImgNumber);
 			}

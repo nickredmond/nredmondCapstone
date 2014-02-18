@@ -1,5 +1,7 @@
 package ui;
 
+import imageHandling.ImageReadMethod;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +13,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import spellCheck.SpellChecker;
 import neuralNetwork.INeuralNetwork;
-import app.ImageReadMethod;
 import app.InputReader;
 import app.ReadResult;
 
@@ -24,7 +26,9 @@ public class MainWindow extends JFrame{
 	private File imageFile;
 	
 	private INeuralNetwork chosenNetwork;
-	private String networkName = null;
+	private String networkName = "default";
+	
+	private boolean isSpellCheckEnabled = false;
 	
 	public MainWindow(){
 		selectedReadMethods = new ArrayList<ImageReadMethod>();
@@ -42,10 +46,11 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void advancedOptionsSaveChangesClicked(List<ImageReadMethod> readMethods, INeuralNetwork chosenNetwork,
-			String networkName){
+			String networkName, boolean useSpellCheck){
 		selectedReadMethods = readMethods;
 		this.chosenNetwork = chosenNetwork;
 		this.networkName = networkName;
+		isSpellCheckEnabled = useSpellCheck;
 	}
 	
 	public void imageLoaded(File selectedImage){
@@ -59,7 +64,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void advancedOptionsClicked(){
-		new AdvancedOptionsWindow(this, selectedReadMethods, chosenNetwork, networkName);
+		new AdvancedOptionsWindow(this, selectedReadMethods, chosenNetwork, networkName, isSpellCheckEnabled);
 	}
 	
 	public void loadImageClicked(){
@@ -72,27 +77,30 @@ public class MainWindow extends JFrame{
 		}
 		else{
 			BufferedImage image;
-				Thread t = new Thread(){
+			Thread t = new Thread(){
 				public void run(){
-				try {
-				LoadingScreen loading = new LoadingScreen("Reading image", 400, 250);
-				
-				System.out.println("yes");
-				
-				BufferedImage image = ImageIO.read(imageFile);
-				InputReader.setNetwork(chosenNetwork);
-				ReadResult result = InputReader.readImageInput(image, selectedReadMethods);
-				String resultText = result.getTranslationString();
-				resultPanel.setResultText(resultText, result.getRejections());
-				
-				loading.closeScreen();
-				} catch (IOException e) {
-					e.printStackTrace();
+					try {
+						LoadingScreen loading = new LoadingScreen("Reading image", 400, 250);
+						
+						BufferedImage image = ImageIO.read(imageFile);
+						InputReader.setNetwork(chosenNetwork);
+						ReadResult result = InputReader.readImageInput(image, selectedReadMethods);
+						String resultText = result.getTranslationString();
+						
+						if (isSpellCheckEnabled){
+							resultText = SpellChecker.spellCheckText(resultText);
+						}
+						
+						resultPanel.setResultText(resultText, result.getRejections());
+						
+						loading.closeScreen();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-				}
-				};
-				
-				t.start();
+			};
+			
+			t.start();
 		}
 	}
 }

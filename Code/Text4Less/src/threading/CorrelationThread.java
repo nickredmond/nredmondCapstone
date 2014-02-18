@@ -1,8 +1,8 @@
 package threading;
 
-import java.awt.image.BufferedImage;
+import imageHandling.LeastDistanceHandler;
 
-import app.LeastDistanceHandler;
+import java.awt.image.BufferedImage;
 
 public class CorrelationThread implements Runnable{
 	private LeastDistanceHandler handler;

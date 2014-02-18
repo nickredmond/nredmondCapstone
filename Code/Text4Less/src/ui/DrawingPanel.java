@@ -38,6 +38,10 @@ public class DrawingPanel extends JPanel{
 		new SaveImageWindow(this);
 	}
 	
+	public void erasingStateChanged(boolean isErasing){
+		area.setErase(isErasing);
+	}
+	
 	public void imageSaved(File imageFile){
 		int[][] imageValues = area.getData();
 		BufferedImage image = ImageBinarizer.convertBinaryValuesToImage(imageValues);

@@ -1,5 +1,8 @@
 package app;
 
+import imageHandling.ICharacterImageHandler;
+import imageHandling.ImageHandlerFactory;
+import imageHandling.LeastDistanceHandler;
 import imageProcessing.ImagePreprocessor;
 import imageProcessing.ImageSegmenter;
 import imageProcessing.NeighboringImageHypothesizer;

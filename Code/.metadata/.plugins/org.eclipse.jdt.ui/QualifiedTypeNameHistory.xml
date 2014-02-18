@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.jocl.Sizeof"/>
-<fullyQualifiedTypeName name="org.jocl.Pointer"/>
-<fullyQualifiedTypeName name="org.jocl.CL"/>
 <fullyQualifiedTypeName name="io.FileOperations"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.ExcludeCategory"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageNormalizer"/>
+<fullyQualifiedTypeName name="imageProcessing.ImagePreprocessor"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
 </qualifiedTypeNameHistroy>

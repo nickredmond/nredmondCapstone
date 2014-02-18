@@ -1,10 +1,9 @@
 package ui;
 
-import io.NeuralNetworkIO;
+import imageHandling.ImageReadMethod;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,17 +11,16 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import neuralNetwork.INeuralNetwork;
-import app.ImageReadMethod;
-import app.InputReader;
 
 public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHandler {
 	private JButton saveChangesButton;
@@ -36,9 +34,14 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	private String networkName;
 	
 	private NetworkSelectionPanel networkPanel;
+	private JRadioButton yesSpellCheckButton, noSpellCheckButton;
+	private boolean useSpellCheck = false;
 	
-	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, INeuralNetwork chosenNetwork, String networkName){
-		this(window, selectedMethods);
+	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, INeuralNetwork chosenNetwork, String networkName,
+			boolean useSpellCheck){		
+		this(window, selectedMethods, useSpellCheck);
+		
+		this.useSpellCheck = useSpellCheck;
 		
 		if (chosenNetwork != null && networkName != null){
 			this.chosenNetwork = chosenNetwork;
@@ -47,7 +50,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		}
 	}
 	
-	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods){
+	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, boolean useSpellCheck){
 		this.window = window;
 		
 		selectedReadMethods = new ArrayList<ImageReadMethod>();
@@ -60,6 +63,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		
 		initializeReadMethods();
 		setupClassificationOptions();
+		setupSpellCheckOptions(useSpellCheck);
 		setupSaveButton();
 		
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -73,6 +77,33 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		this.setVisible(true);
 	}
 	
+	private void setupSpellCheckOptions(boolean isSpellCheckOn) {
+		JPanel spellCheckPanel = new JPanel();
+		spellCheckPanel.setLayout(new BoxLayout(spellCheckPanel, BoxLayout.X_AXIS));
+		spellCheckPanel.add(new JLabel("Translation Spell Checking:"));
+		
+		yesSpellCheckButton = new JRadioButton("Yes");
+		noSpellCheckButton = new JRadioButton("No");
+		
+		SpellCheckListener listener = new SpellCheckListener();
+		yesSpellCheckButton.addActionListener(listener);
+		noSpellCheckButton.addActionListener(listener);
+		
+		if (isSpellCheckOn){
+			yesSpellCheckButton.setSelected(true);
+		}
+		else noSpellCheckButton.setSelected(true);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(yesSpellCheckButton);
+		group.add(noSpellCheckButton);
+		
+		spellCheckPanel.add(yesSpellCheckButton);
+		spellCheckPanel.add(noSpellCheckButton);
+		
+		this.getContentPane().add(spellCheckPanel);
+	}
+
 	private void setupNetworkToUsePanel() {
 		networkPanel = new NetworkSelectionPanel(this);
 		networkPanel.setBorder(BorderFactory.createTitledBorder("Chosen Neural Network"));
@@ -115,13 +146,25 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		readMethods.put("Least Distance", ImageReadMethod.LEAST_DISTANCE);
 	}
 	
+	private class SpellCheckListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == yesSpellCheckButton){
+				useSpellCheck = true;
+			}
+			else if (evt.getSource() == noSpellCheckButton){
+				useSpellCheck = false;
+			}
+		}
+	}
+	
 	private class ButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == saveChangesButton){
 				if (selectedReadMethods.size() > 0){
-					window.advancedOptionsSaveChangesClicked(selectedReadMethods, chosenNetwork, networkName);
+					window.advancedOptionsSaveChangesClicked(selectedReadMethods, chosenNetwork, networkName, useSpellCheck);
 					AdvancedOptionsWindow.this.dispose();
 				}
 				else JOptionPane.showMessageDialog(AdvancedOptionsWindow.this, "Must select at least one method", "Selection Error", JOptionPane.ERROR_MESSAGE);

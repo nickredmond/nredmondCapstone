@@ -36,7 +36,7 @@ public class NetworkSelectionPanel extends JPanel {
 		
 		if (chosenNetwork == null){
 			chosenNetwork = NeuralNetworkIO.readNetwork(InputReader.TRAINED_NETWORK_NAME);		
-			chosenNetworkLabel = new JLabel("Selected Network: " + InputReader.TRAINED_NETWORK_NAME);
+			chosenNetworkLabel = new JLabel("Selected Network: default");
 		}
 		chooseNetworkButton = new JButton("Choose Different Network");
 		chooseNetworkButton.addActionListener(new ButtonListener());
