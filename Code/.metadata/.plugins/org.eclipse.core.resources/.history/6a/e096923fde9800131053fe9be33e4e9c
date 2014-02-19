@@ -1,0 +1,6 @@
+package genetics;
+
+public class Chromosome {
+	private int[] genes;
+	private float fitness;
+}

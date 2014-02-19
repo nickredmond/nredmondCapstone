@@ -1,0 +1,7 @@
+package math;
+
+public class ProbabilityCalculator {
+	public static boolean didEventHappen(float probability){
+		
+	}
+}

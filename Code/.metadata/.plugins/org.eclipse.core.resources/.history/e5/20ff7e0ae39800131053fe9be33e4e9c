@@ -1,0 +1,9 @@
+package genetics;
+
+public class TestFitnessCalculator implements IFitnessCalculator {
+	@Override
+	public float getFitness(int[] chromosome) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

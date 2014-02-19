@@ -1,0 +1,6 @@
+package genetics;
+
+public interface IGeneticAlgorithm {
+	public int[][] generateRandomChromosomeSet(int numberChromosomes, int chromosomeLength);
+	public int[][] breed(int[][] originalChromosomes);
+}

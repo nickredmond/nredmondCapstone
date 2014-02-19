@@ -1,0 +1,22 @@
+package genetics;
+
+public class TestFitnessCalculator implements IFitnessCalculator {
+	private int desiredOutputValue;
+	
+	public TestFitnessCalculator(int desired){
+		desiredOutputValue = desired;
+	}
+	
+	@Override
+	public float getFitness(int[] chromosome) {
+		return 0;
+	}
+	
+	private int convertToBinary(int[] chromosome, int startingIndex, int length){
+		int maxValue = (int) Math.pow(2, length - 1);
+		
+		for (int i = startingIndex; i < (startingIndex + length); i++){
+			
+		}
+	}
+}

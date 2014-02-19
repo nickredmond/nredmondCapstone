@@ -1,0 +1,9 @@
+package math;
+
+public class ProbabilityCalculator {
+	private final static int TOTAL_PIECES = 10000;
+	
+	public static boolean didEventHappen(float probability){
+		
+	}
+}

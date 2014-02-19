@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="io.FileOperations"/>
-<fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.ExcludeCategory"/>
-<fullyQualifiedTypeName name="org.junit.experimental.categories.Categories.IncludeCategory"/>
-<fullyQualifiedTypeName name="app.EditDistanceCalculator"/>
-<fullyQualifiedTypeName name="app.SpellChecker"/>
-<fullyQualifiedTypeName name="spellCheck.DictionaryCreatorUtil"/>
 <fullyQualifiedTypeName name="featureExtraction.FeatureExtractionHelper"/>
 <fullyQualifiedTypeName name="app.CorrelationHandler"/>
 <fullyQualifiedTypeName name="threading.CorrelationThreadPool"/>
@@ -25,8 +18,6 @@
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.io.FileFilter"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
 <fullyQualifiedTypeName name="app.InputReader"/>
 <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
 <fullyQualifiedTypeName name="java.awt.Font"/>
@@ -50,9 +41,7 @@
 <fullyQualifiedTypeName name="math.EntropyCalculator"/>
 <fullyQualifiedTypeName name="math.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="imageProcessing.RowPatternTransformer"/>
-<fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
@@ -60,4 +49,15 @@
 <fullyQualifiedTypeName name="imageProcessing.ImagePreprocessor"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="ui.AdvancedOptionsWindow.SpellCheckListener"/>
+<fullyQualifiedTypeName name="spellCheck.SpellChecker"/>
+<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="java.awt.Cursor"/>
+<fullyQualifiedTypeName name="app.LeastDistanceCalculator"/>
+<fullyQualifiedTypeName name="math.ProbabilityCalculator"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="genetics.TestFitnessCalculator"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

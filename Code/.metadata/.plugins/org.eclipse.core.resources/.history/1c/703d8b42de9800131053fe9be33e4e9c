@@ -1,0 +1,12 @@
+package genetics;
+
+public class Chromosome {
+	private int[] genes;
+	private float fitness;
+	public int[] getGenes() {
+		return genes;
+	}
+	public void setGenes(int[] genes) {
+		this.genes = genes;
+	}
+}

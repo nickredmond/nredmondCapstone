@@ -1,0 +1,20 @@
+package appTest;
+
+import genetics.TestFitnessCalculator;
+
+import org.junit.Test;
+
+public class TestFitnessTest {
+
+	@Test
+	public void test() {
+		int predictedValue = 23;
+		int[] chromosome = {0,1,1,0, 1,0,1,0, 0,1,0,1, 1,1,0,0, 0,1,0,0, 1,1,0,1, 0,0,1,0, 1,0,1,0, 0,0,0,1};
+		
+		TestFitnessCalculator calc = new TestFitnessCalculator(predictedValue);
+		int actualValue = calc.getValueFor(chromosome);
+		
+		org.junit.Assert.assertEquals(predictedValue, actualValue);
+	}
+
+}

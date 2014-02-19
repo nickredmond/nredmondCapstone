@@ -3,3 +3,8 @@
 1392518738667	Encapsulate field 'image'
 1392615526025	Move file
 1392745544056	Move compilation units
+1392756465141	Rename type 'RouletteFitnessCalculator'
+1392756606806	Encapsulate field 'genes'
+1392756611791	Encapsulate field 'fitness'
+1392758248515	Extract method 'getRandomIndex'
+1392758262324	Rename local variable 'crossoverIndex'

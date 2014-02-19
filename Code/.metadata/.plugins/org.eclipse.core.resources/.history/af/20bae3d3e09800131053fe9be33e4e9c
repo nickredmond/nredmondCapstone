@@ -1,0 +1,82 @@
+package genetics;
+
+import java.util.Random;
+
+public class BasicGeneticAlgorithm implements IGeneticAlgorithm {
+	private float mutationRate, crossoverRate;
+	private IFitnessCalculator fitnessCalc;
+	private IChromosomeChooser chooser;
+	
+	private Chromosome[] lastCheckedChromosomes;
+	
+	public BasicGeneticAlgorithm(IFitnessCalculator fitnessCalc, IChromosomeChooser chooser){
+		this.fitnessCalc = fitnessCalc;
+		this.chooser = chooser;
+	}
+	
+//	public Chromosome[] getLastCheckedChromosomes
+	
+	@Override
+	public int[][] generateRandomChromosomeSet(int numberChromosomes,
+			int chromosomeLength) {
+		int[][] chromosomes = new int[numberChromosomes][chromosomeLength];
+		Random rand = new Random();
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			for (int j = 0; j < chromosomes[0].length; j++){
+				int nextGene = rand.nextInt(2);
+				chromosomes[i][j] = nextGene;
+			}
+		}
+		
+		return chromosomes;
+	}
+	
+	@Override
+	public Chromosome[] getChromosomeArray(int[][] chromosomeValues){
+		Chromosome[] chromosomes = new Chromosome[chromosomeValues.length];
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			float nextFitness = fitnessCalc.getFitness(chromosomeValues[i]);
+			Chromosome nextChromosome = new Chromosome(chromosomeValues[i], nextFitness);
+			chromosomes[i] = nextChromosome;
+		}
+		
+		return chromosomes;
+	}
+
+	@Override
+	public int[][] breed(Chromosome[] originalChromosomes) {
+		
+		return null;
+		
+		// BREED
+		// repeat n/2 times...
+			// get fitness for each chromosome
+			// choose 2 chromosomes w/ roulette selection
+			// if crossover occurs, choose random point and swap bits
+			// if mutation occurs, mutate at random gene
+		// return result
+	}
+
+	@Override
+	public void setMutationRate(float rate) {
+		mutationRate = rate;
+	}
+
+	@Override
+	public float getMutationRate() {
+		return mutationRate;
+	}
+
+	@Override
+	public void setCrossoverRate(float rate) {
+		crossoverRate = rate;
+	}
+
+	@Override
+	public float getCrossoverRate() {
+		return crossoverRate;
+	}
+
+}
