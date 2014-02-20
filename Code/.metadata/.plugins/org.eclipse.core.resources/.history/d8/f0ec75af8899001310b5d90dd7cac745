@@ -1,0 +1,17 @@
+package genetics;
+
+public class TournamentChooser implements IChromosomeChooser {
+
+	@Override
+	public int[] chooseChromosome(Chromosome[] chromosomes) {
+		
+		
+		return null;
+	}
+
+	@Override
+	public int[][] chooseNewChromosomeSet(Chromosome[] chromosomes) {
+		return null;
+	}
+
+}

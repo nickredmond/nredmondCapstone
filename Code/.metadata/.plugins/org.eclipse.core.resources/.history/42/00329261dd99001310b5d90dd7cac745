@@ -1,0 +1,40 @@
+package decisionTrees;
+
+import neuralNetwork.INeuralNetwork;
+
+public class MetaclassNode {
+	private char[] classes;
+	private INeuralNetwork network;
+	private boolean isLeafNode;
+	
+	private MetaclassNode leftChild, rightChild;
+	
+	public MetaclassNode(char[] classes, INeuralNetwork network){
+		this.setClasses(classes);
+		this.setNetwork(network);
+	}
+
+	public boolean isLeafNode() {
+		return isLeafNode;
+	}
+
+	public void setLeafNode(boolean isLeafNode) {
+		this.isLeafNode = isLeafNode;
+	}
+
+	public char[] getClasses() {
+		return classes;
+	}
+
+	public void setClasses(char[] classes) {
+		this.classes = classes;
+	}
+
+	public INeuralNetwork getNetwork() {
+		return network;
+	}
+
+	public void setNetwork(INeuralNetwork network) {
+		this.network = network;
+	}
+}

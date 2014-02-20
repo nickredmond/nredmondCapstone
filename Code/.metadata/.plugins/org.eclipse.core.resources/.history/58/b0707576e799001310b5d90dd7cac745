@@ -1,0 +1,9 @@
+package decisionTrees;
+
+public class MetaclassTree {
+	private MetaclassNode rootNode;
+	
+	public MetaclassTree(MetaclassNode rootNode){
+		this.rootNode = rootNode;
+	}
+}

@@ -1,0 +1,19 @@
+package decisionTrees;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+
+public class MetaclassTree {
+	private MetaclassNode rootNode;
+	
+	public MetaclassTree(MetaclassNode rootNode){
+		this.rootNode = rootNode;
+	}
+	
+	public TranslationResult readCharacter(BufferedImage image){
+		
+		
+		return null;
+	}
+}

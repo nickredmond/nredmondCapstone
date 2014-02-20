@@ -5,14 +5,15 @@ import genetics.Chromosome;
 import genetics.IChromosomeChooser;
 import genetics.IFitnessCalculator;
 import genetics.IGeneticAlgorithm;
-import genetics.RouletteChromosomeChooser;
 import genetics.TestFitnessCalculator;
+import genetics.TournamentChooser;
 import imageHandling.ImageHandlerFactory;
 import imageHandling.ImageReadMethod;
 import io.CharacterType;
 import io.FileOperations;
 import io.NeuralNetworkIO;
 import io.ReceptorIO;
+import io.TrainingDataReader;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +28,7 @@ import javax.imageio.ImageIO;
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.FeatureExtractionIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
@@ -42,74 +44,34 @@ import app.LeastDistanceCalculator;
 import app.MultiNetworkReader;
 import app.NetworkFactory;
 import app.ReadResult;
+import decisionTrees.MetaclassTree;
+import decisionTrees.OptimalTreeFinder;
 
 public class MainTest {
 
-	public static void main(String[] args) throws Exception {
-//		BufferedImage miami = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII2/e2.jpg"));
-//		BufferedImage nyc = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII2/e3.jpg"));
-//		
-//		float correlation = LeastDistanceCalculator.getCorrelation(miami, nyc);
-//		float euclidian = LeastDistanceCalculator.getEuclideanDistance(miami, nyc);
-//		
-//		System.out.println("cor: " + correlation + ", euc: " + euclidian);
-		
+	public static void main(String[] args) throws Exception {		
 	//	new HomeWindow();
 		
-		int chromosomeSize = 60;
-		int numberChromosomes = 60;
-		int targetValue = 27;
-		IFitnessCalculator calc = new TestFitnessCalculator(targetValue);
-		IChromosomeChooser chooser = new RouletteChromosomeChooser();
-		IGeneticAlgorithm algo = new BasicGeneticAlgorithm(calc, chooser);
-		int[][] chromosomes = algo.generateRandomChromosomeSet(numberChromosomes, chromosomeSize);
+		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(CharacterType.ASCII);
 		
-//		for (int i = 0; i < chromosomes.length; i++){
-//			System.out.println(Arrays.toString(chromosomes[i]));
-//		}
+		char[] classes = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'
+				, 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'
+				, 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' '};
 		
-		boolean isTargetReached = false;
+		OptimalTreeFinder treeFinder = new OptimalTreeFinder(trainingSet, testSet, classes);
+		MetaclassTree tree = treeFinder.getOptimalTree();
+		System.out.println("tree: " + tree);
 		
-		Chromosome[] chromes = algo.getChromosomeArray(chromosomes);
-		for (int i = 0; i < chromes.length && !isTargetReached; i++){
-			float fitness = chromes[i].getFitness();
-			isTargetReached = (fitness == 1.0f);
-		}
-		
-		while(!isTargetReached){
-			chromosomes = algo.breed(chromes);
-			
-			chromes = algo.getChromosomeArray(chromosomes);
-			for (int i = 0; i < chromes.length && !isTargetReached; i++){
-				float fitness = chromes[i].getFitness();
-			//	System.out.println("fitness: " + fitness);
-				isTargetReached = (fitness == 1.0f);
-				
-				Thread.sleep(20);
-			}
-			System.out.println("iteration");
-		}
-		
-		for (int i = 0; i < chromes.length; i++){
-			if (chromes[i].getFitness() == 1.0f){
-				System.out.println("Chromosome: " + Arrays.toString(chromes[i].getGenes()));
-				System.out.println("Value: " + new TestFitnessCalculator(targetValue).getValueFor(chromes[i].getGenes()));
-			}
-		}
-		
-//		String dir = new MainTest().getWorkingDirectory();
-//		JOptionPane.showMessageDialog(null, "dir: " + dir);
-		
-//		BufferedImage before = 
-//				ImageIO.read(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages\\ASCII2\\lowerb2.jpg"));
+//		INeuralNetwork trained = NeuralNetworkIO.readNetwork("yoloSwaggins");
+//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/a.jpg"));
+//		AlphaNumericIOTranslator t = new AlphaNumericIOTranslator();
+//		float[] input = t.translateImageToNetworkInput(img);
+//		float[] output = trained.forwardPropagate(input);
 //		
-//		int[][] beforeValues = ImageBinarizer.convertImageToBinaryValues(before);
-//		beforeValues = ImageNormalizer.cropImage(beforeValues);
-//		CharacterViewDebug.displayCharacterView(before, beforeValues, beforeValues[0].length, beforeValues.length);
-//		
-//		int[][] afterValues = ImageNormalizer.downSizeImage(beforeValues, 5, 7);
-//		
-//		CharacterViewDebug.displayCharacterView(null, afterValues, 5, 7);
+//		System.out.println(Arrays.toString(output));
+//		char result = t.translateNetworkOutputToCharacter(output).getCharacter();
+//		System.out.println("thinks its: " + result);
 		
 	//	writeTrainingData("C:/Users/nredmond/Pictures/trainingData.png");
 	//	engineTestStuff();
@@ -125,6 +87,50 @@ public class MainTest {
 //		ReceptorIO.saveReceptors(filtered, "myReceptors");
 //		
 //		System.out.println("finished");
+	}
+	
+	private static void testGenetics(){
+		int[] targetValue = {1,1,0,1,0,0,1,1,0,0,0,0,1,1,0,0,0,1,0,0,1,1,0,0,0,1,0,1,0,1,0,0};
+		int chromosomeSize = targetValue.length;
+		int numberChromosomes = 32;
+		IFitnessCalculator calc = new TestFitnessCalculator(targetValue);
+		IChromosomeChooser chooser = new TournamentChooser(); //RouletteChromosomeChooser();
+		IGeneticAlgorithm algo = new BasicGeneticAlgorithm(calc, chooser);
+	//	algo.setElitism(true);
+		algo.setCrossoverRate(0.5f);
+		algo.setMutationRate(0.015f);
+		
+		int[][] chromosomes = algo.generateRandomChromosomeSet(numberChromosomes, chromosomeSize);
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			System.out.println(Arrays.toString(chromosomes[i]) + " F:" + calc.getFitness(chromosomes[i]));
+		}
+		
+		boolean isTargetReached = false;		
+		int numEvolutions = 0;
+		Chromosome[] chromes = null;
+		
+		while(!isTargetReached){
+			chromes = algo.getChromosomeArray(chromosomes);
+			for (int i = 0; i < chromes.length && !isTargetReached; i++){
+				float fitness = chromes[i].getFitness();
+				isTargetReached = (fitness == targetValue.length);
+			}
+			
+			if (!isTargetReached){
+				chromosomes = algo.breed(chromes);
+				numEvolutions++;
+			}
+			//System.out.println("iteration");
+		}
+		
+		for (int i = 0; i < chromes.length; i++){
+			if (chromes[i].getFitness() == targetValue.length){
+				System.out.println("Chromosome: " + Arrays.toString(chromes[i].getGenes()));
+				System.out.println("Value: " + new TestFitnessCalculator(targetValue).getValueFor(chromes[i].getGenes()));
+			}
+		}
+		System.out.println("Number evolutions: " + numEvolutions);
 	}
 	
 	public String getWorkingDirectory(){

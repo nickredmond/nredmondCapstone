@@ -1,28 +1,34 @@
 package genetics;
 
 public class TestFitnessCalculator implements IFitnessCalculator {
-	private int desiredOutputValue;
+	private int[] desiredOutputValue;
 	
-	public TestFitnessCalculator(int desired){
+	public TestFitnessCalculator(int[] desired){
 		desiredOutputValue = desired;
 	}
 	
 	@Override
 	public float getFitness(int[] chromosome) {		
-		if (chromosome.length % 4 != 0){
-			throw new IllegalArgumentException("Chromosome length must be divisible by 4");
-		}
+//		if (chromosome.length % 4 != 0){
+//			throw new IllegalArgumentException("Chromosome length must be divisible by 4");
+//		}
 		
-		int value = getValueFor(chromosome);
+	//	int value = getValueFor(chromosome);
 		
 		float fitness = 1.0f;
-		int difference = Math.abs(desiredOutputValue - value); 
+	//	int difference = Math.abs(desiredOutputValue - value); 
 		
-		if (difference > 0){
-			fitness = 1.0f / (difference + 1);
+		int difference = 0;
+		
+		for (int i = 0; i < chromosome.length; i++){
+			difference += Math.abs(chromosome[i] - desiredOutputValue[i]);
 		}
 		
-		return fitness;
+		if (difference > 0){
+			fitness = 1.0f - ((float)difference / chromosome.length);
+		}
+		
+		return fitness * chromosome.length;
 	}
 	
 	public int getValueFor(int[] chromosome){

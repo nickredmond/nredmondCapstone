@@ -1,0 +1,20 @@
+package decisionTrees;
+
+import neuralNetwork.INeuralNetwork;
+
+public class NetworkSet {
+	private INeuralNetwork leftNetwork, rightNetwork;
+	
+	public NetworkSet(INeuralNetwork left, INeuralNetwork right){
+		this.leftNetwork = leftNetwork;
+		this.rightNetwork = rightNetwork;
+	}
+
+	public INeuralNetwork getLeftNetwork() {
+		return leftNetwork;
+	}
+
+	public INeuralNetwork getRightNetwork() {
+		return rightNetwork;
+	}
+}

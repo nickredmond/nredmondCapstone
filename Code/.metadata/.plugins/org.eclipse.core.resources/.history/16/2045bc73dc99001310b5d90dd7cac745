@@ -1,0 +1,43 @@
+package decisionTrees;
+
+import genetics.BasicGeneticAlgorithm;
+import genetics.IChromosomeChooser;
+import genetics.IFitnessCalculator;
+import genetics.MetaclassFitnessCalculator;
+import genetics.TournamentChooser;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class OptimalTreeFinder {
+	private Set<CharacterTrainingExample> trainingSet, testSet;
+	private float minRequiredFitness;
+	private char[] classes;
+	
+	private final float DEFAULT_REQUIRED_FITNESS = 0.1f;
+	
+	public OptimalTreeFinder(Set<CharacterTrainingExample> trainingSet, Set<CharacterTrainingExample> testSet, char[] classes){
+		this.trainingSet = trainingSet;
+		this.testSet = testSet;
+		this.classes = classes;
+		
+		minRequiredFitness = DEFAULT_REQUIRED_FITNESS;
+	}
+	
+	public MetaclassTree getOptimalTree(){
+		IChromosomeChooser chooser = new TournamentChooser();
+		IFitnessCalculator fitnessCalc = new MetaclassFitnessCalculator(trainingSet, testSet, classes);
+		BasicGeneticAlgorithm geneticAlgo = new BasicGeneticAlgorithm(fitnessCalc, chooser);
+		
+		return null;
+	}
+
+	public float getMinRequiredFitness() {
+		return minRequiredFitness;
+	}
+
+	public void setMinRequiredFitness(float minRequiredFitness) {
+		this.minRequiredFitness = minRequiredFitness;
+	}
+}

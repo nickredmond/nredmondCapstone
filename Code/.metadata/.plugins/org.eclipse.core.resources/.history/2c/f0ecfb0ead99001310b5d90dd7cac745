@@ -1,0 +1,18 @@
+package genetics;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
+
+public class MetaclassFitnessCalculator implements IFitnessCalculator {
+	private Set<CharacterTrainingExample> trainingSet, testSet;
+	private INeuralNetwork network;
+	
+	@Override
+	public float getFitness(int[] chromosome) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

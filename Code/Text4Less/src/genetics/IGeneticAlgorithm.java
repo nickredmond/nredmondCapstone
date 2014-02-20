@@ -8,4 +8,6 @@ public interface IGeneticAlgorithm {
 	public float getMutationRate();
 	public void setCrossoverRate(float rate);
 	public float getCrossoverRate();
+	public boolean isElitism();
+	public void setElitism(boolean isElitism);
 }

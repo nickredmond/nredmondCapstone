@@ -1,5 +1,6 @@
 package genetics;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import math.ProbabilityCalculator;
@@ -13,6 +14,8 @@ public class BasicGeneticAlgorithm implements IGeneticAlgorithm {
 	
 	private final float DEFAULT_CROSSOVER_RATE = 0.7f;
 	private final float DEFAULT_MUTATION_RATE = 0.001f;
+	
+	private boolean isElitism = false;
 	
 	public BasicGeneticAlgorithm(IFitnessCalculator fitnessCalc, IChromosomeChooser chooser){
 		this.fitnessCalc = fitnessCalc;
@@ -55,40 +58,57 @@ public class BasicGeneticAlgorithm implements IGeneticAlgorithm {
 
 	@Override
 	public int[][] breed(Chromosome[] originalChromosomes) {
-		int[][] nextGeneration = chooser.chooseNewChromosomeSet(originalChromosomes);
+		int chromosomeLength =  originalChromosomes[0].getGenes().length;
+		int[][] nextGeneration = new int[originalChromosomes.length][chromosomeLength]; //chooser.chooseNewChromosomeSet(originalChromosomes);
 		
-		for (int n = 0; n < originalChromosomes.length; n += 2){
-			int[] male = nextGeneration[n];
-			int[] female = nextGeneration[n+1];
+		int startingIndex = (isElitism ? 1 : 0);
+		
+		if (isElitism){
+			float maxFitness = 0.0f;
+			Chromosome fittest = null;
+			
+			for (int i = 0; i < originalChromosomes.length; i++){
+				float nextFitness = originalChromosomes[i].getFitness();
+				if (nextFitness > maxFitness){
+					maxFitness = nextFitness;
+					fittest = originalChromosomes[i];
+				}
+			}
+			
+			nextGeneration[0] = fittest.getGenes();
+		}
+		
+		for (int n = startingIndex; n < originalChromosomes.length; n ++){
+			int[] daughter = new int[chromosomeLength];
+			
+			int[] male = chooser.chooseChromosome(originalChromosomes);
+			int[] female = chooser.chooseChromosome(originalChromosomes);
 			
 			boolean isMutation = ProbabilityCalculator.didEventHappen(mutationRate);
 			boolean isCrossover = ProbabilityCalculator.didEventHappen(crossoverRate);
 			
 			Random rand = new Random();
-			int chromosomeLength =  originalChromosomes[0].getGenes().length;
 			
 			if (isCrossover){	
 				//System.out.println("performed crossover");
 				int crossoverIndex = getRandomIndex(rand, chromosomeLength);
 				
+				for (int i = 0; i < crossoverIndex; i++){
+					daughter[i] = male[i];
+				}
 				for (int i = crossoverIndex; i < chromosomeLength; i++){
-					int maleGene = male[i];
-					int femaleGene = female[i];
-					
-					male[i] = femaleGene;
-					female[i] = maleGene;
+					daughter[i] = female[i];
 				}
 			}
+			else daughter = male;
+			
 			if (isMutation){
 				//System.out.println("performed mutation");
 				int mutationIndex = getRandomIndex(rand, chromosomeLength);
-				
-				male[mutationIndex] = (male[mutationIndex] == 1 ? 0 : 1);
-				female[mutationIndex] = (female[mutationIndex] == 1 ? 0 : 1);
+				daughter[mutationIndex] = (daughter[mutationIndex] == 0) ? 1 : 0;
 			}
 			
-			nextGeneration[n] = male;
-			nextGeneration[n+1] = female;
+			nextGeneration[n] = daughter;
 		}
 		
 		if (originalChromosomes.length % 2 != 0){
@@ -135,6 +155,14 @@ public class BasicGeneticAlgorithm implements IGeneticAlgorithm {
 	@Override
 	public float getCrossoverRate() {
 		return crossoverRate;
+	}
+
+	public boolean isElitism() {
+		return isElitism;
+	}
+
+	public void setElitism(boolean isElitism) {
+		this.isElitism = isElitism;
 	}
 
 }
