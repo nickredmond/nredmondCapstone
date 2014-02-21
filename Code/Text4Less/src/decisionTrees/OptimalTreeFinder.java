@@ -55,7 +55,7 @@ public class OptimalTreeFinder {
 		
 		IFitnessCalculator fitnessCalc = new MetaclassFitnessCalculator(trainingSet, testSet, parentClasses);
 		BasicGeneticAlgorithm geneticAlgo = new BasicGeneticAlgorithm(fitnessCalc, chooser);
-		int[][] genePool = geneticAlgo.generateRandomChromosomeSet(parentClasses.length, parentClasses.length);
+		int[][] genePool = geneticAlgo.generateRandomChromosomeSet(parentClasses.length / 2, parentClasses.length);
 		
 		Chromosome[] chromosomes = null;
 		boolean isTargetReached = false;

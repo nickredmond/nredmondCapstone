@@ -3,11 +3,12 @@ package decisionTrees;
 import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import networkIOtranslation.FeatureExtractionIOTranslator;
 import neuralNetwork.INeuralNetwork;
 
-public class MetaclassTree {
+public class MetaclassTree implements Serializable {
 	private MetaclassNode rootNode;
 	private FeatureExtractionIOTranslator translator;
 	

@@ -1,21 +1,5 @@
 package networkIOtranslation;
 
-import imageProcessing.ImageBinarizer;
-import imageProcessing.ImageNormalizer;
-import imageProcessing.ImageScaler;
-import imageProcessing.NoiseRemover;
-import imageProcessing.TranslationResult;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import debug.CharacterViewDebug;
-import debug.FeatureExtractionDebug;
-import math.ComplexNumber;
 import featureExtraction.ChainCodeCreator;
 import featureExtraction.CrossingCalculator;
 import featureExtraction.FeaturePoint;
@@ -24,8 +8,22 @@ import featureExtraction.ImageThinner;
 import featureExtraction.MomentCalculator;
 import featureExtraction.VectorCalculator;
 import featureExtraction.ZernikeImageNormalizer;
+import imageProcessing.ImageBinarizer;
+import imageProcessing.ImageNormalizer;
+import imageProcessing.ImageScaler;
+import imageProcessing.NoiseRemover;
+import imageProcessing.TranslationResult;
 
-public class FeatureExtractionIOTranslator implements INetworkIOTranslator {
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import math.ComplexNumber;
+
+public class FeatureExtractionIOTranslator implements INetworkIOTranslator, Serializable {
 private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 	
 	public final static int DEFAULT_INPUT_LENGTH = 7 + (NUMBER_PROFILE_DIRECTIONS * 3) + 16 + 2; // plus 24 w/ original values

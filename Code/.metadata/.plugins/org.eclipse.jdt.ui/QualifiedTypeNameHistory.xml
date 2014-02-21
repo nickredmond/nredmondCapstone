@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="featureExtraction.FeatureExtractionHelper"/>
-<fullyQualifiedTypeName name="app.CorrelationHandler"/>
-<fullyQualifiedTypeName name="threading.CorrelationThreadPool"/>
-<fullyQualifiedTypeName name="imageProcessing.TranslationResult"/>
-<fullyQualifiedTypeName name="neuralNetwork.MatrixNeuralNetwork"/>
-<fullyQualifiedTypeName name="app.CharacterResult"/>
-<fullyQualifiedTypeName name="app.ImageHandlerFactory"/>
-<fullyQualifiedTypeName name="app.ImageReadMethod"/>
-<fullyQualifiedTypeName name="ui.ImageLoaderPanel"/>
-<fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
@@ -27,15 +17,12 @@
 <fullyQualifiedTypeName name="debug.SegmentationDebug"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
-<fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="imageProcessing.NeighboringImageHypothesizer"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
 <fullyQualifiedTypeName name="debug.EntropyDebug"/>
-<fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="receptors.ReceptorGenerator"/>
 <fullyQualifiedTypeName name="receptors.ReceptorFilter"/>
 <fullyQualifiedTypeName name="math.EntropyCalculator"/>
@@ -49,7 +36,6 @@
 <fullyQualifiedTypeName name="imageProcessing.ImagePreprocessor"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow.SpellCheckListener"/>
 <fullyQualifiedTypeName name="spellCheck.SpellChecker"/>
 <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
@@ -60,4 +46,18 @@
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="genetics.TestFitnessCalculator"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
+<fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
+<fullyQualifiedTypeName name="decisionTrees.MetaclassConverter"/>
+<fullyQualifiedTypeName name="io.TrainingDataReader"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.nio.file.Paths"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="io.MnistParser"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="java.io.DataInputStream"/>
 </qualifiedTypeNameHistroy>

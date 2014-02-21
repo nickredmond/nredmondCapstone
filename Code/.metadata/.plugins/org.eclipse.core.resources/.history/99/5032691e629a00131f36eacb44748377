@@ -1,0 +1,25 @@
+package io;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class MnistParser {
+	private static final int NUMBER_TRAINING_IMAGES = 60000;
+	private static final int NUMBER_TEST_IMAGES = 10000;
+	
+	private static final int METADATA_BUFFER_SIZE = 4;
+	private static final int DATA_BUFFER_SIZE = 1;
+	
+	public Set<CharacterTrainingExample> readImages(String imagesFilepath, String labelsFilepath, int numberImages) throws IOException{
+		InputStream labelInput = new FileInputStream(new File(labelsFilepath));
+		
+		byte[] buffer = byte[4]
+		
+		return null;
+	}
+}

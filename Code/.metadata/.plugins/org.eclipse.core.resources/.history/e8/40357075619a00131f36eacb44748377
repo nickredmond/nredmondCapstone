@@ -1,0 +1,16 @@
+package io;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class MnistParser {
+	private static final int NUMBER_TRAINING_IMAGES = 60000;
+	private static final int NUMBER_TEST_IMAGES = 10000;
+	
+	public Set<CharacterTrainingExample> readImages(String imagesFilepath, String labelsFilepath, int numberImages){
+		
+		
+		return null;
+	}
+}

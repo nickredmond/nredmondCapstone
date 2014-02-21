@@ -1,8 +1,10 @@
 package decisionTrees;
 
+import java.io.Serializable;
+
 import neuralNetwork.INeuralNetwork;
 
-public class MetaclassNode {
+public class MetaclassNode implements Serializable{
 	private char[] classes;
 	private INeuralNetwork network;
 	private boolean isLeafNode;
