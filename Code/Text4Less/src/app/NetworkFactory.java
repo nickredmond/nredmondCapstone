@@ -31,7 +31,7 @@ public class NetworkFactory {
 		return getTrainedNetworkWithExamples(originalNetwork, translator, trainingSet, testSet, networkTrainer, numIterations, errorGoal);
 	}
 	
-	private static INeuralNetwork getTrainedNetworkWithExamples(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
+	public static INeuralNetwork getTrainedNetworkWithExamples(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
 			Set<CharacterTrainingExample> trainingSet, Set<CharacterTrainingExample> testSet, 
 			INetworkTrainer networkTrainer, int numIterations, float errorGoal) throws IOException{
 		CharacterNetworkTrainer trainer = new CharacterNetworkTrainer(translator);

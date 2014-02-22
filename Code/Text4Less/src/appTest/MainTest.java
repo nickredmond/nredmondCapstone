@@ -13,7 +13,7 @@ import imageProcessing.TranslationResult;
 import io.CharacterType;
 import io.FileOperations;
 import io.MetaclassTreeIO;
-import io.MnistParser;
+import io.MnistReader;
 import io.NeuralNetworkIO;
 import io.ReceptorIO;
 import io.TrainingDataReader;
@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.FeatureExtractionIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INetworkTrainer;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
@@ -53,12 +55,21 @@ import decisionTrees.OptimalTreeFinder;
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {		
-	//	new HomeWindow();
+//		new HomeWindow();
 		
-		String imgPath = "C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Vendor\\handwrittenData\\MNIST_testImages.gz";
-		String labelPath = "C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Vendor\\handwrittenData\\MNIST_testLabels.gz";
+//		Set<CharacterTrainingExample> trainingSet = MnistReader.readHandwrittenImages(MnistReader.DEFAULT_TRAINING_FILEPATH);
+//		Set<CharacterTrainingExample> validationSet = MnistReader.readHandwrittenImages(MnistReader.DEFAULT_VALIDATION_FILEPATH);
+//		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+//		INetworkTrainer trainer = new MatrixBackpropTrainer(0.05f, 0.02f);
+//		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(), 
+//				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+//		
+//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetworkWithExamples(network, translator, trainingSet, 
+//				validationSet, trainer, 10000, 0.05f);
+//		NeuralNetworkIO.writeNetwork(trainedNetwork, "mnistTestNet");
 		
-		MnistParser.readImages(imgPath, labelPath, 20);
+		INeuralNetwork saved = NeuralNetworkIO.readNetwork("mnistTestNet");
+		TestMnistNetwork.testTrainedNetwork(saved);
 		
 //		INeuralNetwork trained = NeuralNetworkIO.readNetwork("yoloSwaggins");
 //		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/a.jpg"));
@@ -241,7 +252,7 @@ public class MainTest {
 		
 		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
 		
-		BufferedImage img = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
+		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Vendor/handwrittenData/trainingSet/129.bmp"));
 		List<CharacterResult> translation = reader.readTextFromImage(img);
 		
 		float totalConfidence = 0.0f;

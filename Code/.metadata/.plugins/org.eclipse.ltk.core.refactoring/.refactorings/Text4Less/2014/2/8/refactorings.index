@@ -17,3 +17,4 @@
 1392866217621	Encapsulate field 'rightChild'
 1392867791862	Encapsulate field 'leftNetwork'
 1392867796974	Encapsulate field 'rightNetwork'
+1393035300987	Rename type 'MnistParser'
