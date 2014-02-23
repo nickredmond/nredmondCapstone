@@ -8,6 +8,11 @@ import app.AlphaNumericCharacterConverter;
 
 public class AlphaNumericIOTranslator implements INetworkIOTranslator{
 	private final float THRESHOLD = 0.5f;
+	private FeatureExtractionIOTranslator translator;
+	
+	public AlphaNumericIOTranslator(){
+		translator = new FeatureExtractionIOTranslator();
+	}
 
 	@Override
 	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
@@ -52,12 +57,15 @@ public class AlphaNumericIOTranslator implements INetworkIOTranslator{
 	}
 	
 	public int getInputLength(){
-		return new FeatureExtractionIOTranslator().getInputLength();
+		return translator.getInputLength();
 	}
 
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
-		return new FeatureExtractionIOTranslator().translateImageToNetworkInput(img);
+		return translator.translateImageToNetworkInput(img);
 	}
 
+	public float[] translateMnistImageToNetworkInput(BufferedImage img){
+		return translator.translateMnistImageToInput(img);
+	}
 }

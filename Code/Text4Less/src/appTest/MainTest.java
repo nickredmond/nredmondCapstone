@@ -13,7 +13,6 @@ import imageProcessing.TranslationResult;
 import io.CharacterType;
 import io.FileOperations;
 import io.MetaclassTreeIO;
-import io.MnistReader;
 import io.NeuralNetworkIO;
 import io.ReceptorIO;
 import io.TrainingDataReader;
@@ -41,6 +40,7 @@ import neuralNetwork.NeuralNetwork;
 import neuralNetwork.TrainingExample;
 import receptors.Receptor;
 import spellCheck.SpellChecker;
+import ui.HomeWindow;
 import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageReader;
@@ -55,21 +55,18 @@ import decisionTrees.OptimalTreeFinder;
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {		
-//		new HomeWindow();
+	//	new HomeWindow();
+	//	testDecisionTrees();
 		
-//		Set<CharacterTrainingExample> trainingSet = MnistReader.readHandwrittenImages(MnistReader.DEFAULT_TRAINING_FILEPATH);
-//		Set<CharacterTrainingExample> validationSet = MnistReader.readHandwrittenImages(MnistReader.DEFAULT_VALIDATION_FILEPATH);
-//		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-//		INetworkTrainer trainer = new MatrixBackpropTrainer(0.05f, 0.02f);
-//		INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(), 
-//				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-//		
-//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetworkWithExamples(network, translator, trainingSet, 
-//				validationSet, trainer, 10000, 0.05f);
-//		NeuralNetworkIO.writeNetwork(trainedNetwork, "mnistTestNet");
+	//	BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/lowera3.jpg"));
+		NNclassificationLogic.trainNetworkOnClasses();
 		
-		INeuralNetwork saved = NeuralNetworkIO.readNetwork("mnistTestNet");
-		TestMnistNetwork.testTrainedNetwork(saved);
+		Set<CharacterTrainingExample> examples = TrainingDataReader.createTestSetFromFile(CharacterType.ASCII);
+		
+		for (CharacterTrainingExample next : examples){
+			System.out.print("actual: " + next.getCharacterValue() + " --- ");
+			NNclassificationLogic.read(next.getCharacterImage());
+		}
 		
 //		INeuralNetwork trained = NeuralNetworkIO.readNetwork("yoloSwaggins");
 //		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/a.jpg"));
@@ -87,14 +84,6 @@ public class MainTest {
 	//	BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/trainingData.png"));
 		
 	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII4, 5);
-		
-//		Set<CharacterTrainingExample> examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-//		List<Receptor> receptors = ReceptorGenerator.generateRandomReceptors(1000);
-//		
-//		List<Receptor> filtered = ReceptorFilter.filterReceptors(receptors, examples, 100);
-//		ReceptorIO.saveReceptors(filtered, "myReceptors");
-//		
-//		System.out.println("finished");
 	}
 	
 	private static void testDecisionTrees() throws IOException{
@@ -113,7 +102,7 @@ public class MainTest {
 		MetaclassTree savedTree = MetaclassTreeIO.readTree("treeTest");
 		System.out.println("tree: " + savedTree);
 		
-		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/z5.jpg"));
+		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/k5.jpg"));
 		TranslationResult result = savedTree.readCharacter(img);
 		
 		System.out.println("The character: " + result.getCharacter());

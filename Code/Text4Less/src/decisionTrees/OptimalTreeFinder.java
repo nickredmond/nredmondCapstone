@@ -57,7 +57,7 @@ public class OptimalTreeFinder {
 		BasicGeneticAlgorithm geneticAlgo = new BasicGeneticAlgorithm(fitnessCalc, chooser);
 		int[][] genePool = geneticAlgo.generateRandomChromosomeSet(parentClasses.length / 2, parentClasses.length);
 		
-		Chromosome[] chromosomes = null;
+		Chromosome[] chromosomes = null;	
 		boolean isTargetReached = false;
 		
 		while (!isTargetReached){

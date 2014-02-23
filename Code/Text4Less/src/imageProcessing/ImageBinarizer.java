@@ -52,7 +52,7 @@ public class ImageBinarizer {
 		return img;
 	}
 	
-	private static void invertLightValues(int[][] lightValues) {
+	public static void invertLightValues(int[][] lightValues) {
 		for (int row = 0; row < lightValues.length; row++){
 			for (int col = 0; col < lightValues[row].length; col++){
 				lightValues[row][col] = ((lightValues[row][col] == 0) ? 1 : 0);

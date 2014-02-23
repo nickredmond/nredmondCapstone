@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import debug.FeatureExtractionDebug;
 import math.ComplexNumber;
 
 public class FeatureExtractionIOTranslator implements INetworkIOTranslator, Serializable {
@@ -73,10 +74,21 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
-		
 		int[][] lightValues = ImageBinarizer.convertImageToBinaryValues(img);
 		NoiseRemover.removeNoise(lightValues);
 		
+		return convertLightValuesToInput(lightValues);
+	}
+	
+	public float[] translateMnistImageToInput(BufferedImage img){
+		int[][] lightValues = ImageBinarizer.convertImageToBinaryValues(img);
+		ImageBinarizer.invertLightValues(lightValues);
+		NoiseRemover.removeNoise(lightValues);
+		
+		return convertLightValuesToInput(lightValues);
+	}
+	
+	private float[] convertLightValuesToInput(int[][] lightValues){
 	//	CharacterViewDebug.displayCharacterView(img, lightValues, lightValues.length, lightValues[0].length);
 		
 		int[][] croppedLightValues = ImageNormalizer.cropImage(lightValues);
@@ -95,10 +107,6 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 20, 20);
 			
-			//int[][] newValues = convertToScale(20, 20, scaledImg);
-			
-		//	CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
-			
 			for (int row = 0; row < scaledImg.length; row++){
 				for (int col = 0; col < scaledImg[0].length; col++){
 					
@@ -108,13 +116,6 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			}
 			
 		//	inputList.add(getHeightToWidthRatio(croppedLightValues));
-			
-//			FeatureExtractionDebug.printImg(lightValues);
-//			System.out.println();
-//			FeatureExtractionDebug.printImg(croppedLightValues);
-//			System.out.println();
-//			FeatureExtractionDebug.printImg(scaledImg);
-//			System.out.println("------------------------------------------------------");
 						
 			addProfilingFeatures(inputList, croppedLightValues, percentages);
 			addVectorFeatures(inputList, croppedLightValues);
@@ -128,11 +129,6 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			for (int i = 0; i < input.length; i++){
 				input[i] = inputList.get(i);
 			}
-			
-//			for (int i = 0; i < input.length; i++){
-//				System.out.print(input[i] + " ");
-//			}
-//			System.out.println();
 			
 			inputLength = input.length;
 		}

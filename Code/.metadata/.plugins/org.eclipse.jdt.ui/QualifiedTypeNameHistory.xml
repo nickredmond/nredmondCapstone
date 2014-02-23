@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
-<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.io.FileFilter"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
@@ -16,9 +14,7 @@
 <fullyQualifiedTypeName name="appTest.SegmentationHistogramPanel"/>
 <fullyQualifiedTypeName name="debug.SegmentationDebug"/>
 <fullyQualifiedTypeName name="debug.CorrelationDebug"/>
-<fullyQualifiedTypeName name="io.CharacterType"/>
 <fullyQualifiedTypeName name="imageProcessing.NeighboringImageHypothesizer"/>
-<fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
@@ -31,7 +27,6 @@
 <fullyQualifiedTypeName name="imageProcessing.RowPatternTransformer"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
-<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageNormalizer"/>
 <fullyQualifiedTypeName name="imageProcessing.ImagePreprocessor"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
@@ -45,11 +40,8 @@
 <fullyQualifiedTypeName name="math.ProbabilityCalculator"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="genetics.TestFitnessCalculator"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
 <fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="decisionTrees.MetaclassConverter"/>
-<fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
@@ -60,4 +52,12 @@
 <fullyQualifiedTypeName name="io.MnistParser"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
 <fullyQualifiedTypeName name="java.io.DataInputStream"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="io.MnistReader"/>
+<fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
+<fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
+<fullyQualifiedTypeName name="io.TrainingDataReader"/>
+<fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
+<fullyQualifiedTypeName name="io.CharacterType"/>
 </qualifiedTypeNameHistroy>

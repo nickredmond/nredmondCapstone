@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;appTest.NNclassificationTest&apos; to &apos;NNclassificationLogic&apos;&#x0D;&#x0A;- Original project: &apos;Text4Less&apos;&#x0D;&#x0A;- Original element: &apos;appTest.NNclassificationTest&apos;&#x0D;&#x0A;- Renamed element: &apos;appTest.NNclassificationLogic&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;NNclassificationTest&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;appTest{NNclassificationTest.java[NNclassificationTest" matchStrategy="1" name="NNclassificationLogic" qualified="false" references="true" similarDeclarations="false" stamp="1393122990299" textual="false" version="1.0"/>
+</session>
