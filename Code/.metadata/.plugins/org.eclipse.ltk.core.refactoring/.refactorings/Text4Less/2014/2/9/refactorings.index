@@ -1,1 +1,5 @@
 1393122990299	Rename type 'NNclassificationTest'
+1393187307693	Rename method 'getOptimalTree'
+1393190024232	Rename type 'MetaclassTree'
+1393199324884	Rename field 'nnCheckBox'
+1393199338066	Rename field 'ldCheckBox'

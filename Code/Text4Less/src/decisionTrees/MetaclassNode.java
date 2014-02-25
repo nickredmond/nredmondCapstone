@@ -31,6 +31,10 @@ public class MetaclassNode implements Serializable{
 	public INeuralNetwork getNetwork() {
 		return network;
 	}
+	
+	public void setNetwork(INeuralNetwork network){
+		this.network = network;
+	}
 
 	public MetaclassNode getLeftChild() {
 		return leftChild;

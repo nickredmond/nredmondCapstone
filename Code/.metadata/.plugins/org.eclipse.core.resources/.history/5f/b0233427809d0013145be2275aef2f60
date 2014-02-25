@@ -1,0 +1,71 @@
+package decisionTrees;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import networkIOtranslation.INetworkIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.TrainingExample;
+import app.ICharacterConverter;
+
+public class ConfusionMatrixBuilder {
+	private ICharacterConverter converter;
+	private INetworkIOTranslator translator;
+	
+	public ConfusionMatrixBuilder(ICharacterConverter converter, INetworkIOTranslator translator){
+		this.converter = converter;
+		this.translator = translator;
+	}
+	
+	public int[][] buildConfusionMatrix(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, float errorGoal){
+		INeuralNetwork trainedNetwork = trainNetwork(trainingSet, converter);
+		
+		return null;
+	}
+	
+	private INeuralNetwork trainNetwork(Set<CharacterTrainingExample> trainingSet,
+			ICharacterConverter converter) {
+		Set<TrainingExample>
+		
+		return null;
+	}
+	
+	private Set<TrainingExample> getTrainingExamples(Set<CharacterTrainingExample> characterSet,
+			ICharacterConverter converter) throws Exception{
+		Set<TrainingExample> examples = new HashSet<TrainingExample>();
+		
+		for (CharacterTrainingExample nextExample : characterSet){
+			int classNr = converter.convertCharacterToClassNumber(nextExample.getCharacterValue());
+			
+			int[] output = convertClassNrToOutput(converter.getNumberClasses(), classNr);
+			float[] input = translator.translateImageToNetworkInput(nextExample.getCharacterImage());
+			
+			examples.add(new TrainingExample(input, output));
+		}
+		
+		return examples;
+	}
+	
+	private int[] convertClassNrToOutput(int numberOfClasses, int classNr){
+		int[] output = new int[numberOfClasses];
+		output[classNr] = 1;
+		
+		return output;
+	}
+
+	private int convertOutputToClassNumber(float[] output){
+		int classNr = -1;
+		float maxOutput = -2.0f;
+		
+		for (int i = 0; i < output.length; i++){
+			if (output[i] > maxOutput){
+				maxOutput = output[i];
+				classNr = i;
+			}
+		}
+		
+		return classNr;
+	}
+}

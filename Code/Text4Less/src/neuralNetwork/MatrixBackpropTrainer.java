@@ -7,10 +7,10 @@ import threading.TrainingExampleThreadPool;
 
 public class MatrixBackpropTrainer implements INetworkTrainer {
 	private float learningRate, regularizationParam;
-	private final float MAX_ERROR = 0.01f;
+	private final float MAX_ERROR = 0.005f;
 	
 	private float errorGoal = MAX_ERROR;
-	private int maxIterations = 100000;
+	private int maxIterations = 10000;
 	
 	private float previousError, previousCve;
 	private int numberIterationsPerformed = 0;
@@ -52,7 +52,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 			System.out.println("MSE: " + mse + ", CVE: " + cve);
 			numberIterationsPerformed++;
 		//	System.out.println("error goal: " + errorGoal);
-		}while(mse > errorGoal && numberIterationsPerformed < maxIterations);
+		}while(mse > errorGoal && numberIterationsPerformed < maxIterations && mse < previousError);
 		
 		errorAchieved = mse;
 	}

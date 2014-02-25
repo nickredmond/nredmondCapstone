@@ -1,0 +1,5 @@
+package decisionTrees;
+
+public interface ITreeFinder {
+	public GeneticMetaclassTree getTree();
+}

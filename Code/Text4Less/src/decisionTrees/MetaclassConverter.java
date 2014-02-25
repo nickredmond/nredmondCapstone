@@ -4,6 +4,8 @@ public class MetaclassConverter {
 	public static final int LEFT_CLASS_INDEX = 0;
 	public static final int RIGHT_CLASS_INDEX = 1;
 	
+//	public static char translateSplitOutputToCharacter(float[] output, char[] leftClass)
+	
 	public static char translateOutputToCharacter(float[] output, char[] classes){
 		if (output.length != classes.length){
 			throw new IllegalArgumentException("Output must be same length as classes.");

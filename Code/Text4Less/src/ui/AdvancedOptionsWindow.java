@@ -24,12 +24,12 @@ import neuralNetwork.INeuralNetwork;
 
 public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHandler {
 	private JButton saveChangesButton;
-	private Map<String, ImageReadMethod> readMethods;
+//	private Map<String, ImageReadMethod> readMethods;
 	private MainWindow window;
 	
-	private JCheckBox nnCheckBox, ldCheckBox;
+	private JRadioButton nnButton, ldButton, treeButton;
 	
-	private List<ImageReadMethod> selectedReadMethods;
+	private ImageReadMethod selectedReadMethod;
 	private INeuralNetwork chosenNetwork;
 	private String networkName;
 	
@@ -37,9 +37,9 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	private JRadioButton yesSpellCheckButton, noSpellCheckButton;
 	private boolean useSpellCheck = false;
 	
-	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, INeuralNetwork chosenNetwork, String networkName,
+	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, INeuralNetwork chosenNetwork, String networkName,
 			boolean useSpellCheck){		
-		this(window, selectedMethods, useSpellCheck);
+		this(window, selectedMethod, useSpellCheck);
 		
 		this.useSpellCheck = useSpellCheck;
 		
@@ -50,18 +50,11 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		}
 	}
 	
-	public AdvancedOptionsWindow(MainWindow window, List<ImageReadMethod> selectedMethods, boolean useSpellCheck){
+	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, boolean useSpellCheck){
 		this.window = window;
 		
-		selectedReadMethods = new ArrayList<ImageReadMethod>();
-		if(selectedMethods != null){
-			for (ImageReadMethod nextMethod : selectedMethods){
-				selectedReadMethods.add(nextMethod);
-			}
-		}
+		selectedReadMethod = selectedMethod;		
 		
-		
-		initializeReadMethods();
 		setupClassificationOptions();
 		setupSpellCheckOptions(useSpellCheck);
 		setupSaveButton();
@@ -113,8 +106,16 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	private void setupReadMethodsPanel() {
 		JPanel readMethodsPanel = new JPanel();
 		readMethodsPanel.setLayout(new BoxLayout(readMethodsPanel, BoxLayout.Y_AXIS));
-		readMethodsPanel.add(nnCheckBox);
-		readMethodsPanel.add(ldCheckBox);
+		
+		ButtonGroup group = new ButtonGroup();
+		
+		group.add(nnButton);
+		group.add(ldButton);
+		group.add(treeButton);
+		
+		readMethodsPanel.add(nnButton);
+		readMethodsPanel.add(ldButton);
+		readMethodsPanel.add(treeButton);
 		
 		readMethodsPanel.setBorder(BorderFactory.createTitledBorder("Classification Methods"));
 		this.getContentPane().add(readMethodsPanel);
@@ -126,24 +127,24 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	}
 	
 	private void setupClassificationOptions() {
-		nnCheckBox = new JCheckBox("Neural Network");
-		ldCheckBox = new JCheckBox("Least Distance");
+		nnButton = new JRadioButton("Neural Network");
+		ldButton = new JRadioButton("Least Distance");
+		treeButton = new JRadioButton("Decision Tree");
 		
-		if(selectedReadMethods.contains(ImageReadMethod.NEURAL_NETWORK)){
-			nnCheckBox.setSelected(true);
-		}
-		if(selectedReadMethods.contains(ImageReadMethod.LEAST_DISTANCE)){
-			ldCheckBox.setSelected(true);
-		}
+		ButtonListener listener = new ButtonListener();
+		nnButton.addActionListener(listener);
+		ldButton.addActionListener(listener);
+		treeButton.addActionListener(listener);
 		
-		nnCheckBox.addActionListener(new ButtonListener());
-		ldCheckBox.addActionListener(new ButtonListener());
-	}
-
-	private void initializeReadMethods(){
-		readMethods = new HashMap<String, ImageReadMethod>();
-		readMethods.put("Neural Network", ImageReadMethod.NEURAL_NETWORK);
-		readMethods.put("Least Distance", ImageReadMethod.LEAST_DISTANCE);
+		if (selectedReadMethod == ImageReadMethod.NEURAL_NETWORK){
+			nnButton.setSelected(true);
+		}
+		else if (selectedReadMethod == ImageReadMethod.LEAST_DISTANCE){
+			ldButton.setSelected(true);
+		}
+		else if (selectedReadMethod == ImageReadMethod.DECISION_TREE){
+			treeButton.setSelected(true);
+		}
 	}
 	
 	private class SpellCheckListener implements ActionListener{
@@ -163,19 +164,17 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == saveChangesButton){
-				if (selectedReadMethods.size() > 0){
-					window.advancedOptionsSaveChangesClicked(selectedReadMethods, chosenNetwork, networkName, useSpellCheck);
-					AdvancedOptionsWindow.this.dispose();
-				}
-				else JOptionPane.showMessageDialog(AdvancedOptionsWindow.this, "Must select at least one method", "Selection Error", JOptionPane.ERROR_MESSAGE);
+				window.advancedOptionsSaveChangesClicked(selectedReadMethod, chosenNetwork, networkName, useSpellCheck);
+				AdvancedOptionsWindow.this.dispose();
 			}
-			else if (evt.getSource().getClass() == JCheckBox.class){
-				JCheckBox clickedBox = (JCheckBox)evt.getSource();
-				
-				if (clickedBox.isSelected()){
-					selectedReadMethods.add(readMethods.get(clickedBox.getText()));
-				}
-				else selectedReadMethods.remove(readMethods.get(clickedBox.getText()));
+			else if (evt.getSource() == nnButton){
+				selectedReadMethod = ImageReadMethod.NEURAL_NETWORK;
+			}
+			else if (evt.getSource() == ldButton){
+				selectedReadMethod = ImageReadMethod.LEAST_DISTANCE;			
+			}
+			else if (evt.getSource() == treeButton){
+				selectedReadMethod = ImageReadMethod.DECISION_TREE;
 			}
 		}
 		

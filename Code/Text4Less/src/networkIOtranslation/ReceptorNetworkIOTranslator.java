@@ -39,4 +39,9 @@ public class ReceptorNetworkIOTranslator implements INetworkIOTranslator {
 		return input;
 	}
 
+	@Override
+	public int getInputLength() {
+		return receptors.size();
+	}
+
 }

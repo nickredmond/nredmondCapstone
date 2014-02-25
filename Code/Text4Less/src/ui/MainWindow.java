@@ -21,7 +21,7 @@ import app.ReadResult;
 public class MainWindow extends JFrame{
 	private ImageLoaderPanel loaderPanel;
 	private ResultPanel resultPanel;
-	private List<ImageReadMethod> selectedReadMethods;
+	private ImageReadMethod selectedReadMethod;
 	private final ImageReadMethod DEFAULT_READ_METHOD = ImageReadMethod.NEURAL_NETWORK;
 	private File imageFile;
 	
@@ -31,8 +31,7 @@ public class MainWindow extends JFrame{
 	private boolean isSpellCheckEnabled = false;
 	
 	public MainWindow(){
-		selectedReadMethods = new ArrayList<ImageReadMethod>();
-		selectedReadMethods.add(DEFAULT_READ_METHOD);
+		selectedReadMethod = ImageReadMethod.NEURAL_NETWORK;
 		
 		loaderPanel = new ImageLoaderPanel(this);
 		resultPanel = new ResultPanel(this);
@@ -45,9 +44,9 @@ public class MainWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public void advancedOptionsSaveChangesClicked(List<ImageReadMethod> readMethods, INeuralNetwork chosenNetwork,
+	public void advancedOptionsSaveChangesClicked(ImageReadMethod readMethod, INeuralNetwork chosenNetwork,
 			String networkName, boolean useSpellCheck){
-		selectedReadMethods = readMethods;
+		selectedReadMethod = readMethod;
 		this.chosenNetwork = chosenNetwork;
 		this.networkName = networkName;
 		isSpellCheckEnabled = useSpellCheck;
@@ -64,7 +63,7 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void advancedOptionsClicked(){
-		new AdvancedOptionsWindow(this, selectedReadMethods, chosenNetwork, networkName, isSpellCheckEnabled);
+		new AdvancedOptionsWindow(this, selectedReadMethod, chosenNetwork, networkName, isSpellCheckEnabled);
 	}
 	
 	public void loadImageClicked(){
@@ -76,7 +75,6 @@ public class MainWindow extends JFrame{
 			JOptionPane.showMessageDialog(this, "Please upload an image before translation.", "No Image", JOptionPane.ERROR_MESSAGE);
 		}
 		else{
-			BufferedImage image;
 			Thread t = new Thread(){
 				public void run(){
 					try {
@@ -84,7 +82,7 @@ public class MainWindow extends JFrame{
 						
 						BufferedImage image = ImageIO.read(imageFile);
 						InputReader.setNetwork(chosenNetwork);
-						ReadResult result = InputReader.readImageInput(image, selectedReadMethods);
+						ReadResult result = InputReader.readImageInput(image, selectedReadMethod);
 						String resultText = result.getTranslationString();
 						
 						if (isSpellCheckEnabled){

@@ -1,0 +1,19 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class BasicTreeFinder extends MetaclassTreeFinder {
+
+	public BasicTreeFinder(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, char[] classes) {
+		super(trainingSet, testSet, classes);
+	}
+
+	@Override
+	public MetaclassTree getTree() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

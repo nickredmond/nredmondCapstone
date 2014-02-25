@@ -12,6 +12,12 @@ public class AlphaNumericCharacterConverter implements ICharacterConverter {
 	
 	public static final int NUMBER_CLASSES = 63;
 	
+	@Override
+	public int getNumberClasses(){
+		return NUMBER_CLASSES;
+	}
+	
+	@Override
 	public int convertCharacterToClassNumber(char character) throws Exception{
 		int asciiValue = (int)character;
 		int classNumber = 0;
@@ -33,6 +39,7 @@ public class AlphaNumericCharacterConverter implements ICharacterConverter {
 		return classNumber;
 	}
 	
+	@Override
 	public char convertClassNumberToCharacter(int classNumber) throws Exception{
 		int asciiValue = 0;
 		

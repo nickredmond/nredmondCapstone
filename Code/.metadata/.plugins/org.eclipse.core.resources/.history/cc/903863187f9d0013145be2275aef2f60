@@ -1,0 +1,15 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+import app.ICharacterConverter;
+
+public class ConfusionMatrixBuilder {
+	public static int[][] buildConfusionMatrix(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, ICharacterConverter converter, float errorGoal){
+		trainNetwork(trainingSet);
+		
+		return null;
+	}
+}

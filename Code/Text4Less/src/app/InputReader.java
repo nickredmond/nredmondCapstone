@@ -24,85 +24,59 @@ public class InputReader {
 		currentNetwork = network;
 	}
 	
-	public static ReadResult readImageInput(BufferedImage image, List<ImageReadMethod> readMethods) throws IOException{
-		List<CharacterResult> nnTranslation = new ArrayList<CharacterResult>();
-		List<CharacterResult> ldTranslation = new ArrayList<CharacterResult>();
+	public static ReadResult readImageInput(BufferedImage image, ImageReadMethod method) throws IOException{
+		ReadResult result = null;
+		ImageHandlerFactory.setHandlerMethod(method);
 		
-		List<CharacterResult> finalTranslation = null;//new ArrayList<CharacterResult>();
+		if (method == ImageReadMethod.NEURAL_NETWORK && currentNetwork == null){
+			result = readDefaultNetworkInput(image);
+		}
+		else{
+			INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+			ImageReader reader = new ImageReader(currentNetwork, translator);
+			
+			List<CharacterResult> results = reader.readTextFromImage(image);
+			
+			result = convertTranslationToResult(results);
+		}
 		
+		return result;
+	}
+	
+	private static ReadResult readDefaultNetworkInput(BufferedImage image) throws IOException{
+		float maxConfidence = 0.0f;
+		List<CharacterResult> translation = null;
+		ReadResult result = null;
 		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 		
-		if (readMethods.contains(ImageReadMethod.NEURAL_NETWORK)){
-			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.NEURAL_NETWORK);
-						
-			if (currentNetwork == null){	
-				float maxConfidence = 0.0f;
-				List<CharacterResult> translation = null;
-				
-				for (int i = 0; i < DEFAULT_NETWORKS.length; i++){
-					INeuralNetwork nextNetwork = NeuralNetworkIO.readNetwork(DEFAULT_NETWORKS[i]);
-					ImageReader reader = new ImageReader(nextNetwork, translator);
-					List<CharacterResult> results = reader.readTextFromImage(image);
-					
-					float totalConfidence = 0.0f;
-					
-					for (CharacterResult nextResult : results){
-						totalConfidence += nextResult.getResult().getConfidence();
-					}
-					
-					float avgConfidence = totalConfidence / results.size();
-					if (avgConfidence > maxConfidence){
-						translation = results;
-						maxConfidence = avgConfidence;
-					}
-					
-					System.out.println("avg: " + avgConfidence + " " + DEFAULT_NETWORKS[i]);
-				}
-				
-				if (translation == null){
-					Logger.logMessage("Most confident translation was not set during default multi-network reading (Source: InputReader).");
-				}
-				else{
-					nnTranslation = translation;
-					finalTranslation = translation;
-				}
-			}
-			else{
-				ImageReader reader = new ImageReader(currentNetwork, translator);
-				
-				nnTranslation = reader.readTextFromImage(image);
-				finalTranslation = nnTranslation;
-			}
-		}
-		if (readMethods.contains(ImageReadMethod.LEAST_DISTANCE)){
-			ImageHandlerFactory.setHandlerMethod(ImageReadMethod.LEAST_DISTANCE);
-			ImageReader reader = new ImageReader(translator);
-
-			ldTranslation = reader.readTextFromImage(image);
-			finalTranslation = ldTranslation;
-		}
-		if (readMethods.contains(ImageReadMethod.NEURAL_NETWORK) && readMethods.contains(ImageReadMethod.LEAST_DISTANCE)){
-			int index = 0;
-			finalTranslation = new ArrayList<CharacterResult>();
+		for (int i = 0; i < DEFAULT_NETWORKS.length; i++){
+			INeuralNetwork nextNetwork = NeuralNetworkIO.readNetwork(DEFAULT_NETWORKS[i]);
+			ImageReader reader = new ImageReader(nextNetwork, translator);
+			List<CharacterResult> results = reader.readTextFromImage(image);
 			
-			for (CharacterResult nextResult : nnTranslation){
-				if (nextResult.isRejected()){
-					finalTranslation.add(ldTranslation.get(index));
-				}
-				else finalTranslation.add(nnTranslation.get(index));
-				index++;
+			float totalConfidence = 0.0f;
+			
+			for (CharacterResult nextResult : results){
+				totalConfidence += nextResult.getResult().getConfidence();
 			}
+			
+			float avgConfidence = totalConfidence / results.size();
+			if (avgConfidence > maxConfidence){
+				translation = results;
+				maxConfidence = avgConfidence;
+			}
+			
+			System.out.println("avg: " + avgConfidence + " " + DEFAULT_NETWORKS[i]);
 		}
 		
-		float confidence = 0.0f;
-		for (CharacterResult nextResult : finalTranslation){
-			confidence += nextResult.getResult().getConfidence();
+		if (translation == null){
+			Logger.logMessage("Most confident translation was not set during default multi-network reading (Source: InputReader).");
 		}
-		confidence /= finalTranslation.size();
+		else{
+			result = convertTranslationToResult(translation);
+		}
 		
-		System.out.println("Confidence: " + confidence);
-		
-		return convertTranslationToResult(finalTranslation);
+		return result;
 	}
 	
 	private static ReadResult convertTranslationToResult(

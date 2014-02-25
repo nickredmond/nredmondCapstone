@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
-<fullyQualifiedTypeName name="java.awt.Graphics"/>
-<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
-<fullyQualifiedTypeName name="java.io.FileFilter"/>
-<fullyQualifiedTypeName name="java.io.IOException"/>
-<fullyQualifiedTypeName name="app.InputReader"/>
-<fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
-<fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="appTest.SegmentationPanel"/>
 <fullyQualifiedTypeName name="appTest.SegmentationHistogramPanel"/>
@@ -40,14 +31,12 @@
 <fullyQualifiedTypeName name="math.ProbabilityCalculator"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="genetics.TestFitnessCalculator"/>
-<fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="decisionTrees.MetaclassConverter"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
 <fullyQualifiedTypeName name="io.MnistParser"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
@@ -60,4 +49,15 @@
 <fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
 <fullyQualifiedTypeName name="io.CharacterType"/>
+<fullyQualifiedTypeName name="decisionTrees.MetaclassNode"/>
+<fullyQualifiedTypeName name="decisionTrees.MetaclassTree"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="decisionTrees.BasicSplitMetaclassTree"/>
+<fullyQualifiedTypeName name="io.MetaclassTreeIO"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="app.CharacterResult"/>
+<fullyQualifiedTypeName name="app.Logger"/>
+<fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
+<fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
+<fullyQualifiedTypeName name="debug.ConfusionMatrixDebug"/>
 </qualifiedTypeNameHistroy>

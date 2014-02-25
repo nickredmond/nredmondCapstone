@@ -1,0 +1,26 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixNeuralNetwork;
+
+public class BasicTreeFinder extends MetaclassTreeFinder {
+
+	public BasicTreeFinder(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, char[] classes) {
+		super(trainingSet, testSet, classes);
+	}
+
+	@Override
+	public MetaclassTree getTree() {
+		FeatureExtractionIOTranslator translator = new FeatureExtractionIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, 2, true);
+		
+		int splitIndex = classes.length / 2;
+		
+		return null;
+	}
+}

@@ -1,0 +1,8 @@
+package decisionTrees;
+
+public class BasicTreeFinder implements ITreeFinder {
+
+	public MetaclassTree getTree(){
+		
+	}
+}

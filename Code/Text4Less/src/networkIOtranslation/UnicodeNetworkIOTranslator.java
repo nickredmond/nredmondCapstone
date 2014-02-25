@@ -52,8 +52,12 @@ public class UnicodeNetworkIOTranslator implements INetworkIOTranslator {
 
 	@Override
 	public float[] translateImageToNetworkInput(BufferedImage img) {
-		// TODO Auto-generated method stub
 		return new NetworkIOTranslator().translateImageToNetworkInput(img);
+	}
+
+	@Override
+	public int getInputLength() {
+		return new NetworkIOTranslator().getInputLength();
 	}
 	
 }

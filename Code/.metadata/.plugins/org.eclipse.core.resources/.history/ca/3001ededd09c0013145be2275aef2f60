@@ -1,0 +1,33 @@
+package decisionTrees;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+
+public class BasicSplitMetaclassTree implements IMetaclassTree {
+	private MetaclassNode rootNode;
+	private FeatureExtractionIOTranslator translator;
+	
+	public BasicSplitMetaclassTree(MetaclassNode rootNode, FeatureExtractionIOTranslator translator){
+		this.rootNode = rootNode;
+		this.translator = translator;
+	}
+	
+	@Override
+	public TranslationResult readCharacter(BufferedImage image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public MetaclassNode getLeafNode(BufferedImage image, MetaclassNode currentNode){
+		float[] input = translator.translateImageToNetworkInput(image);
+		float[] output = currentNode.getNetwork().forwardPropagate(input);
+		
+		int classNr = (output[0] > output[1]) ? 0 : 1;
+		
+		MetaclassNode child = (classNr == 0) ? currentNode.getLeftChild() : currentNode.getRightChild();
+	}
+}

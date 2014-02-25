@@ -1,0 +1,9 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public abstract class MetaclassTreeFinder implements ITreeFinder {
+	protected Set<CharacterTrainingExample> trainingSet, testSet;
+}

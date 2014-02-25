@@ -1,0 +1,5 @@
+package decisionTrees;
+
+public abstract class MetaclassTreeFinder implements ITreeFinder {
+	
+}

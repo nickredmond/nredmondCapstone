@@ -218,4 +218,10 @@ public class NetworkIOTranslator implements INetworkIOTranslator {
 	private static boolean isValidPoint(int x, int y, BufferedImage img){
 		return (x < img.getWidth() && y < img.getHeight());
 	}
+
+	@Override
+	public int getInputLength() {
+		// TODO Auto-generated method stub
+		return 30; // IDK IF THIS IS RIGHT...
+	}
 }

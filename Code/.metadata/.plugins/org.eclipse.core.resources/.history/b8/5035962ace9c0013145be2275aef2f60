@@ -1,0 +1,102 @@
+package decisionTrees;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixBackpropTrainer;
+import neuralNetwork.MatrixNeuralNetwork;
+import neuralNetwork.TrainingExample;
+
+public class BasicTreeFinder extends MetaclassTreeFinder {
+	private FeatureExtractionIOTranslator translator;
+	private MatrixBackpropTrainer trainer;
+	
+	private final int LEFT_INDEX = 0;
+	private final int RIGHT_INDEX = 1;
+	
+	private final int MAX_CLASS_SIZE = 3;
+	
+	public BasicTreeFinder(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, char[] classes) {
+		super(trainingSet, testSet, classes);
+		translator = new FeatureExtractionIOTranslator();
+		trainer = new MatrixBackpropTrainer(0.05f, 0.02f);
+	}
+
+	@Override
+	public MetaclassTree getTree() {
+		MetaclassNode rootNode = new MetaclassNode(classes, new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, 2, true));
+		
+		return null;
+	}
+	
+	private void addNodes(MetaclassNode currentNode, char[] currentClasses){
+		INeuralNetwork network = currentNode.getNetwork();
+		
+		char[][] combinedClasses = getCombinedClasses(currentClasses);
+		Set<TrainingExample> trainingExamples = getFormattedExamples(combinedClasses, trainingSet);
+		
+		trainer.trainWithTrainingSet(network, trainingExamples, new HashSet<TrainingExample>());
+		
+		if (combinedClasses[0])
+	}
+	
+	private Set<TrainingExample> getFormattedExamples(char[][] combinedClasses, Set<CharacterTrainingExample> examples){
+		Set<TrainingExample> formatted = new HashSet<TrainingExample>();
+		
+		for (CharacterTrainingExample nextExample : examples){
+			int classNr = getClassNr(nextExample.getCharacterValue(), combinedClasses[LEFT_INDEX], combinedClasses[RIGHT_INDEX]);
+				
+			if (classNr != -1){
+				int[] left = {1,0};
+				int[] right = {0,1};
+				
+				float[] input = translator.translateImageToNetworkInput(nextExample.getCharacterImage());
+				int[] output = (classNr == LEFT_INDEX) ? left : right;
+				
+				formatted.add(new TrainingExample(input, output));
+			}
+		}
+		
+		return formatted;
+	}
+	
+	private char[][] getCombinedClasses(char[] currentClasses){
+		int splitIndex = currentClasses.length / 2;
+		char[] leftClasses = new char[splitIndex];
+		char[] rightClasses = new char[currentClasses.length - leftClasses.length];
+		
+		for (int i = 0; i < splitIndex; i++){
+			leftClasses[i] = currentClasses[i];
+		}
+		for (int i = 0; i < rightClasses.length; i++){
+			rightClasses[i] = currentClasses[i + splitIndex];
+		}
+		
+		char[][] combined = {leftClasses, rightClasses};
+		return combined;
+	}
+	
+	private int getClassNr(char character, char[] leftClasses, char[] rightClasses){
+		int classNr = -1;
+		boolean foundClass = false;
+		
+		for (int i = 0; i < leftClasses.length && !foundClass; i++){
+			if (character == leftClasses[i]){
+				foundClass = true;
+				classNr = 0;
+			}
+		}
+		for (int i = 0; i < rightClasses.length && !foundClass; i++){
+			if (character == rightClasses[i]){
+				foundClass = true;
+				classNr = 1;
+			}
+		}
+		
+		return classNr;
+	}
+}

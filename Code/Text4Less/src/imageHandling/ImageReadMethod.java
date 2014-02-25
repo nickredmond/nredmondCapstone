@@ -25,6 +25,12 @@ public enum ImageReadMethod {
 		public ICharacterImageHandler getHandler(CharacterReader reader, List<CharacterResult> results) {
 			return new NeuralNetworkHandler(results, reader);
 		}
+	},
+	DECISION_TREE{
+		@Override
+		public ICharacterImageHandler getHandler(CharacterReader reader, List<CharacterResult> results) {
+			return new DecisionTreeHandler(results);
+		}
 	};
 	
 	public abstract ICharacterImageHandler getHandler(CharacterReader reader, List<CharacterResult> results);
