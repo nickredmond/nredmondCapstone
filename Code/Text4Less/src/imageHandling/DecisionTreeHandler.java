@@ -12,7 +12,7 @@ import app.Logger;
 import decisionTrees.IMetaclassTree;
 
 public class DecisionTreeHandler implements ICharacterImageHandler{
-	private final String DECISION_TREE_NAME = "treeTest";
+	private final String DECISION_TREE_NAME = "defaultTree";
 	private IMetaclassTree decisionTree;
 	private List<CharacterResult> results;
 	

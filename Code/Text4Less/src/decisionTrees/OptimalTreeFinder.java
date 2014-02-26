@@ -24,7 +24,7 @@ public class OptimalTreeFinder extends MetaclassTreeFinder {
 	private int numberLeafClasses;
 	private IChromosomeChooser chooser;
 
-	private final float DEFAULT_REQUIRED_FITNESS = 0.1f;
+	private final float DEFAULT_REQUIRED_FITNESS = 0.15f;
 	private final int DEFAULT_NUMBER_LEAF_CLASSES = 3;
 	protected float bestFitness;
 	

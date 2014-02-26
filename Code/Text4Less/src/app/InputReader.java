@@ -84,7 +84,7 @@ public class InputReader {
 		String resultString = "";
 		ReadResult result = new ReadResult();
 		
-		for (CharacterResult nextResult : translation){
+		for (CharacterResult nextResult : translation){			
 			String nextTranslationString = (nextResult.getResult() == null) ? " " : nextResult.getResult().toString();
 			String newline = TranslationResult.NEWLINE_VALUE;
 			

@@ -42,6 +42,7 @@ import ui.HomeWindow;
 import app.AlphaNumericCharacterConverter;
 import app.CharacterResult;
 import app.ImageReader;
+import app.InputReader;
 import app.LeastDistanceCalculator;
 import app.MultiNetworkReader;
 import app.NetworkFactory;
@@ -55,10 +56,15 @@ public class MainTest {
 	public static void main(String[] args) throws Exception {		
 		new HomeWindow();
 		
-	//	FileOperations.renameFilesWithAppendedName("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/unformatted", "2");
+//		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
+//		AlphaNumericIOTranslator translator = new AlphaNumericIOTranslator();
+//		
+//		INeuralNetwork network = NetworkFactory.getTrainedNetwork(new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true),
+//				translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.06f, 0.04f));
+//		NeuralNetworkIO.writeNetwork(network, "endOfLineTestNetArial");
 		
 //		testDecisionTrees();
-//		
+		
 //		BufferedImage test = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest2.png"));
 //		ReadResult result = InputReader.readImageInput(test, ImageReadMethod.DECISION_TREE);
 //		
@@ -97,20 +103,20 @@ public class MainTest {
 		
 		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(CharacterType.ASCII2);
 		
-//		char[] classes = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'
-//				, 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'
-//				, 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' '};
+		char[] classes = {'j', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'
+				, 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', ' ', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'
+				, 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 		
 		char[] handPickedClasses = {'C', 'c', 'M', 'H', 'Z', 'z', 'A', 'B', 'E', 'F', 'G', 'J', 'K', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'U'
-				, 'V', 'W', 'X', 'Y', 'a', 'b', 'd', 'e', 'f', 'g', 'h', 'k', 'm', ' ', 'n', 'p', 'q', 'r', 's'
+				, 'V', 'W', 'X', 'Y', ' ', 'a', 'b', 'd', 'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'q', 'r', 's'
 				, 't', 'u', 'v', 'w', 'x', 'y', '0', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'I', 'i', 'j', 'l', '1', 'D', 'o',};
 		
-		ITreeFinder treeFinder = new BasicTreeFinder(trainingSet, testSet, handPickedClasses);
+		ITreeFinder treeFinder = new BasicTreeFinder(trainingSet, testSet, classes);
 		IMetaclassTree tree = treeFinder.getTree();
 		System.out.println("tree: " + tree);
 		
-		MetaclassTreeIO.saveTree(tree, "treeTest");
-		IMetaclassTree savedTree = MetaclassTreeIO.readTree("treeTest");
+		MetaclassTreeIO.saveTree(tree, "defaultTree");
+		IMetaclassTree savedTree = MetaclassTreeIO.readTree("defaultTree");
 		System.out.println("tree: " + savedTree);
 		
 		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/t5.jpg"));

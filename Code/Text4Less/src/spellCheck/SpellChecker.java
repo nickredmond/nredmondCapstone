@@ -6,41 +6,27 @@ public class SpellChecker {
 	private static final int NEWLINE_CODE = 10;
 	private static final int RETURN_CODE = 13;
 	
-	public static String spellCheckText(String text){
-		int currentWordStart = 0;
-		int currentWordEnd = 0;
-		boolean inWord = false;
+	public static String spellCheckText(String text){		
+		String correctedText = "";
 		
-		boolean isNewLine = false;
-		boolean wasNewLine = false;
+		String[] lines = text.split("\\r\\n");
 		
-		String correctedText = text;
-		
-		for (int i = 0; i < correctedText.length(); i++){
-			if (correctedText.charAt(i) != 10 || correctedText.charAt(i) != 13){
+		for (int i = 0; i < lines.length; i++){
+			String nextLine = lines[i];
+			String[] words = nextLine.split(" ");
+			
+			for (int j = 0; j < words.length; j++){
+				String nextWord = words[j];
+				String correctedWord = (nextWord.matches("^[0-9]+$") || nextWord.length() < 2) ? nextWord : correctSpelling(nextWord);
+				correctedText += correctedWord;
 				
+				if (j < words.length - 1){
+					correctedText += " ";
+				}
 			}
 			
-			if (correctedText.charAt(i) != WORD_DELIMITER && !isNewLine(correctedText, i) && !inWord){
-				currentWordStart = i;
-				inWord = true;
-			}
-			else if (correctedText.charAt(i) == WORD_DELIMITER && inWord){
-				//currentWordEnd = i;
-				inWord = false;
-				
-				String word = correctedText.substring(((currentWordStart > 0) ? currentWordStart - 1 : 0), i);
-				String before = correctedText.substring(0, currentWordStart);
-				String after = correctedText.substring(i);
-				
-				word = word.trim();
-				
-				String correctedWord = (word.matches("^[0-9]+$") || word.length() < 2) ? word : correctSpelling(word);
-				
-				//System.out.println("n: " + word + ", c: " + correctedWord);
-				
-				correctedText = before + correctedWord + after;
-				i += (correctedWord.length() - word.length());
+			if (i < lines.length - 1){
+				correctedText += "\r\n";
 			}
 		}
 		
@@ -52,6 +38,10 @@ public class SpellChecker {
 	}
 
 	public static String correctSpelling(String word){
+		if (word.startsWith("pancake")){
+			int x = 0;
+		}
+		
 		IDictionary dictionary = DictionaryFactory.getDictionary(DictionaryFactory.PRIORITY_DICTIONARY_FILEPATH);
 		String closestMatch = word;
 		

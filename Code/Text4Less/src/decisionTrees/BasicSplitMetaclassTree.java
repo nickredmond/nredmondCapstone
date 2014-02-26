@@ -4,6 +4,7 @@ import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Arrays;
 
 import networkIOtranslation.FeatureExtractionIOTranslator;
 

@@ -1,0 +1,4 @@
+USER RECOMMENDATIONS/COMMENTS
+
+-Drawing crosshair paints at upper left corner
+-Handwritten image saving UI is confusing/complicated

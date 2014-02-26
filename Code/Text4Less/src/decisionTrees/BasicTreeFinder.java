@@ -62,6 +62,7 @@ public class BasicTreeFinder extends MetaclassTreeFinder {
 	}
 	
 	private void setupLeafNode(MetaclassNode currentNode){
+		currentNode.setNetwork(new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, currentNode.getClasses().length, true));
 		currentNode.setLeafNode(true);
 		char[] classes = currentNode.getClasses();
 		
@@ -118,21 +119,55 @@ public class BasicTreeFinder extends MetaclassTreeFinder {
 		int splitIndex = currentClasses.length / 2;
 		char[] leftClasses = new char[splitIndex];
 		char[] rightClasses = new char[currentClasses.length - leftClasses.length];
+		char[][] combined = null;
 		
-		for (int i = 0; i < splitIndex; i++){
-			leftClasses[i] = currentClasses[i];
-		}
-		for (int i = 0; i < rightClasses.length; i++){
-			rightClasses[i] = currentClasses[i + splitIndex];
-		}
+//		int spaceIndex = -1;
+//		boolean hasSpace = false;
+//		for (int i = 0; i < currentClasses.length && !hasSpace; i++){
+//			if (currentClasses[i] == ' '){
+//				hasSpace = true;
+//				spaceIndex = i;
+//			}
+//		}
 		
-		char[][] combined = {leftClasses, rightClasses};
+//		if (!hasSpace){
+			for (int i = 0; i < splitIndex; i++){
+				leftClasses[i] = currentClasses[i];
+			}
+			for (int i = 0; i < rightClasses.length; i++){
+				rightClasses[i] = currentClasses[i + splitIndex];
+			}
+			char[][] leftRightClasses = {leftClasses, rightClasses};
+			combined = leftRightClasses;
+//		}
+//		else{
+//			char[] left = {' '};
+//			char[] right = new char[currentClasses.length - 1];
+//			int currentIndex = 0;
+//			
+//			for (int i = 0; i < currentClasses.length; i++){
+//				if (i != spaceIndex){
+//					right[currentIndex] = currentClasses[i];
+//					currentIndex++;
+//				}
+//			}
+//			
+//			
+//			char[][] leftRightClasses = {left, right};
+//			combined = leftRightClasses;
+//		}
+		
+		
 		return combined;
 	}
 	
 	private int getClassNr(char character, char[] classes){
 		int classNr = -1;
 		boolean foundClass = false;
+		
+		if (character == ' '){
+			int x = 0;
+		}
 		
 		for (int i = 0; i < classes.length && !foundClass; i++){
 			if (classes[i] == character){
@@ -147,6 +182,10 @@ public class BasicTreeFinder extends MetaclassTreeFinder {
 	private int getClassNr(char character, char[] leftClasses, char[] rightClasses){
 		int classNr = -1;
 		boolean foundClass = false;
+		
+		if (character == ' '){
+			int x = 0;
+		}
 		
 		for (int i = 0; i < leftClasses.length && !foundClass; i++){
 			if (character == leftClasses[i]){
