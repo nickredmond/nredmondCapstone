@@ -1,0 +1,9 @@
+package app;
+
+import neuralNetwork.INeuralNetwork;
+
+public class DirectoryReader {
+	public static void setNetwork(INeuralNetwork network){
+		InputReader.setNetwork(network);
+	}
+}

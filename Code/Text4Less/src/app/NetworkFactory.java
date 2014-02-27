@@ -20,7 +20,7 @@ public class NetworkFactory {
 	
 	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,
 			CharacterType type, INetworkTrainer networkTrainer) throws IOException{
-		return getTrainedNetwork(originalNetwork, translator, type, networkTrainer, 10000, 0.05f);
+		return getTrainedNetwork(originalNetwork, translator, type, networkTrainer, 10000, 0.03f);
 	}
 	
 	public static INeuralNetwork getTrainedNetwork(INeuralNetwork originalNetwork, INetworkIOTranslator translator,

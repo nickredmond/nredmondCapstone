@@ -1,0 +1,28 @@
+package io;
+
+import java.util.List;
+
+public class WordDocWriter {
+	private String documentMetadata;
+	private List<String> translations;
+	
+	public WordDocWriter(){
+		
+	}
+	
+	public void addImageTranslation(String translation){
+		
+	}
+	
+	public void addTranslations(List<String> translations){
+		
+	}
+	
+	public void clearTranslations(){
+		
+	}
+	
+	public void writeDocument(){
+		
+	}
+}

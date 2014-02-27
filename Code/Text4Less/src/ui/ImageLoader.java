@@ -22,7 +22,7 @@ public class ImageLoader {
 		}
 	}
 	
-	private static boolean isImage(String filename){
+	public static boolean isImage(String filename){
 		String[] nameParts = filename.split("[.]");
 		String fileType = nameParts[1];
 		boolean isImage = false;

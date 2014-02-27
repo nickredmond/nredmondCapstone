@@ -1,0 +1,29 @@
+package app;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import neuralNetwork.INeuralNetwork;
+import ui.ImageLoader;
+
+public class DirectoryReader {
+	
+	
+	public static void setNetwork(INeuralNetwork network){
+		InputReader.setNetwork(network);
+	}
+	
+	public static List<String> readDirectoryImages(File directory){
+		File[] files = directory.listFiles();
+		List<String> translationList = new ArrayList<String>();
+		
+		for (File nextFile : files){
+			String fileName = nextFile.getName();
+			
+			if (ImageLoader.isImage(fileName)){
+				// translate and add
+			}
+		}
+	}
+}

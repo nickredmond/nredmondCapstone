@@ -1,0 +1,29 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+
+public class SpellCheckPanel extends JPanel{
+	private boolean useSpellCheck;
+	
+	public boolean isSpellCheckEnabled(){
+	}
+	
+	public void setSpellCheckEnabled(boolean isEnabled){
+		
+	}
+	
+	private class SpellCheckListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == yesSpellCheckButton){
+				useSpellCheck = true;
+			}
+			else if (evt.getSource() == noSpellCheckButton){
+				useSpellCheck = false;
+			}
+		}
+	}
+}

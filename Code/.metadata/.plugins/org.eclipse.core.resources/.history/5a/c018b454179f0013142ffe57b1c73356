@@ -1,0 +1,31 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class FolderTranslationWindow extends JFrame {
+	private JButton chooseFolderButton, translateButton, saveButton;
+	private JLabel selectedFolderLabel;
+	
+	private SpellCheckPanel spellCheckPanel;
+	
+	public FolderTranslationWindow(){
+		setupDisplay();
+	}
+
+	private void setupDisplay() {
+		
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+}

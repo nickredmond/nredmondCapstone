@@ -1,0 +1,67 @@
+package io;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import app.Logger;
+
+public class WordDocWriter {
+	private String documentMetadata;
+	private List<String> translations;
+	
+	private final String OPEN_PAGE_TAGS = "<wx:sect><w:p><w:r><w:t>";
+	private final String CLOSE_PAGE_TAGS = "</w:t></w:r></w:p></wx:sect>";
+	private final String LINE_BREAK_TAG = "<w:br/>";
+	private final String PAGE_BREAK_TAGS = "<w:p><w:r><w:br w:type=\"page\">";
+	private final String CLOSE_DOC_TAGS = "</w:body></w:wordDocument>";
+	
+	public static final String DOC_EXTENSION = ".doc";
+	
+	public WordDocWriter() throws IOException{
+		translations = new ArrayList<String>();
+		try {
+			addMetadata();
+		} catch (IOException e) {
+			Logger.logMessage("Could not read metadata for Word document (Source: WordDocWriter); Error Message: " + e.getMessage());
+			throw e;
+		}
+	}
+	
+	private void addMetadata() throws IOException{
+		BufferedReader reader = new BufferedReader(new FileReader(new File("metadataFiles/wordDocMetadata.txt")));
+		
+		String nextLine = "";
+		
+		while ((nextLine = reader.readLine()) != null){
+			documentMetadata += nextLine;
+		}
+		
+		reader.close();
+	}
+	
+	public void addImageTranslation(String translation){
+		translations.add(translation);
+	}
+	
+	public void addTranslations(List<String> translations){
+		translations.addAll(translations);
+	}
+	
+	public void clearTranslations(){
+		translations.clear();
+	}
+	
+	public void writeDocument(File documentFile) throws IOException{
+		BufferedWriter writer = new BufferedWriter(new FileWriter(documentFile));
+		
+		for (int i = 0; i < translations.size(); i++){
+			writer.write(OPEN_PAGE_TAGS);
+		}
+	}
+}

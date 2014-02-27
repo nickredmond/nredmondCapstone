@@ -1,0 +1,9 @@
+package io;
+
+public class WordDocWriter {
+	String documentMetadata;
+	
+	public WordDocWriter(){
+		
+	}
+}

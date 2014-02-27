@@ -1,0 +1,10 @@
+package ui;
+
+import javax.swing.JPanel;
+
+public class SpellCheckPanel extends JPanel{
+
+	
+	public boolean isSpellCheckEnabled(){
+	}
+}

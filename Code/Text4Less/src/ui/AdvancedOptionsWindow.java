@@ -34,14 +34,11 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	private String networkName;
 	
 	private NetworkSelectionPanel networkPanel;
-	private JRadioButton yesSpellCheckButton, noSpellCheckButton;
-	private boolean useSpellCheck = false;
+	private SpellCheckPanel spellCheckPanel;
 	
 	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, INeuralNetwork chosenNetwork, String networkName,
 			boolean useSpellCheck){		
 		this(window, selectedMethod, useSpellCheck);
-		
-		this.useSpellCheck = useSpellCheck;
 		
 		if (chosenNetwork != null && networkName != null){
 			this.chosenNetwork = chosenNetwork;
@@ -71,29 +68,8 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	}
 	
 	private void setupSpellCheckOptions(boolean isSpellCheckOn) {
-		JPanel spellCheckPanel = new JPanel();
-		spellCheckPanel.setLayout(new BoxLayout(spellCheckPanel, BoxLayout.X_AXIS));
-		spellCheckPanel.add(new JLabel("Translation Spell Checking:"));
-		
-		yesSpellCheckButton = new JRadioButton("Yes");
-		noSpellCheckButton = new JRadioButton("No");
-		
-		SpellCheckListener listener = new SpellCheckListener();
-		yesSpellCheckButton.addActionListener(listener);
-		noSpellCheckButton.addActionListener(listener);
-		
-		if (isSpellCheckOn){
-			yesSpellCheckButton.setSelected(true);
-		}
-		else noSpellCheckButton.setSelected(true);
-		
-		ButtonGroup group = new ButtonGroup();
-		group.add(yesSpellCheckButton);
-		group.add(noSpellCheckButton);
-		
-		spellCheckPanel.add(yesSpellCheckButton);
-		spellCheckPanel.add(noSpellCheckButton);
-		
+		spellCheckPanel = new SpellCheckPanel();
+		spellCheckPanel.setSpellCheckEnabled(isSpellCheckOn);
 		this.getContentPane().add(spellCheckPanel);
 	}
 
@@ -147,24 +123,12 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		}
 	}
 	
-	private class SpellCheckListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent evt) {
-			if (evt.getSource() == yesSpellCheckButton){
-				useSpellCheck = true;
-			}
-			else if (evt.getSource() == noSpellCheckButton){
-				useSpellCheck = false;
-			}
-		}
-	}
-	
 	private class ButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == saveChangesButton){
-				window.advancedOptionsSaveChangesClicked(selectedReadMethod, chosenNetwork, networkName, useSpellCheck);
+				window.advancedOptionsSaveChangesClicked(selectedReadMethod, chosenNetwork, networkName, spellCheckPanel.isSpellCheckEnabled());
 				AdvancedOptionsWindow.this.dispose();
 			}
 			else if (evt.getSource() == nnButton){

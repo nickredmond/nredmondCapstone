@@ -10,19 +10,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class HomeWindow extends JFrame{
-	private JButton translateButton, trainNetButton, userCharacterButton;
+	private JButton translateButton, translateFolderButton, trainNetButton, userCharacterButton;
 	
 	public HomeWindow(){
 		translateButton = new JButton("Translate an Image");
+		translateFolderButton = new JButton("Translate Folder");
 		trainNetButton = new JButton("Train Neural Network");
 		userCharacterButton = new JButton("User Characters");
 		setupButton(translateButton);
+		setupButton(translateFolderButton);
 		setupButton(trainNetButton);
 		setupButton(userCharacterButton);
 		
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		contentPane.add(translateButton);
+		contentPane.add(translateFolderButton);
 		contentPane.add(trainNetButton);
 		contentPane.add(userCharacterButton);
 		
@@ -47,6 +50,9 @@ public class HomeWindow extends JFrame{
 			}
 			else if (evt.getSource() == userCharacterButton){
 				new DigitalDrawingWindow();
+			}
+			else if (evt.getSource() == translateFolderButton){
+				new FolderTranslationWindow();
 			}
 		}
 	}
