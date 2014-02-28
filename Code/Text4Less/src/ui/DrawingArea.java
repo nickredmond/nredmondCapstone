@@ -19,6 +19,9 @@ public class DrawingArea extends JPanel {
 	private final int DEFAULT_WIDTH = 10;
 	private final int DEFAULT_PEN_SIZE = 1;
 	
+	private final int MOUSE_OFFSET_X = 5;
+	private final int MOUSE_OFFSET_Y = 15;
+	
 	private int height, width, penSize;
 	private float cellWidth, cellHeight;
 	private int[][] data;
@@ -100,8 +103,8 @@ public class DrawingArea extends JPanel {
 			Point areaLocation = DrawingArea.this.getLocation();
 			Point relativeLocation = new Point(mouseLocation.x - areaLocation.x, mouseLocation.y - areaLocation.y);
 			
-			int cellX = (int) (relativeLocation.x / cellWidth);
-			int cellY = (int) (relativeLocation.y / cellHeight);
+			int cellX = (int) ((relativeLocation.x + MOUSE_OFFSET_X) / cellWidth);
+			int cellY = (int) ((relativeLocation.y + MOUSE_OFFSET_Y) / cellHeight);
 			
 			if (cellY < height && cellX < width){
 				drawOnArea(cellX, cellY);

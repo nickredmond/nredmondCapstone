@@ -33,7 +33,7 @@ public class FolderTranslationWindow extends JFrame {
 	
 	private WordDocWriter writer;
 	
-	private final int DEFAULT_WIDTH = 400;
+	private final int DEFAULT_WIDTH = 550;
 	private final int DEFAULT_HEIGHT = 600;
 	
 	private JTextArea textArea;
@@ -146,6 +146,7 @@ public class FolderTranslationWindow extends JFrame {
 					textArea.setText(resultText);
 					
 					saveButton.setEnabled(true);
+					textArea.setEnabled(true);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

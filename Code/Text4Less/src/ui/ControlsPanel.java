@@ -25,8 +25,6 @@ public class ControlsPanel extends JPanel {
 	private final int MAX_PEN_WIDTH = 9;
 	private final int MIN_PEN_WIDTH = 1;
 	
-	private boolean isErasing = false;
-	
 	public ControlsPanel(DrawingPanel parent){
 		this.parent = parent;
 		
@@ -78,15 +76,20 @@ public class ControlsPanel extends JPanel {
 	}
 
 	private void setupPenSlider() {
-		penSizeSlider = new JSlider(JSlider.HORIZONTAL, MAX_PEN_WIDTH, MIN_PEN_WIDTH);
-		penSizeSlider.setMinorTickSpacing(2);
+		penSizeSlider = new JSlider(MIN_PEN_WIDTH, MAX_PEN_WIDTH, MIN_PEN_WIDTH);
+		penSizeSlider.setMajorTickSpacing(2);
 		penSizeSlider.setPaintTicks(true);
 		penSizeSlider.setPaintLabels(true);
 		penSizeSlider.setSnapToTicks(true);
 		
 		Hashtable<Integer, JLabel> penLabels = new Hashtable<Integer, JLabel>();
-		penLabels.put(MIN_PEN_WIDTH, new JLabel(new Integer(MIN_PEN_WIDTH).toString()));
-		penLabels.put(MAX_PEN_WIDTH, new JLabel(new Integer(MAX_PEN_WIDTH).toString()));
+//		penLabels.put(MIN_PEN_WIDTH, new JLabel(new Integer(MIN_PEN_WIDTH).toString()));
+//		penLabels.put(MAX_PEN_WIDTH, new JLabel(new Integer(MAX_PEN_WIDTH).toString()));
+		
+		for (int i = MIN_PEN_WIDTH; i <= MAX_PEN_WIDTH; i+= 2){
+			penLabels.put(i, new JLabel(new Integer(i).toString()));
+		}
+		
 		penSizeSlider.setLabelTable(penLabels);
 		penSizeSlider.setPaintLabels(true);
 		

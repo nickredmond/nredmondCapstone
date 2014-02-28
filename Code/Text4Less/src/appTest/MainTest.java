@@ -53,9 +53,9 @@ import decisionTrees.ITreeFinder;
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {		
-	//	new HomeWindow();
+		new HomeWindow();
 		
-		FileOperations.renameFilesWithAppendedName("trainingImages/unformatted", "31");
+	//	FileOperations.renameFilesWithAppendedName("trainingImages/unformatted", "36");
 	}
 	
 	private static void testDecisionTrees() throws IOException{

@@ -97,7 +97,8 @@ public class CharacterRecognitionPanel extends JPanel implements INetworkSelecti
 			String floatString = new Float(value).toString();
 			String[] floatParts = floatString.split("[.]");
 			
-			String roundedString = floatParts[1].substring(0, placesToRound);
+			String roundedString = (floatParts[1].length() >= placesToRound) ? floatParts[1].substring(0, placesToRound) :
+					floatParts[1];
 			return floatParts[0] + "." + roundedString;
 		}
 	}

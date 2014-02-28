@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="debug.CorrelationDebug"/>
-<fullyQualifiedTypeName name="imageProcessing.NeighboringImageHypothesizer"/>
-<fullyQualifiedTypeName name="featureExtraction.ImageThinner"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageSegmenter"/>
 <fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
 <fullyQualifiedTypeName name="debug.EntropyDebug"/>
 <fullyQualifiedTypeName name="receptors.ReceptorGenerator"/>
@@ -20,7 +16,6 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow.SpellCheckListener"/>
 <fullyQualifiedTypeName name="spellCheck.SpellChecker"/>
-<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.Cursor"/>
 <fullyQualifiedTypeName name="app.LeastDistanceCalculator"/>
@@ -60,4 +55,9 @@
 <fullyQualifiedTypeName name="imageHandling.ImageReadMethod"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.DirectoryReader"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
+<fullyQualifiedTypeName name="javax.swing.Box"/>
+<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="app.InputReader"/>
 </qualifiedTypeNameHistroy>
