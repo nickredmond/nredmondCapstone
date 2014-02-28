@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -59,15 +62,19 @@ public class ImageLoaderPanel extends JPanel {
 		ImageIcon finalIcon = new ImageIcon(baseImg);
 		
 		imagePreview.setText("");
+		imagePreview.setBorder(null);
 		imagePreview.setIcon(finalIcon);
+		imagePreview.setAlignmentY(LEFT_ALIGNMENT);
 	}
 
 	private void setupPreviewPanel() {
 		previewPanel = new JPanel();
-		previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
+		previewPanel.setLayout(new BorderLayout());
 		
 		JLabel title = new JLabel("PREVIEW:");
 		imagePreview = new JLabel("No Image Selected");
+		imagePreview.setFont(new Font("Helvetica", Font.BOLD, 18));
+		imagePreview.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 10));
 		
 		previewPanel.add(title);
 		previewPanel.add(imagePreview);

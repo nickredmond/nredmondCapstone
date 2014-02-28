@@ -2,21 +2,15 @@ package ui;
 
 import imageHandling.ImageReadMethod;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -35,6 +29,8 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	
 	private NetworkSelectionPanel networkPanel;
 	private SpellCheckPanel spellCheckPanel;
+	
+	private final int NUMBER_ELEMENTS = 4;
 	
 	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, INeuralNetwork chosenNetwork, String networkName,
 			boolean useSpellCheck){		
@@ -56,7 +52,8 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		setupSpellCheckOptions(useSpellCheck);
 		setupSaveButton();
 		
-		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		GridLayout layout = new GridLayout(4, 0);
+		this.getContentPane().setLayout(layout);
 		
 		setupReadMethodsPanel();
 		setupNetworkToUsePanel();

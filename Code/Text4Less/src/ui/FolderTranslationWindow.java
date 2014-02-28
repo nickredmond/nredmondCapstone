@@ -3,6 +3,7 @@ package ui;
 import io.WordDocWriter;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,7 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import app.DirectoryReader;
-import appTest.MainTest;
+import app.InputReader;
 
 public class FolderTranslationWindow extends JFrame {
 	private JButton chooseFolderButton, translateButton, saveButton;
@@ -32,11 +33,15 @@ public class FolderTranslationWindow extends JFrame {
 	
 	private WordDocWriter writer;
 	
+	private final int DEFAULT_WIDTH = 400;
+	private final int DEFAULT_HEIGHT = 600;
+	
 	private JTextArea textArea;
 	
 	public FolderTranslationWindow(){
 		setupDisplay();
-		this.pack();
+		InputReader.setNetwork(null);
+		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		this.setVisible(true);
 	}
 

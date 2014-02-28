@@ -53,47 +53,9 @@ import decisionTrees.ITreeFinder;
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {		
-		new HomeWindow();
+	//	new HomeWindow();
 		
-//		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-//		AlphaNumericIOTranslator translator = new AlphaNumericIOTranslator();
-//		
-//		INeuralNetwork network = NetworkFactory.getTrainedNetwork(new MatrixNeuralNetwork(translator.getInputLength(), 1, 150, AlphaNumericCharacterConverter.NUMBER_CLASSES, true),
-//				translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.07f, 0.04f));
-//		NeuralNetworkIO.writeNetwork(network, "finalTestArial");
-		
-//		testDecisionTrees();
-		
-//		BufferedImage test = ImageIO.read(new File("C:/Users/nredmond/Pictures/charTest2.png"));
-//		ReadResult result = InputReader.readImageInput(test, ImageReadMethod.DECISION_TREE);
-//		
-//		System.out.println("RESULT: " + result.getTranslationString());
-		
-//		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-//		Set<CharacterTrainingExample> testSet = TrainingDataReader.createTestSetFromFile(CharacterType.ASCII2);
-//		
-//		ConfusionMatrixBuilder builder = new ConfusionMatrixBuilder(new AlphaNumericCharacterConverter(),
-//				new AlphaNumericIOTranslator());
-//		int[][] confusionMatrix = builder.buildConfusionMatrix(trainingSet, testSet, 0.05f);
-//		
-//		ConfusionMatrixDebug.printConfusionMatrix(confusionMatrix, new AlphaNumericCharacterConverter());
-		
-//		INeuralNetwork trained = NeuralNetworkIO.readNetwork("yoloSwaggins");
-//		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/ASCII/a.jpg"));
-//		AlphaNumericIOTranslator t = new AlphaNumericIOTranslator();
-//		float[] input = t.translateImageToNetworkInput(img);
-//		float[] output = trained.forwardPropagate(input);
-//		
-//		System.out.println(Arrays.toString(output));
-//		char result = t.translateNetworkOutputToCharacter(output).getCharacter();
-//		System.out.println("thinks its: " + result);
-		
-	//	writeTrainingData("C:/Users/nredmond/Pictures/trainingData.png");
-	//	engineTestStuff();
-	//	
-	//	BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/trainingData.png"));
-		
-	//	FileOperations.addAlphanumericsToMetadataFile(CharacterType.ASCII4, 5);
+		FileOperations.renameFilesWithAppendedName("trainingImages/unformatted", "31");
 	}
 	
 	private static void testDecisionTrees() throws IOException{

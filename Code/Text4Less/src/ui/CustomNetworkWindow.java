@@ -1,8 +1,10 @@
 package ui;
 
-import io.CharacterType;
 import io.NeuralNetworkIO;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,13 +38,17 @@ public class CustomNetworkWindow extends JFrame {
 	
 	private TrainingSetSelectionPanel setSelectionPanel;
 	
+	private final int NUMBER_ELEMENTS = 11;
+	private final int DEFAULT_WIDTH = 350;
+	private final int DEFAULT_HEIGHT = 350;
+	
 	public CustomNetworkWindow(){
-		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.getContentPane().setLayout(new GridLayout(NUMBER_ELEMENTS, 0));
 		setupTextFieldPanels();
 		setupTrainingDataSelectionPanel();
 		setupButtons();
 		
-		this.pack();
+		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		this.setVisible(true);
 	}
 
@@ -105,9 +111,20 @@ public class CustomNetworkWindow extends JFrame {
 		
 		this.add(numberLayersPanel);
 		this.add(numberNeuronsPanel);
-		this.add(new JLabel("Stop training at:"));
+		this.add(new JPanel());
+		
+		JLabel stopLabel = new JLabel("Stop training network at:");
+		stopLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		
+		this.add(stopLabel);
 		this.add(iterationsPanel);
+		
+		JLabel orLabel = new JLabel("OR");
+		orLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		
+		this.add(orLabel);
 		this.add(msePanel);
+		this.add(new JPanel());
 	}
 	
 	private boolean parseUserInput(){

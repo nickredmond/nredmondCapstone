@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -44,6 +45,16 @@ public class CharacterRecognitionPanel extends JPanel implements INetworkSelecti
 		JLabel resultLabel = new JLabel("RESULT:");
 		translationLabel = new JLabel("Network thinks it's: ---");
 		confidenceLabel = new JLabel("Translation Confidence: ---");
+		
+		resultLabel.setFont(new Font("Arial", Font.BOLD, 26));
+		translationLabel.setFont(new Font("Arial", Font.BOLD, 22));
+		confidenceLabel.setFont(new Font("Arial", Font.BOLD, 22));
+		
+		networkPanel.setAlignmentX(CENTER_ALIGNMENT);
+		recognizeButton.setAlignmentX(CENTER_ALIGNMENT);
+		resultLabel.setAlignmentX(CENTER_ALIGNMENT);
+		translationLabel.setAlignmentX(CENTER_ALIGNMENT);
+		confidenceLabel.setAlignmentX(CENTER_ALIGNMENT);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(networkPanel);

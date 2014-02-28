@@ -2,19 +2,18 @@ package ui;
 
 import imageHandling.ImageReadMethod;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import spellCheck.SpellChecker;
 import neuralNetwork.INeuralNetwork;
+import spellCheck.SpellChecker;
 import app.InputReader;
 import app.ReadResult;
 
@@ -30,17 +29,21 @@ public class MainWindow extends JFrame{
 	
 	private boolean isSpellCheckEnabled = false;
 	
+	private final int DEFAULT_WIDTH = 850;
+	private final int DEFAULT_HEIGHT = 550;
+	
 	public MainWindow(){
 		selectedReadMethod = ImageReadMethod.NEURAL_NETWORK;
 		
 		loaderPanel = new ImageLoaderPanel(this);
 		resultPanel = new ResultPanel(this);
 		
-		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
+		this.getContentPane().setLayout(new GridLayout(0,2));
 		this.getContentPane().add(loaderPanel);
 		this.getContentPane().add(resultPanel);
 		
-		this.pack();
+		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	//	this.pack();
 		this.setVisible(true);
 	}
 	

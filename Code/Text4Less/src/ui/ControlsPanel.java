@@ -56,10 +56,10 @@ public class ControlsPanel extends JPanel {
 		this.add(areaLabel);
 		this.add(areaSizeSlider);
 		this.add(saveButton);
-		this.add(clearButton);
 		
 		JPanel drawingFunctionsPanel = new JPanel();
 		drawingFunctionsPanel.setLayout(new BoxLayout(drawingFunctionsPanel, BoxLayout.X_AXIS));
+		drawingFunctionsPanel.add(clearButton);
 		drawingFunctionsPanel.add(drawButton);
 		drawingFunctionsPanel.add(eraseButton);
 		
