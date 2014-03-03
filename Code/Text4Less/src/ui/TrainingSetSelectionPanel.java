@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import app.AlphaNumericCharacterConverter;
-import appTest.MainTest;
+import app.Main;
 
 public class TrainingSetSelectionPanel extends JPanel {
 	private JPanel addFolderPanel;
@@ -36,6 +36,9 @@ public class TrainingSetSelectionPanel extends JPanel {
 		selectedFolderLabel = new JLabel("Selected Training Set: ---");
 		chooseFolderButton = new JButton("Choose Folder...");
 		chooseFolderButton.addActionListener(new ButtonListener());
+		
+		selectedFolderLabel.setFont(HomeWindow.SUB_LABEL_FONT);
+		chooseFolderButton.setFont(HomeWindow.SUB_LABEL_FONT);
 		
 		selectedFolderPanel.setLayout(new BoxLayout(selectedFolderPanel, BoxLayout.X_AXIS));
 		selectedFolderPanel.add(selectedFolderLabel);
@@ -80,7 +83,7 @@ public class TrainingSetSelectionPanel extends JPanel {
 			if (evt.getSource() == chooseFolderButton){
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				chooser.setCurrentDirectory(new File(new MainTest().getWorkingDirectory() + "/trainingImages"));
+				chooser.setCurrentDirectory(new File(new Main().getWorkingDirectory() + "/trainingImages"));
 				
 				int result = chooser.showOpenDialog(TrainingSetSelectionPanel.this);
 				
@@ -97,7 +100,7 @@ public class TrainingSetSelectionPanel extends JPanel {
 				String folderName = newSetField.getText();
 				
 				if (folderName.length() > 0 && !folderName.contains(".")){
-					File trainingDataDir = new File(new MainTest().getWorkingDirectory() + "/trainingImages/" + folderName);
+					File trainingDataDir = new File(new Main().getWorkingDirectory() + "/trainingImages/" + folderName);
 					boolean success = trainingDataDir.mkdir();
 					
 					addFolderPanel.setVisible(false);

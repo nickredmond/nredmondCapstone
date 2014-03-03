@@ -14,40 +14,42 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class HomeWindow extends JFrame{
-	private JButton translateButton, translateFolderButton, trainNetButton, userCharacterButton;
+	public static Font DEFAULT_BUTTON_FONT = new Font("Arial", Font.BOLD, 16);
+	public static Font DEFAULT_LABEL_FONT = new Font("Arial", Font.BOLD, 16);
 	
-	private final int DEFAULT_WIDTH = 500;
-	private final int DEFAULT_HEIGHT = 300;
+	public static Font SUB_LABEL_FONT = new Font("Arial", Font.BOLD, 14);
+	
+	private JButton beginButton;
+	
+	private final int DEFAULT_WIDTH = 600;
+	private final int DEFAULT_HEIGHT = 700;
 	
 	public HomeWindow(){
 		JLabel title = new JLabel("Text4Less");
 		JLabel subTitle = new JLabel("An Experiment in OCR");
 		
-		title.setFont(new Font("Helvetica", Font.PLAIN, 48));
-		subTitle.setFont(new Font("Helvetica", Font.ITALIC, 20));
-		this.getContentPane().add(Box.createHorizontalGlue());
+		title.setFont(new Font("Helvetica", Font.PLAIN, 72));
+		subTitle.setFont(new Font("Helvetica", Font.ITALIC, 28));
 		title.setAlignmentX(CENTER_ALIGNMENT);
 		subTitle.setAlignmentX(CENTER_ALIGNMENT);
 		
-		translateButton = new JButton("Translate an Image");
-		translateFolderButton = new JButton("Translate Folder");
-		trainNetButton = new JButton("Train Neural Network");
-		userCharacterButton = new JButton("User Characters");
-		setupButton(translateButton);
-		setupButton(translateFolderButton);
-		setupButton(trainNetButton);
-		setupButton(userCharacterButton);
+		beginButton = new JButton("Begin");
+		setupButton(beginButton);
 		
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		
+		contentPane.add(Box.createVerticalGlue());
+		
 		contentPane.add(title);
 		contentPane.add(subTitle);
-		contentPane.add(translateButton);
-		contentPane.add(translateFolderButton);
-		contentPane.add(trainNetButton);
-		contentPane.add(userCharacterButton);
+		
+		contentPane.add(Box.createVerticalGlue());
+		contentPane.add(beginButton);
+		contentPane.add(Box.createVerticalGlue());
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Text4Less");
 		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		this.setVisible(true);
 	}
@@ -61,17 +63,9 @@ public class HomeWindow extends JFrame{
 	private class ButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-			if (evt.getSource() == translateButton){
-				new MainWindow();
-			}
-			else if (evt.getSource() == trainNetButton){
-				new CustomNetworkWindow();
-			}
-			else if (evt.getSource() == userCharacterButton){
-				new DigitalDrawingWindow();
-			}
-			else if (evt.getSource() == translateFolderButton){
-				new FolderTranslationWindow();
+			if (evt.getSource() == beginButton){
+				new MenuWindow();
+				HomeWindow.this.dispose();
 			}
 		}
 	}

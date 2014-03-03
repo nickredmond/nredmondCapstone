@@ -2,6 +2,8 @@ package debug;
 
 import imageProcessing.ImagePreprocessor;
 import io.CharacterType;
+import io.MetaclassTreeIO;
+import io.NeuralNetworkIO;
 import io.TrainingDataReader;
 
 import java.awt.image.BufferedImage;
@@ -16,9 +18,12 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
 import app.LeastDistanceCalculator;
+import decisionTrees.IMetaclassTree;
 
 public class CorrelationDebug {
 	public static float getCorrelationBetweenTrainingSets(CharacterType type, int firstSetNum, int secondSetNum) throws IOException{
@@ -72,16 +77,9 @@ public class CorrelationDebug {
 		return totalCorrts / list1.size();
 	}
 	
+	
 	public static void correlateAgainstTestCharacters(String expectedText, BufferedImage testImage){		
 		int index = 0;
-		
-		Set<CharacterTrainingExample> examples = null;
-		try {
-			examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
-		} catch (IOException e) {
-			System.out.println("FAILED TO CREATE TRAINING SET.");
-			e.printStackTrace();
-		}
 		
 		int numRight = 0;
 		int totalComparisons = 0;
@@ -100,34 +98,75 @@ public class CorrelationDebug {
 				}
 				
 				char chosenCharacter = 'A';
-				float highestCorrelation = -1.0f;
-				System.out.println("--- SHOULD BE '" + expectedText.charAt(index) + "'");
+		//		System.out.println("--- SHOULD BE '" + expectedText.charAt(index) + "'");
 				
-				Iterator<CharacterTrainingExample> iter = examples.iterator();
-				while(iter.hasNext()){
-					CharacterTrainingExample nextExample = iter.next();
-					
-					BufferedImage nextTrainingImg = nextExample.getCharacterImage();
-					float nextCorrelation = LeastDistanceCalculator.getCorrelation(nextCharacter, nextTrainingImg);
-					
-					if (nextExample.getCharacterValue() == expectedText.charAt(index)){
-						System.out.println("correlation between same chars: " + nextCorrelation);
-					}
-					
-					if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
-						highestCorrelation = nextCorrelation;
-						chosenCharacter = nextExample.getCharacterValue();
-					}
-				}
+				chosenCharacter = getChosenCharacterNeuralNetwork(nextCharacter); //getChosenCharacterEuclideanDistance(nextCharacter, index, expectedText); // CAN CHANGE THIS
+				
 				if (chosenCharacter != ' '){
-					if (chosenCharacter == expectedText.charAt(index)){ numRight++;}
-					else{System.out.println("bestChar: " + chosenCharacter + " with " + highestCorrelation + " correlation");}
+					if (chosenCharacter == expectedText.charAt(index)){
+						numRight++;
+					}
 					totalComparisons++;
 					index++;
 				}
 			}
 		}
-		System.out.println("\r\nACCURACY: " + ((float)numRight / totalComparisons));
+		System.out.println("\r\nACCURACY: " + ((float)numRight / totalComparisons) + "(" + numRight + " / " + totalComparisons + ")");
+	}
+	
+	private static char getChosenCharacterDecisionTree(BufferedImage nextCharacter){
+		IMetaclassTree tree = null;
+		
+		try {
+			tree = MetaclassTreeIO.readTree("defaultTree");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return tree.readCharacter(nextCharacter).getCharacter();
+	}
+	
+	private static char getChosenCharacterNeuralNetwork(BufferedImage nextCharacter){
+		INeuralNetwork trainedNet = NeuralNetworkIO.readNetwork("endOfLineTestNetArial"); // CAN CHANGE THIS
+		AlphaNumericIOTranslator translator = new  AlphaNumericIOTranslator();
+		
+		float[] input = translator.translateImageToNetworkInput(nextCharacter);
+		float[] output = trainedNet.forwardPropagate(input);
+		
+		return translator.translateNetworkOutputToCharacter(output).getCharacter();
+	}
+	
+	private static char getChosenCharacterEuclideanDistance(BufferedImage nextCharacter,
+			int index, String expectedText){
+		Set<CharacterTrainingExample> examples = null;
+		try {
+			examples = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII);
+		} catch (IOException e) {
+			System.out.println("FAILED TO CREATE TRAINING SET.");
+			e.printStackTrace();
+		}
+		
+		float highestCorrelation = -1.0f;
+		char chosenCharacter = 'A';
+		
+		Iterator<CharacterTrainingExample> iter = examples.iterator();
+		while(iter.hasNext()){
+			CharacterTrainingExample nextExample = iter.next();
+			
+			BufferedImage nextTrainingImg = nextExample.getCharacterImage();
+			float nextCorrelation = LeastDistanceCalculator.getEuclideanDistance(nextCharacter, nextTrainingImg);
+			
+			if (nextExample.getCharacterValue() == expectedText.charAt(index)){
+				System.out.println("correlation between same chars: " + nextCorrelation);
+			}
+			
+			if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
+				highestCorrelation = nextCorrelation;
+				chosenCharacter = nextExample.getCharacterValue();
+			}
+		}
+		
+		return chosenCharacter;
 	}
 	
 	private boolean isSpace(BufferedImage image, INetworkIOTranslator translator){

@@ -25,11 +25,7 @@ public class ResultPanel extends JPanel {
 	private JScrollPane resultArea;
 	private JTextArea textArea;
 	
-	private MainWindow window;
-	
-	public ResultPanel(MainWindow window){
-		this.window = window;
-		
+	public ResultPanel(ImageTranslationTab window){
 		setupPanel();
 	}
 	
@@ -53,6 +49,7 @@ public class ResultPanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel title = new JLabel("RESULTS:");
+		title.setFont(HomeWindow.DEFAULT_LABEL_FONT);
 		
 		textArea = new JTextArea();
 		textArea.setEnabled(false);

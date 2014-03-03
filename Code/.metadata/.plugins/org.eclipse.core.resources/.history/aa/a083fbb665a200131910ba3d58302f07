@@ -1,0 +1,24 @@
+package alternateUI;
+
+import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
+
+public class MenuWindow extends JFrame {
+
+	public MenuWindow(){
+		setupWindow();
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	private void setupWindow() {
+		JTabbedPane pane = new JTabbedPane();
+		pane.addTab("Image Translation", new ImageTranslationTab());
+		pane.addTab("Folder Translation", new FolderTranslationTab());
+		pane.addTab("Neural Network Training", new CustomNetworkTab());
+		pane.addTab("Handwritten Characters", new DigitalDrawingTab());
+		
+		this.getContentPane().add(pane);
+	}
+}

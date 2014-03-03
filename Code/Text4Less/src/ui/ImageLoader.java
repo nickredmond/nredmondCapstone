@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 public class ImageLoader {
 	private static final String[] ACCEPTED_IMAGE_TYPES = {"jpg", "bmp", "tiff", "png"};
 	
-	public static void loadImage(MainWindow window){
+	public static void loadImage(ImageTranslationTab window){
 		JFileChooser chooser = new JFileChooser();
 		int returnValue = chooser.showOpenDialog(window);
 		

@@ -10,7 +10,7 @@ import app.CharacterResult;
 import neuralNetwork.CharacterReader;
 
 public class NeuralNetworkHandler implements ICharacterImageHandler {
-	private final float MIN_CONFIDENCE = 0.005f;
+	private final float MIN_CONFIDENCE = 0; //0.005f;
 	private List<CharacterResult> results;
 	private CharacterReader reader;
 	

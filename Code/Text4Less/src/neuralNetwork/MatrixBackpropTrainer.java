@@ -7,7 +7,7 @@ import threading.TrainingExampleThreadPool;
 
 public class MatrixBackpropTrainer implements INetworkTrainer {
 	private float learningRate, regularizationParam;
-	private final float MAX_ERROR = 0.02f;
+	private final float MAX_ERROR = 0.03f;
 	
 	private float errorGoal = MAX_ERROR;
 	private int maxIterations = 10000;

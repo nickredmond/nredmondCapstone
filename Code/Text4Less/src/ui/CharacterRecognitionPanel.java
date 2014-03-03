@@ -25,9 +25,9 @@ public class CharacterRecognitionPanel extends JPanel implements INetworkSelecti
 	private BufferedImage characterImage;
 	private INetworkIOTranslator translator;
 	
-	private DigitalDrawingWindow window;
+	private DigitalDrawingTab window;
 	
-	public CharacterRecognitionPanel(DigitalDrawingWindow window){
+	public CharacterRecognitionPanel(DigitalDrawingTab window){
 		this.window = window;
 		translator = new AlphaNumericIOTranslator();
 		setupPanel();
@@ -41,6 +41,7 @@ public class CharacterRecognitionPanel extends JPanel implements INetworkSelecti
 		networkPanel = new NetworkSelectionPanel(this);
 		recognizeButton = new JButton("Recognize Current Image");
 		recognizeButton.addActionListener(new ButtonListener());
+		recognizeButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
 		
 		JLabel resultLabel = new JLabel("RESULT:");
 		translationLabel = new JLabel("Network thinks it's: ---");

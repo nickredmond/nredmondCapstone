@@ -13,13 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.TitledBorder;
 
 import neuralNetwork.INeuralNetwork;
 
 public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHandler {
 	private JButton saveChangesButton;
 //	private Map<String, ImageReadMethod> readMethods;
-	private MainWindow window;
+	private ImageTranslationTab window;
 	
 	private JRadioButton nnButton, ldButton, treeButton;
 	
@@ -32,7 +33,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 	
 	private final int NUMBER_ELEMENTS = 4;
 	
-	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, INeuralNetwork chosenNetwork, String networkName,
+	public AdvancedOptionsWindow(ImageTranslationTab window, ImageReadMethod selectedMethod, INeuralNetwork chosenNetwork, String networkName,
 			boolean useSpellCheck){		
 		this(window, selectedMethod, useSpellCheck);
 		
@@ -43,7 +44,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		}
 	}
 	
-	public AdvancedOptionsWindow(MainWindow window, ImageReadMethod selectedMethod, boolean useSpellCheck){
+	public AdvancedOptionsWindow(ImageTranslationTab window, ImageReadMethod selectedMethod, boolean useSpellCheck){
 		this.window = window;
 		
 		selectedReadMethod = selectedMethod;		
@@ -52,7 +53,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		setupSpellCheckOptions(useSpellCheck);
 		setupSaveButton();
 		
-		GridLayout layout = new GridLayout(4, 0);
+		GridLayout layout = new GridLayout(NUMBER_ELEMENTS, 0);
 		this.getContentPane().setLayout(layout);
 		
 		setupReadMethodsPanel();
@@ -60,6 +61,7 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		
 		this.getContentPane().add(saveChangesButton);
 		
+		this.setTitle("Advanced Options");
 		this.pack();
 		this.setVisible(true);
 	}
@@ -72,7 +74,11 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 
 	private void setupNetworkToUsePanel() {
 		networkPanel = new NetworkSelectionPanel(this);
-		networkPanel.setBorder(BorderFactory.createTitledBorder("Chosen Neural Network"));
+		
+		TitledBorder border = BorderFactory.createTitledBorder("Chosen Neural Network");
+		border.setTitleFont(HomeWindow.DEFAULT_LABEL_FONT);
+		
+		networkPanel.setBorder(border);
 		this.getContentPane().add(networkPanel);
 	}
 
@@ -90,12 +96,16 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		readMethodsPanel.add(ldButton);
 		readMethodsPanel.add(treeButton);
 		
-		readMethodsPanel.setBorder(BorderFactory.createTitledBorder("Classification Methods"));
+		TitledBorder border = BorderFactory.createTitledBorder("Classification Methods");
+		border.setTitleFont(HomeWindow.DEFAULT_LABEL_FONT);
+		
+		readMethodsPanel.setBorder(border);
 		this.getContentPane().add(readMethodsPanel);
 	}
 
 	private void setupSaveButton(){
 		saveChangesButton = new JButton("Save Changes");
+		saveChangesButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
 		saveChangesButton.addActionListener(new ButtonListener());
 	}
 	
@@ -108,6 +118,10 @@ public class AdvancedOptionsWindow extends JFrame implements INetworkSelectionHa
 		nnButton.addActionListener(listener);
 		ldButton.addActionListener(listener);
 		treeButton.addActionListener(listener);
+		
+		nnButton.setFont(HomeWindow.SUB_LABEL_FONT);
+		ldButton.setFont(HomeWindow.SUB_LABEL_FONT);
+		treeButton.setFont(HomeWindow.SUB_LABEL_FONT);
 		
 		if (selectedReadMethod == ImageReadMethod.NEURAL_NETWORK){
 			nnButton.setSelected(true);

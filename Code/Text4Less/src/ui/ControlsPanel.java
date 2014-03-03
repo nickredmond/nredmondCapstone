@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
@@ -21,9 +23,13 @@ public class ControlsPanel extends JPanel {
 	
 	private final int MAX_AREA_SIZE = 100;
 	private final int MIN_AREA_SIZE = 10;
+	private final int STARTING_AREA_VALUE = 30;
 	
 	private final int MAX_PEN_WIDTH = 9;
 	private final int MIN_PEN_WIDTH = 1;
+	private final int STARTING_PEN_VALUE = 3;
+	
+	private final Color optionSelectedColor = new Color(102, 0, 40);
 	
 	public ControlsPanel(DrawingPanel parent){
 		this.parent = parent;
@@ -35,13 +41,26 @@ public class ControlsPanel extends JPanel {
 		JLabel penLabel = new JLabel("Pen Width");
 		JLabel areaLabel = new JLabel("Image Size");
 		
+		penLabel.setFont(HomeWindow.SUB_LABEL_FONT);
+		areaLabel.setFont(HomeWindow.SUB_LABEL_FONT);
+		
 		setupPenSlider();
 		setupAreaSlider();
+		parent.penSizeChanged(STARTING_PEN_VALUE);
+		parent.areaSizeChanged(STARTING_AREA_VALUE);
 		
 		saveButton = new JButton("Save Image");
 		clearButton = new JButton("Clear");
 		eraseButton = new JButton("Erase");
 		drawButton = new JButton("Draw");
+		
+		drawButton.setBorder(BorderFactory.createLineBorder(optionSelectedColor, 3));
+		drawButton.setEnabled(false);
+		
+		saveButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
+		clearButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
+		eraseButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
+		drawButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
 		
 		saveButton.addActionListener(new ButtonListener());
 		clearButton.addActionListener(new ButtonListener());
@@ -56,16 +75,18 @@ public class ControlsPanel extends JPanel {
 		this.add(saveButton);
 		
 		JPanel drawingFunctionsPanel = new JPanel();
-		drawingFunctionsPanel.setLayout(new BoxLayout(drawingFunctionsPanel, BoxLayout.X_AXIS));
+		drawingFunctionsPanel.setLayout(new GridLayout(0,3));
 		drawingFunctionsPanel.add(clearButton);
 		drawingFunctionsPanel.add(drawButton);
 		drawingFunctionsPanel.add(eraseButton);
+		
+		drawingFunctionsPanel.setMaximumSize(new Dimension(800, 40));
 		
 		this.add(drawingFunctionsPanel);
 	}
 
 	private void setupAreaSlider() {
-		areaSizeSlider = new JSlider(JSlider.HORIZONTAL, MAX_AREA_SIZE, MIN_AREA_SIZE);
+		areaSizeSlider = new JSlider(MIN_AREA_SIZE, MAX_AREA_SIZE, STARTING_AREA_VALUE);
 		areaSizeSlider.setMajorTickSpacing(10);
 		areaSizeSlider.setMinorTickSpacing(1);
 		areaSizeSlider.setPaintTicks(true);
@@ -76,16 +97,14 @@ public class ControlsPanel extends JPanel {
 	}
 
 	private void setupPenSlider() {
-		penSizeSlider = new JSlider(MIN_PEN_WIDTH, MAX_PEN_WIDTH, MIN_PEN_WIDTH);
+		penSizeSlider = new JSlider(MIN_PEN_WIDTH, MAX_PEN_WIDTH, STARTING_PEN_VALUE);
 		penSizeSlider.setMajorTickSpacing(2);
 		penSizeSlider.setPaintTicks(true);
 		penSizeSlider.setPaintLabels(true);
 		penSizeSlider.setSnapToTicks(true);
 		
 		Hashtable<Integer, JLabel> penLabels = new Hashtable<Integer, JLabel>();
-//		penLabels.put(MIN_PEN_WIDTH, new JLabel(new Integer(MIN_PEN_WIDTH).toString()));
-//		penLabels.put(MAX_PEN_WIDTH, new JLabel(new Integer(MAX_PEN_WIDTH).toString()));
-		
+
 		for (int i = MIN_PEN_WIDTH; i <= MAX_PEN_WIDTH; i+= 2){
 			penLabels.put(i, new JLabel(new Integer(i).toString()));
 		}
@@ -124,13 +143,17 @@ public class ControlsPanel extends JPanel {
 				parent.clearClicked();
 			}
 			else if (evt.getSource() == eraseButton){
-				eraseButton.setBorder(BorderFactory.createLineBorder(Color.PINK, 3));
+				eraseButton.setBorder(BorderFactory.createLineBorder(optionSelectedColor, 3));
+				eraseButton.setEnabled(false);
 				drawButton.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+				drawButton.setEnabled(true);
 				parent.erasingStateChanged(true);
 			}
 			else if (evt.getSource() == drawButton){
-				drawButton.setBorder(BorderFactory.createLineBorder(Color.PINK, 3));
+				drawButton.setBorder(BorderFactory.createLineBorder(optionSelectedColor, 3));
+				drawButton.setEnabled(false);
 				eraseButton.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+				eraseButton.setEnabled(true);
 				parent.erasingStateChanged(false);
 			}
 		}

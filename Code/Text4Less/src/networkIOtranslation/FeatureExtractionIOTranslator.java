@@ -18,6 +18,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,6 +108,7 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 			int[][] squareCroppedValues = ZernikeImageNormalizer.squareImage(croppedLightValues);
 			int[][] scaledImg = ImageScaler.scaleWithBilinearInterpolation(squareCroppedValues, 20, 20);
 			
+			// ACTUAL VALUES USED
 			for (int row = 0; row < scaledImg.length; row++){
 				for (int col = 0; col < scaledImg[0].length; col++){
 					
@@ -114,15 +116,11 @@ private static final int NUMBER_PROFILE_DIRECTIONS = 4;
 					inputList.add(inputValue);
 				}
 			}
-			
-		//	inputList.add(getHeightToWidthRatio(croppedLightValues));
-						
+				
+			// ACTUAL VALUES USED
 			addProfilingFeatures(inputList, croppedLightValues, percentages);
 			addVectorFeatures(inputList, croppedLightValues);
 			addCrossingFeatures(inputList, croppedLightValues);
-//			addFeaturePoints(inputList, croppedLightValues);
-			
-		//	CharacterViewDebug.displayCharacterView(img, scaledImg, 20, 20);
 			
 			input = new float[inputList.size()];
 			

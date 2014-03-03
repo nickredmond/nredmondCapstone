@@ -20,64 +20,6 @@ public class ImageSegmenter {
 			characters.addAll(segmentTextIntoCharacters(nextSegment));
 		}
 		
-//		int totalWidth = 0;
-//		int numberCharacters = 0;
-//		
-//		// TEST CODE //
-//		List<SegmentationDatum> segmentationData = new ArrayList<SegmentationDatum>();
-//		List<Float> widths = new ArrayList<Float>();
-//		List<int[][]> stuff = new ArrayList<int[][]>();
-//		// END TEST //
-//		
-//		for (BufferedImage nextCharacter : characters){
-//			int[][] imageValues = ImageBinarizer.convertImageToBinaryValues(nextCharacter);
-//			int totalBlackPixels = 0;
-//			
-//			for (int i = 0; i < imageValues.length; i++){
-//				for (int j = 0; j < imageValues[0].length; j++){
-//					if (imageValues[i][j] == 1){
-//						totalBlackPixels++;
-//					}
-//				}
-//			}
-//			
-//			float percentBlack = (float)totalBlackPixels / (imageValues.length * (imageValues[0].length));
-//			if (percentBlack >= SPACE_THRESHOLD){
-//				totalWidth += imageValues[0].length;
-//				numberCharacters++;
-//				
-//				// TEST CODE //
-//				widths.add((float)imageValues[0].length);
-//				stuff.add(imageValues);
-//				// END TEST //
-//			}
-//		}
-		
-//		float avgWidth = (float)totalWidth / numberCharacters;
-//		
-//		// TEST CODE //
-//		float stdDev = StatisticalMath.standardDeviation(widths);
-//		float mean = StatisticalMath.average(widths);
-//		System.out.println("avg: " + mean + " " + avgWidth);
-//		for (int[][] nextImage : stuff){
-//			float numDevs = StatisticalMath.numberStandardDeviationsFromMean(stdDev, mean, nextImage[0].length);
-//			SegmentationDatum datum = new SegmentationDatum(ImageBinarizer.convertBinaryValuesToImage(nextImage), stdDev, numDevs);
-//			segmentationData.add(datum);
-//		}
-//		// END TEST //	
-//		
-//		new SegmentationDataWindow(segmentationData);
-//		
-//		List<BufferedImage> finalCharacters = new ArrayList<BufferedImage>();
-//		
-//		for (BufferedImage nextImage : characters){
-//			if (nextImage.getWidth() > avgWidth){
-//				finalCharacters.addAll(splitSegment(nextImage));
-//			}
-//			else finalCharacters.add(nextImage);
-//		}
-		
-
 		return characters;
 	}
 	
@@ -208,12 +150,6 @@ public class ImageSegmenter {
 			for (int row = 0; row < binaryValues.length && !foundBlack; row++){
 				foundBlack = (binaryValues[row][col] == 1);
 			}
-
-//			if ((foundBlack && !isInCharacter) || (!foundBlack && isInCharacter)){
-//				System.out.println("lastCharEnd: " + lastCharacterEndingCol + " col: " + col);
-////				BufferedImage nextCharacter = line.getSubimage(lastCharacterEndingCol+1, 0, col - lastCharacterEndingCol, line.getHeight());
-////				characters.add(nextCharacter);		
-//			}
 
 			if (foundBlack && !isInCharacter){
 				isInCharacter = true;

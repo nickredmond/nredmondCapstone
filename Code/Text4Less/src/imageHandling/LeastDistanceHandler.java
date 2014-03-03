@@ -40,7 +40,6 @@ public class LeastDistanceHandler implements ICharacterImageHandler {
 	
 	public void handleImage(BufferedImage img, int index){
 		char chosenCharacter = 'A';
-	//	float highestCorrelation = -1.0f;
 		boolean found = false;
 		
 		float lowestDistance = -1.0f;
@@ -57,23 +56,9 @@ public class LeastDistanceHandler implements ICharacterImageHandler {
 				lowestDistance = euclideanDistance;
 				chosenCharacter = nextExample.getCharacterValue();
 			}
-			
-//			float nextCorrelation = LeastDistanceCalculator.getCorrelation(img, nextTrainingImg);
-//			
-//			if (nextCorrelation > highestCorrelation || highestCorrelation < 0){
-//				highestCorrelation = nextCorrelation;
-//				chosenCharacter = nextExample.getCharacterValue();
-//			}
-			
-			//found = (highestCorrelation >= 0.99f);
 		}
 		
 		CharacterResult result = new CharacterResult(img, new TranslationResult(chosenCharacter, lowestDistance)); // highestCorrelation
-		
-//		if (highestCorrelation < MIN_CONFIDENCE){
-//			result.setRejected(true);
-//		}
-		System.out.println("char: " + chosenCharacter + ", lowestDistance: " + lowestDistance + ", i: " + index); // highestCorrelation
 		
 		if (index == -1){
 			results.add(result);

@@ -12,7 +12,7 @@ public class ChainCodeCreator {
 	private int numberPixelsFollowed = 0;
 	//private static final int NON_VISITED = 1;
 	
-	private int NORMALIZED_CHAIN_CODE_LENGTH = 15;
+	private int NORMALIZED_CHAIN_CODE_LENGTH = 20;
 	private int MIN_CHAIN_VALUE_LENGTH = 2;
 	
 	private List<Point> convertChainCodeToMatrix(int[] chainCode){

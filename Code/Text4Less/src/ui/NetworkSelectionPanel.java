@@ -31,14 +31,15 @@ public class NetworkSelectionPanel extends JPanel {
 	}
 	
 	private void setupPanel(){
-		JPanel networkPanel = new JPanel();
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		if (chosenNetwork == null){
 			chosenNetwork = NeuralNetworkIO.readNetwork(InputReader.TRAINED_NETWORK_NAME);		
 			chosenNetworkLabel = new JLabel("Selected Network: default");
+			chosenNetworkLabel.setFont(HomeWindow.SUB_LABEL_FONT);
 		}
 		chooseNetworkButton = new JButton("Choose Different Network");
+		chooseNetworkButton.setFont(HomeWindow.SUB_LABEL_FONT);
 		chooseNetworkButton.addActionListener(new ButtonListener());
 		
 		this.add(chosenNetworkLabel);

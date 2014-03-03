@@ -19,10 +19,17 @@ public class SpellCheckPanel extends JPanel{
 	
 	private void setupDisplay() {
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		this.add(new JLabel("Translation Spell Checking:"));
+		
+		JLabel spellCheckLabel = new JLabel("Translation Spell Checking:");
+		spellCheckLabel.setFont(HomeWindow.SUB_LABEL_FONT);
+		
+		this.add(spellCheckLabel);
 		
 		yesSpellCheckButton = new JRadioButton("Yes");
 		noSpellCheckButton = new JRadioButton("No");
+		
+		yesSpellCheckButton.setFont(HomeWindow.SUB_LABEL_FONT);
+		noSpellCheckButton.setFont(HomeWindow.SUB_LABEL_FONT);
 		
 		SpellCheckListener listener = new SpellCheckListener();
 		yesSpellCheckButton.addActionListener(listener);

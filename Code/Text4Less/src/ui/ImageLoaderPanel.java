@@ -23,11 +23,11 @@ public class ImageLoaderPanel extends JPanel {
 	private JButton loadImageButton, translateButton, advancedButton;
 	private JLabel imagePreview;
 	
-	private MainWindow window;
+	private ImageTranslationTab window;
 	
 	private final int MAX_IMAGE_WIDTH = 400;
 	
-	public ImageLoaderPanel(MainWindow window){
+	public ImageLoaderPanel(ImageTranslationTab window){
 		this.window = window;
 		
 		setupButtonPanel();
@@ -87,6 +87,10 @@ public class ImageLoaderPanel extends JPanel {
 		loadImageButton = new JButton("Load Image");
 		translateButton = new JButton("Translate");
 		advancedButton = new JButton("Advanced Options...");
+		
+		loadImageButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
+		translateButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
+		advancedButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
 		
 		loadImageButton.addActionListener(new ButtonListener());
 		translateButton.addActionListener(new ButtonListener());

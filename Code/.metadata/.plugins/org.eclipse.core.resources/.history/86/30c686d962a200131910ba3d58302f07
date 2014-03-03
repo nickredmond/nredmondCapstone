@@ -1,0 +1,86 @@
+package alternateUI;
+
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class HomeWindow extends JFrame{
+	private JButton translateButton, translateFolderButton, trainNetButton, userCharacterButton;
+	
+	private final int DEFAULT_WIDTH = 600;
+	private final int DEFAULT_HEIGHT = 700;
+	
+	public HomeWindow(){
+		JLabel title = new JLabel("Text4Less");
+		JLabel subTitle = new JLabel("An Experiment in OCR");
+		
+		title.setFont(new Font("Helvetica", Font.PLAIN, 72));
+		subTitle.setFont(new Font("Helvetica", Font.ITALIC, 28));
+		title.setAlignmentX(CENTER_ALIGNMENT);
+		subTitle.setAlignmentX(CENTER_ALIGNMENT);
+		
+		translateButton = new JButton("Translate an Image");
+		translateFolderButton = new JButton("Translate Folder");
+		trainNetButton = new JButton("Train Neural Network");
+		userCharacterButton = new JButton("User Characters");
+		setupButton(translateButton);
+		setupButton(translateFolderButton);
+		setupButton(trainNetButton);
+		setupButton(userCharacterButton);
+		
+		Container contentPane = this.getContentPane();
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		
+		contentPane.add(Box.createVerticalGlue());
+		
+		contentPane.add(title);
+		contentPane.add(subTitle);
+		
+		contentPane.add(Box.createVerticalGlue());
+		
+		contentPane.add(translateButton);
+		contentPane.add(translateFolderButton);
+		contentPane.add(trainNetButton);
+		contentPane.add(userCharacterButton);
+		
+		contentPane.add(Box.createVerticalGlue());
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Text4Less");
+		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+		this.setVisible(true);
+	}
+
+	private void setupButton(JButton button) {
+		button.setFont(new Font("Helvetica", Font.PLAIN, 24));
+		button.setAlignmentX(CENTER_ALIGNMENT);
+		button.addActionListener(new ButtonListener());
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == translateButton){
+				new ImageTranslationTab();
+			}
+			else if (evt.getSource() == trainNetButton){
+				new CustomNetworkTab();
+			}
+			else if (evt.getSource() == userCharacterButton){
+				new DigitalDrawingWindow();
+			}
+			else if (evt.getSource() == translateFolderButton){
+				new FolderTranslationTab();
+			}
+		}
+	}
+}
