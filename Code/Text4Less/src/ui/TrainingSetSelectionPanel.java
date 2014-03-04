@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -46,6 +47,7 @@ public class TrainingSetSelectionPanel extends JPanel {
 		
 		if (isAddFolderEnabled){
 			newSetButton = new JButton("New Folder");
+			newSetButton.setFont(HomeWindow.SUB_LABEL_FONT);
 			newSetButton.addActionListener(new ButtonListener());
 			selectedFolderPanel.add(newSetButton);
 		}
@@ -69,7 +71,10 @@ public class TrainingSetSelectionPanel extends JPanel {
 	private void setupAddFolderPanel() {
 		addFolderPanel = new JPanel();
 		newSetField = new JTextField();
+		newSetField.setFont(new Font("Arial", Font.PLAIN, 22));
+		
 		saveSetButton = new JButton("Create Training Set (Adds new folder)");
+		saveSetButton.setFont(HomeWindow.SUB_LABEL_FONT);
 		saveSetButton.addActionListener(new ButtonListener());
 		
 		addFolderPanel.setLayout(new BoxLayout(addFolderPanel, BoxLayout.X_AXIS));

@@ -80,7 +80,7 @@ public class ImageTranslationTab extends JPanel{
 			Thread t = new Thread(){
 				public void run(){
 					try {
-						LoadingScreen loading = new LoadingScreen("Reading image", 400, 250);
+						LoadingScreen loading = new LoadingScreen("Reading image", false, ImageTranslationTab.this, 400, 250);
 						
 						BufferedImage image = ImageIO.read(imageFile);
 						InputReader.setNetwork(chosenNetwork);

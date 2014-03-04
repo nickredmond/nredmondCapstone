@@ -1,0 +1,19 @@
+package io;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class AppStatusIO {
+	private static final String CLOSE_STATUS_PATH = "appCloseStatus.txt";
+	
+	public static AppCloseStatus getLastCloseStatus(){
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader(new File(CLOSE_STATUS_PATH)));
+			String status = reader.readLine();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+}

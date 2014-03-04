@@ -1,0 +1,19 @@
+package threading;
+
+import javax.swing.JOptionPane;
+
+import app.Logger;
+
+public class UncaughtExceptionHandler extends ThreadGroup{
+
+	public UncaughtExceptionHandler() {
+		super("UncaughtExceptionHandler");
+	}
+
+	@Override
+	public void uncaughtException(Thread t, Throwable e){
+		Logger.logMessage("Unknown error occured while starting application. Message: \"" + e.getMessage() + "\"");
+		JOptionPane.showMessageDialog(null, "The application encountered an unknown error and must close. Please view the log file for more details",
+				"CRITICAL ERROR", JOptionPane.ERROR);
+	}
+}

@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,7 +29,7 @@ public class SaveImageWindow extends JFrame{
 	public SaveImageWindow(DrawingPanel panel){
 		this.panel = panel;
 		setupWindow();
-		this.pack();
+		this.setSize(new Dimension(700, 250));
 		this.setTitle("Save Training Image");
 		this.setVisible(true);
 	}
@@ -38,7 +39,9 @@ public class SaveImageWindow extends JFrame{
 		
 		JPanel characterSelectionPanel = new JPanel();
 		JLabel charLabel = new JLabel("Enter character:");
+		charLabel.setFont(HomeWindow.DEFAULT_LABEL_FONT);
 		characterTextField = new JTextField(1);
+		characterTextField.setFont(new Font("Arial", Font.PLAIN, 22));
 		characterTextField.setInputVerifier(new InputVerifier(){
 			@Override
 			public boolean verify(JComponent input) {
@@ -52,12 +55,18 @@ public class SaveImageWindow extends JFrame{
 		characterSelectionPanel.add(characterTextField);
 		
 		JLabel infoLabel = new JLabel("Which character should this be recognized as? (Alphanumeric characters only)");
+		infoLabel.setFont(HomeWindow.SUB_LABEL_FONT);
+		
 		saveButton = new JButton("Save");
+		saveButton.setFont(HomeWindow.DEFAULT_BUTTON_FONT);
 		saveButton.addActionListener(new ButtonListener());
+		
+		JPanel panel = new JPanel();
+		panel.add(infoLabel);
 		
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.getContentPane().add(setSelectionPanel);
-		this.getContentPane().add(infoLabel);
+		this.getContentPane().add(panel);
 		this.getContentPane().add(characterSelectionPanel);
 		this.getContentPane().add(saveButton);
 	}

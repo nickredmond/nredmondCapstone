@@ -8,6 +8,7 @@ import imageProcessing.ImageSegmenter;
 import imageProcessing.NeighboringImageHypothesizer;
 import imageProcessing.NewLineTranslationResult;
 import imageProcessing.TranslationResult;
+import io.Logger;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -90,7 +91,6 @@ public class ImageReader {
 						"; Image height: " + ((nextLine == null) ? "null" : nextLine.getHeight()) +
 						"; Image width: " + ((nextLine == null) ? "null" : nextLine.getWidth()));
 			}
-			Logger.logMessage("testing the log file");
 		}
 		
 		for (BufferedImage nextLine : lines){

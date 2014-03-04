@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="app.AlphaNumericCharacterConverter"/>
-<fullyQualifiedTypeName name="debug.EntropyDebug"/>
-<fullyQualifiedTypeName name="receptors.ReceptorGenerator"/>
-<fullyQualifiedTypeName name="receptors.ReceptorFilter"/>
-<fullyQualifiedTypeName name="math.EntropyCalculator"/>
-<fullyQualifiedTypeName name="math.StatisticalMath"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="imageProcessing.RowPatternTransformer"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
@@ -23,7 +17,6 @@
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="genetics.TestFitnessCalculator"/>
 <fullyQualifiedTypeName name="decisionTrees.MetaclassConverter"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
@@ -47,9 +40,7 @@
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow"/>
 <fullyQualifiedTypeName name="networkIOtranslation.FeatureExtractionIOTranslator"/>
 <fullyQualifiedTypeName name="debug.ConfusionMatrixDebug"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="app.Logger"/>
-<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="ui.ImageLoader"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="imageHandling.ImageReadMethod"/>
@@ -57,7 +48,16 @@
 <fullyQualifiedTypeName name="app.DirectoryReader"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
 <fullyQualifiedTypeName name="javax.swing.Box"/>
-<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
 <fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="app.InputReader"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="io.AppStatusIO"/>
+<fullyQualifiedTypeName name="io.AppCloseStatus"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="javax.swing.SwingWorker"/>
+<fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
+<fullyQualifiedTypeName name="io.Logger"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

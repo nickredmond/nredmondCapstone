@@ -1,0 +1,37 @@
+package threading;
+
+import io.AppCloseStatus;
+import io.AppStatusIO;
+
+import java.awt.Frame;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import app.Logger;
+
+public class UncaughtExceptionHandler extends ThreadGroup{
+
+	public UncaughtExceptionHandler() {
+		super("UncaughtExceptionHandler");
+	}
+
+	@Override
+	public void uncaughtException(Thread t, Throwable e){
+		System.out.println("we're here!");
+		Logger.logMessage("Unknown error occured while running application. Message: \"" + e.getMessage() + "\"");
+
+		SwingUtilities.invokeLater(new Thread(){
+			public void run(){
+				JOptionPane.showMessageDialog(null, "Due to an unknown error, the application must terminate. For more information, \nview the application log file " +
+						"or contact the developer at nicholas.redmond@ymail.com. Sorry for the inconvenience.", "Unknown Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
+			}
+		});
+
+		
+	//	System.exit(0);
+	}
+}

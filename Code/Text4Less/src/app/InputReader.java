@@ -3,6 +3,7 @@ package app;
 import imageHandling.ImageHandlerFactory;
 import imageHandling.ImageReadMethod;
 import imageProcessing.TranslationResult;
+import io.Logger;
 import io.NeuralNetworkIO;
 
 import java.awt.image.BufferedImage;

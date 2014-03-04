@@ -1,0 +1,33 @@
+package io;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class AppStatusIO {
+	private static final String CLOSE_STATUS_PATH = "appCloseStatus.txt";
+	
+	public static AppCloseStatus getLastCloseStatus(){
+		AppCloseStatus status = AppCloseStatus.NO_EVENT;
+		
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader(new File(CLOSE_STATUS_PATH)));
+			String statusTxt = reader.readLine();
+			
+			AppCloseStatus[] statuses = AppCloseStatus.values();
+			boolean foundStatus = false;
+			
+			for (int i = 0; i < statuses.length && !foundStatus; i++){
+				if (statuses[i].toString().equals(statusTxt)){
+					foundStatus = true;
+					status = statuses[i];
+				}
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		return status;
+	}
+}

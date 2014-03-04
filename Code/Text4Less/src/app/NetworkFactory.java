@@ -47,15 +47,7 @@ public class NetworkFactory {
 		networkTrainer.setIterations(numIterations);
 		
 		INeuralNetwork networkCopy = originalNetwork.cloneNetwork();
-		
-		long before = System.nanoTime();
 		trainer.trainNeuralNetwork(networkCopy, networkTrainer);
-		long after = System.nanoTime();
-		
-		long nanoSecs = after - before;
-		long secs = nanoSecs / 1000000000;
-		
-		System.out.println("Training time: " + secs + " seconds");
 		
 		mse = networkTrainer.getAchievedError();
 		iterations = networkTrainer.getIterations();

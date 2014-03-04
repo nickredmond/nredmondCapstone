@@ -1,5 +1,6 @@
 package ui;
 
+import io.Logger;
 import io.NeuralNetworkIO;
 
 import java.awt.Dimension;
@@ -9,12 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,12 +25,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
+import neuralNetwork.ITrainingProgressHandler;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
 import app.AlphaNumericCharacterConverter;
 import app.NetworkFactory;
 
-public class CustomNetworkTab extends JPanel {
+public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler {
 	private JTextField numberLayersBox, numberNeuronsBox, iterationsField, mseField;
 	private JButton trainButton, saveButton;
 	
@@ -38,12 +40,18 @@ public class CustomNetworkTab extends JPanel {
 	private float mse;
 	
 	private TrainingSetSelectionPanel setSelectionPanel;
+	private LoadingScreen loading;
 	
 	private final int NUMBER_ELEMENTS = 11;
 	private final int DEFAULT_WIDTH = 350;
 	private final int DEFAULT_HEIGHT = 350;
 	
 	private Font defaultFont, fieldFont;
+	
+	private float errorAchieved;
+	private int iterationsPerformed;
+	private boolean success;
+	private long trainingTime;
 	
 	public CustomNetworkTab(){
 		defaultFont = new Font("Arial", Font.BOLD, 22);
@@ -179,24 +187,42 @@ public class CustomNetworkTab extends JPanel {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == trainButton){
 				if (parseUserInput()){
-					try {
-						trainButton.setEnabled(false);
-						saveButton.setEnabled(false);
-						
-						INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-						INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
-								numberLayers, numberNeurons, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-						
-						File selectedTrainingSet = setSelectionPanel.getSelectedFolder();
-						
-						customNetwork = NetworkFactory.getTrainedNetwork(network, translator, selectedTrainingSet, new MatrixBackpropTrainer(0.05f, 0.02f),
-								numberIterations, mse);
-						
-						trainButton.setEnabled(true);
-						saveButton.setEnabled(true);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					new Thread(){
+						public void run(){
+							loading = new LoadingScreen("Training Neural Network", true, CustomNetworkTab.this, 400, 250);
+							
+							try {
+								trainButton.setEnabled(false);
+								saveButton.setEnabled(false);
+								
+								INetworkIOTranslator translator = new AlphaNumericIOTranslator();
+								INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
+										numberLayers, numberNeurons, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
+								
+								File selectedTrainingSet = setSelectionPanel.getSelectedFolder();
+								
+								customNetwork = NetworkFactory.getTrainedNetwork(network, translator, selectedTrainingSet, 
+										new MatrixBackpropTrainer(0.05f, 0.02f, CustomNetworkTab.this), numberIterations, mse);
+								
+								saveButton.setEnabled(true);
+								
+								String message = (success ? "Network was successfully trained.\n" : "Network could NOT be successfully trained.\n");
+								message += "MSE achieved: " + errorAchieved +"\nNumber iterations performed: " + iterationsPerformed +
+										"\nTraining time: " + trainingTime + " sec.";
+								
+								JOptionPane.showMessageDialog(CustomNetworkTab.this, message, "Network Training Summary", JOptionPane.INFORMATION_MESSAGE);
+								
+							} catch (IOException e) {
+								Logger.logMessage("Error occurred while training neural network. Message: " + e.getMessage() + "; Source: " + Arrays.toString(e.getStackTrace()));
+								JOptionPane.showMessageDialog(CustomNetworkTab.this, "An error occurred while training the neural network, and training has stopped.", 
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
+							finally{
+								trainButton.setEnabled(true);
+								loading.closeScreen();
+							}
+						}
+					}.start();
 				}
 			}
 			else if (evt.getSource() == saveButton){
@@ -245,5 +271,19 @@ public class CustomNetworkTab extends JPanel {
 			
 			return errorMessage;
 		}
+	}
+
+	@Override
+	public void progressUpdate(float mse, int iterationsPerformed) {
+		loading.setSubMessage("Current MSE: " + mse + "\nNumber iterations performed: " + iterationsPerformed);
+	}
+
+	@Override
+	public void setTrainingSummary(float mse, int iterationsPerformed,
+			boolean success, long secs) {
+		errorAchieved = mse;
+		this.iterationsPerformed = iterationsPerformed;
+		this.success = success;
+		trainingTime = secs;
 	}
 }

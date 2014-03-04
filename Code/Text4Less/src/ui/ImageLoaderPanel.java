@@ -39,12 +39,10 @@ public class ImageLoaderPanel extends JPanel {
 	}
 	
 	public void setPreviewImage(File imageFile){
-	//	ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
 		Image iconImg = null;
 		try {
 			iconImg = ImageIO.read(imageFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -52,8 +50,6 @@ public class ImageLoaderPanel extends JPanel {
 		
 		int newWidth = (iconImg.getWidth(null) > MAX_IMAGE_WIDTH) ? MAX_IMAGE_WIDTH : iconImg.getWidth(null);
 		int newHeight = (int)(percentHeightToWidth * newWidth);
-		
-		System.out.println("stuff: " + newWidth + " " + newHeight + " " + MAX_IMAGE_WIDTH + " " + iconImg.getHeight(null));
 		
 		BufferedImage baseImg = new BufferedImage(newWidth,
 				newHeight, BufferedImage.TYPE_INT_RGB);

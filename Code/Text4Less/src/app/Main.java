@@ -17,7 +17,6 @@ import io.NeuralNetworkIO;
 import io.ReceptorIO;
 import io.TrainingDataReader;
 
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.FeatureExtractionIOTranslator;
@@ -35,38 +35,23 @@ import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
-import neuralNetwork.NeuralNetwork;
-import neuralNetwork.TrainingExample;
 import receptors.Receptor;
 import spellCheck.SpellChecker;
+import threading.UncaughtExceptionHandler;
 import ui.HomeWindow;
 import decisionTrees.BasicTreeFinder;
 import decisionTrees.IMetaclassTree;
 import decisionTrees.ITreeFinder;
 
 public class Main {	
-	public static void main(String[] args) throws Exception {		
-		new HomeWindow();
+	public static void main(String[] args) {
+		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
 		
-//		testDecisionTrees();
-		
-		
-//		AlphaNumericIOTranslator translator = new AlphaNumericIOTranslator();
-//		INeuralNetwork network = new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-//		MatrixBackpropTrainer trainer = new MatrixBackpropTrainer(0.05f, 0.02f);
-//		
-//		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-//		Set<TrainingExample> examples = new HashSet<TrainingExample>();
-//		
-//		for (CharacterTrainingExample nextExample : trainingSet){
-//			float[] input = translator.translateImageToNetworkInput(nextExample.getCharacterImage());
-//			int[] output = translator.translateCharacterToNetworkOutput(nextExample.getCharacterValue());
-//			
-//			examples.add(new TrainingExample(input, output));
-//		}
-//		
-//		trainer.trainWithTrainingSet(network, examples, new HashSet<TrainingExample>());
-//		NeuralNetworkIO.writeNetwork(network, "resultTestNet");
+		new Thread(uncaughtExceptionGroup, "Main Thread"){
+			public void run(){
+				new HomeWindow();
+			}
+		}.start();
 	}
 	
 	private static char correlateChainCodeEuc(BufferedImage testImg) throws IOException{

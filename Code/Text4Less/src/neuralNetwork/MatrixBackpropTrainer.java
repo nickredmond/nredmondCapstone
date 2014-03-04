@@ -1,6 +1,10 @@
 package neuralNetwork;
 
+import io.Logger;
+
 import java.util.Set;
+
+import javax.swing.SwingWorker;
 
 import threading.DeltaValues;
 import threading.TrainingExampleThreadPool;
@@ -16,9 +20,19 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 	private int numberIterationsPerformed = 0;
 	private float errorAchieved = 1.0f;
 	
+	private ITrainingProgressHandler handler;
+	private boolean isRunning;
+	private final int MILLISECONDS_BETWEEN_UPDATES = 2000;
+	
 	public MatrixBackpropTrainer(float learningRate, float regParam){
 		this.learningRate = learningRate;
 		regularizationParam = regParam;
+	}
+	
+	public MatrixBackpropTrainer(float learningRate, float regParam, ITrainingProgressHandler handler){
+		this(learningRate, regParam);
+		this.handler = handler;
+		isRunning = true;
 	}
 	
 	public void setIterations(int iterations){
@@ -37,11 +51,30 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 		return errorAchieved;
 	}
 	
+	private class ProgressUpdater extends Thread{
+		@Override
+		public void run(){
+			while (isRunning){				
+				handler.progressUpdate(previousError, numberIterationsPerformed);
+				
+				try {
+					Thread.sleep(MILLISECONDS_BETWEEN_UPDATES);
+				} catch (InterruptedException e) {
+					Logger.logMessage("ProgressUpdater thread threw InterruptedException while training network.");
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void trainWithTrainingSet(INeuralNetwork network,
 			Set<TrainingExample> trainingSet, Set<TrainingExample> testSet) {
 		float mse = 1000.0f;
 		float cve = 1000.0f;
+		
+		new ProgressUpdater().start();
+		
+		long before = System.nanoTime();
 		
 		do{
 			previousError = mse;
@@ -49,12 +82,22 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 			
 			mse = performTrainingIteration(trainingSet, network);
 			cve = crossValidate(testSet, network);
-			System.out.println("MSE: " + mse + ", CVE: " + cve);
+			//System.out.println("MSE: " + mse + ", CVE: " + cve);
 			numberIterationsPerformed++;
-		//	System.out.println("error goal: " + errorGoal);
 		}while(mse > errorGoal && numberIterationsPerformed < maxIterations && mse < previousError);
 		
 		errorAchieved = mse;
+		
+		long after = System.nanoTime();
+		
+		long nanoSecs = after - before;
+		long secs = nanoSecs / 1000000000;
+		
+		if (handler != null){
+			handler.setTrainingSummary(errorAchieved, numberIterationsPerformed, 
+					(errorAchieved <= errorGoal || numberIterationsPerformed >= maxIterations), secs);
+			isRunning = false;
+		}
 	}
 	
 	private float crossValidate(Set<TrainingExample> testSet, INeuralNetwork network){

@@ -46,7 +46,6 @@ public class TrainingDataNameAssigner {
 			}
 			
 			if (trainingImgChar == character && indexCharacter.toString().matches("^[0-9]+$")){
-				System.out.println("yes: " + indexCharacter + " " + nextFilename);
 				int nextTrainingImgNumber = Integer.parseInt(indexCharacter.toString());
 				takenNumbers.add(nextTrainingImgNumber);
 			}

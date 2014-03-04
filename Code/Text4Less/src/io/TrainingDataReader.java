@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import ui.TrainingDataNameAssigner;
 import app.AlphaNumericCharacterConverter;
@@ -35,7 +36,7 @@ public class TrainingDataReader {
 		return readCharacterSet(reader, type, imagePath);
 	}
 	
-	public static Set<CharacterTrainingExample> createTriningSetFromFile(File trainingSetDirectory) throws IllegalStateException, IOException{
+	public static Set<CharacterTrainingExample> createTriningSetFromFile(File trainingSetDirectory){
 		File[] trainingImageFiles = trainingSetDirectory.listFiles();
 		Set<CharacterTrainingExample> examples = new HashSet<CharacterTrainingExample>();
 		
@@ -50,9 +51,6 @@ public class TrainingDataReader {
 				String extension = nameParts[1];
 				
 				if (!extension.equals("db")){
-					if (!extension.equals(IMAGE_EXTENSION)){
-						throw new IllegalStateException("Invalid file format");
-					}
 					
 				//	CharacterTrainingExample nextExample = new CharacterTrainingExample(img, value);
 					char nextCharacter = 'A';
@@ -75,7 +73,8 @@ public class TrainingDataReader {
 							nextCharacter = character;
 						}
 						else{
-							throw new IllegalStateException("Invalid file name");
+							JOptionPane.showMessageDialog(null, "Error while reading training data from folder. Invalid file name: " +imageName,
+										"Error", JOptionPane.ERROR_MESSAGE);;
 						}
 					}
 					else if (imageName.toLowerCase().matches("^[a-z]{1}[0-9]*$")){
@@ -84,11 +83,10 @@ public class TrainingDataReader {
 						
 						if (charValue >= AlphaNumericCharacterConverter.LOWER_START && charValue <= AlphaNumericCharacterConverter.LOWER_END){
 							character = (char)(charValue - TrainingDataNameAssigner.UPPER_LOWER_DIFFERENCE);
-						//	System.out.println("yes: " + imageName + " " + character);
 						}
 						if ((int)character < AlphaNumericCharacterConverter.UPPER_START || (int)character > AlphaNumericCharacterConverter.UPPER_END){
-						//	System.out.println(imageName + " " + charValue);
-							throw new IllegalStateException("Invalid file name");
+							JOptionPane.showMessageDialog(null, "Error while reading training data from folder. Invalid file name: " + imageName,
+									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 						
 						nextCharacter = character;
@@ -97,12 +95,27 @@ public class TrainingDataReader {
 						nextCharacter = imageName.charAt(0);
 					}
 					else{
-						System.out.println(imageName);
-						throw new IllegalStateException("Invalid file name");
+						JOptionPane.showMessageDialog(null, "Error while reading training data from folder. Invalid file name: " + imageName,
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 					
-					BufferedImage nextImage = ImageIO.read(nextFile);
-					examples.add(new CharacterTrainingExample(nextImage, nextCharacter));
+					try {
+						BufferedImage nextImage = ImageIO.read(nextFile);
+						
+						if (nextImage != null){
+							examples.add(new CharacterTrainingExample(nextImage, nextCharacter));
+						}
+					}
+					catch (IllegalArgumentException e){
+						JOptionPane.showMessageDialog(null, "Error while creating training data. The specified image file is not defined.",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						Logger.logMessage("Error while creating training data. Exception: " + e.toString() + "; (Source: " + TrainingDataReader.class.toString() + ")");
+					}
+					catch (IOException e) {
+						JOptionPane.showMessageDialog(null, "Error while creating training data. Could not read the image from the specified file location.",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						Logger.logMessage("Error while creating training data. Exception: " + e.toString() + "; (Source: " + TrainingDataReader.class.toString() + ")");
+					}
 				}
 			}
 		}

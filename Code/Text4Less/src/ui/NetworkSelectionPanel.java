@@ -25,6 +25,8 @@ public class NetworkSelectionPanel extends JPanel {
 	
 	private INetworkSelectionHandler handler;
 	
+	private static final String DEFAULT_NETWORK_NAME = "default.ann";
+	
 	public NetworkSelectionPanel(INetworkSelectionHandler handler){
 		this.handler = handler;
 		setupPanel();
@@ -69,7 +71,8 @@ public class NetworkSelectionPanel extends JPanel {
 					String filePath = chooser.getSelectedFile().getAbsolutePath();
 					
 					if (filePath.endsWith(".ann")){
-						chosenNetwork = NeuralNetworkIO.readFromFilepath(filePath);
+						chosenNetwork = (chooser.getSelectedFile().getName().equals(DEFAULT_NETWORK_NAME)) ? 
+								null : NeuralNetworkIO.readFromFilepath(filePath);
 						networkName = chooser.getSelectedFile().getName();
 						chosenNetworkLabel.setText("Selected Network: " + networkName);
 						

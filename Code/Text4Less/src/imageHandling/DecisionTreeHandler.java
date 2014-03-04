@@ -1,6 +1,7 @@
 package imageHandling;
 
 import imageProcessing.TranslationResult;
+import io.Logger;
 import io.MetaclassTreeIO;
 
 import java.awt.image.BufferedImage;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.util.List;
 
 import app.CharacterResult;
-import app.Logger;
 import decisionTrees.IMetaclassTree;
 
 public class DecisionTreeHandler implements ICharacterImageHandler{

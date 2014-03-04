@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.Logger;
-
 public class WordDocWriter {
 	private String documentMetadata;
 	private List<String> translations;
