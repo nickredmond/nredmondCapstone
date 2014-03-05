@@ -44,7 +44,7 @@ import decisionTrees.IMetaclassTree;
 import decisionTrees.ITreeFinder;
 
 public class Main {	
-	public static void main(String[] args) throws IOException {		
+	public static void main(String[] args) {
 		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
 		
 		new Thread(uncaughtExceptionGroup, "Main Thread"){

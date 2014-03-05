@@ -44,14 +44,16 @@ import decisionTrees.IMetaclassTree;
 import decisionTrees.ITreeFinder;
 
 public class Main {	
-	public static void main(String[] args) throws IOException {		
-		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
+	public static void main(String[] args) {
 		
-		new Thread(uncaughtExceptionGroup, "Main Thread"){
-			public void run(){
-				new HomeWindow();
-			}
-		}.start();
+		
+//		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
+//		
+//		new Thread(uncaughtExceptionGroup, "Main Thread"){
+//			public void run(){
+//				new HomeWindow();
+//			}
+//		}.start();
 	}
 	
 	private static char correlateChainCodeEuc(BufferedImage testImg) throws IOException{

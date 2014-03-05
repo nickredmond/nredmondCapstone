@@ -44,14 +44,19 @@ import decisionTrees.IMetaclassTree;
 import decisionTrees.ITreeFinder;
 
 public class Main {	
-	public static void main(String[] args) throws IOException {		
-		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
+	public static void main(String[] args) throws IOException {
+		BufferedImage img = ImageIO.read(new File("C:/Users/nredmond/Pictures/trainingData.png"));
+		ImageHandlerFactory.setHandlerMethod(ImageReadMethod.TRAINING_DATA_CREATION);
+		ImageReader reader = new ImageReader(new AlphaNumericIOTranslator());
+		reader.readTextFromImage(img);
 		
-		new Thread(uncaughtExceptionGroup, "Main Thread"){
-			public void run(){
-				new HomeWindow();
-			}
-		}.start();
+//		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
+//		
+//		new Thread(uncaughtExceptionGroup, "Main Thread"){
+//			public void run(){
+//				new HomeWindow();
+//			}
+//		}.start();
 	}
 	
 	private static char correlateChainCodeEuc(BufferedImage testImg) throws IOException{

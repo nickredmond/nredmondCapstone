@@ -96,6 +96,12 @@ public class ImageReader {
 		for (BufferedImage nextLine : lines){
 			List<BufferedImage> characters = (maxLineHeight >= MIN_SEGMENT_LINE_HEIGHT) ? ImageSegmenter.segmentLineIntoCharacters(nextLine) : 
 				processor.splitIntoCharacters(nextLine);
+//			try {
+//				characters = NeighboringImageHypothesizer.combineImagesThatFormCharacters(characters);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 			for (BufferedImage nextCharacter : characters){
 				handler.handleImage(nextCharacter);

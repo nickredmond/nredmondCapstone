@@ -94,8 +94,8 @@ public class ImageReader {
 		}
 		
 		for (BufferedImage nextLine : lines){
-			List<BufferedImage> characters = (maxLineHeight >= MIN_SEGMENT_LINE_HEIGHT) ? ImageSegmenter.segmentLineIntoCharacters(nextLine) : 
-				processor.splitIntoCharacters(nextLine);
+			List<BufferedImage> characters = processor.splitIntoCharacters(nextLine); //(maxLineHeight >= MIN_SEGMENT_LINE_HEIGHT) ? ImageSegmenter.segmentLineIntoCharacters(nextLine) : 
+			//	processor.splitIntoCharacters(nextLine);
 			
 			for (BufferedImage nextCharacter : characters){
 				handler.handleImage(nextCharacter);
