@@ -11,68 +11,78 @@ import imageHandling.ImageHandlerFactory;
 import imageHandling.ImageReadMethod;
 import imageProcessing.TranslationResult;
 import io.CharacterType;
-import io.FileOperations;
 import io.MetaclassTreeIO;
 import io.NeuralNetworkIO;
 import io.ReceptorIO;
 import io.TrainingDataReader;
+import io.UserPreferencesIO;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import networkIOtranslation.AlphaNumericIOTranslator;
-import networkIOtranslation.FeatureExtractionIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterTrainingExample;
 import neuralNetwork.INeuralNetwork;
-import neuralNetwork.MatrixBackpropTrainer;
-import neuralNetwork.MatrixNeuralNetwork;
 import receptors.Receptor;
-import spellCheck.SpellChecker;
 import threading.UncaughtExceptionHandler;
-import ui.HomeWindow;
+import ui.MenuWindow;
+import ui.SplashScreen;
 import decisionTrees.BasicTreeFinder;
 import decisionTrees.IMetaclassTree;
 import decisionTrees.ITreeFinder;
 
-public class Main {	
-	public static void main(String[] args) throws IOException {		
+public class Main implements IClickHandler {
+	private SplashScreen splash;
+	private MenuWindow window;
+	
+	public static void main(String[] args) throws IOException {	
+		//UserPreferencesIO.writePreferences(new UserPreferences(true, false, ImageReadMethod.NEURAL_NETWORK));
+		new Main().startApplication();
+		
+	//	FileOperations.renameFilesWithAppendedName("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/nicksFailures", "41");
+	}
+	
+	private void startApplication(){
+		splash = new SplashScreen(this);
+		splash.setLoadPercentage(0.0f);
+		splash.setLoadStatusMessage("Preparing application...");
+		
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {}
+		
 		ThreadGroup uncaughtExceptionGroup = new UncaughtExceptionHandler();
 		
 		new Thread(uncaughtExceptionGroup, "Main Thread"){
 			public void run(){
-				new HomeWindow();
+				splash.setLoadPercentage(0.75f);
+				splash.setLoadStatusMessage("Loading User Preferences...");
+				splash.repaint();
+				
+				window = new MenuWindow();
+				window.setPreferences(UserPreferencesIO.readPreferences());
+				
+				splash.setLoadPercentage(1.0f);
+				splash.repaint();
+				
+				try {
+					Thread.sleep(900);
+				} catch (InterruptedException e) {}
+				
+				window.setVisible(true);
+				splash.setVisible(false);
+				splash.dispose();
+				
+				window.displayStartupInfo();
 			}
 		}.start();
-	}
-	
-	private static char correlateChainCodeEuc(BufferedImage testImg) throws IOException{
-		AlphaNumericIOTranslator translator = new AlphaNumericIOTranslator();
-		Set<CharacterTrainingExample> trainingSet = TrainingDataReader.createTrainingSetFromFile(CharacterType.ASCII2);
-		
-		char chosenChar = 'A';
-		float minDistance = 10000.0f;
-		
-		for (CharacterTrainingExample nextExample : trainingSet){
-			float distance = LeastDistanceCalculator.getEuclideanDistance(testImg, nextExample.getCharacterImage());
-			
-			if (distance < minDistance){
-				minDistance = distance;
-				chosenChar = nextExample.getCharacterValue();
-			}
-		}
-		
-		//System.out.println("RESULT: " + chosenChar);
-		System.out.println("letter");
-		return chosenChar;
 	}
 	
 	private static void testDecisionTrees() throws IOException{
@@ -166,53 +176,6 @@ public class Main {
 		return result;
 	}
 	
-	private static void engineTestStuff() throws IOException{	
-//		List<Receptor> receptors = ReceptorIO.readReceptors("myReceptors");
-//		
-//		INetworkIOTranslator translator = new ReceptorNetworkIOTranslator(receptors);
-//		INeuralNetwork network = new MatrixNeuralNetwork(receptors.size(),
-//				1, 150, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-//		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
-//		
-//		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins2");
-//		readFromSavedNetwork("yoloSwaggins2");
-		
-		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
-		INeuralNetwork network = new MatrixNeuralNetwork(new FeatureExtractionIOTranslator().getInputLength(),
-				1, 100, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-		INeuralNetwork trainedNetwork = NetworkFactory.getTrainedNetwork(network, translator, CharacterType.ASCII2, new MatrixBackpropTrainer(0.05f, 0.02f));
-		
-		NeuralNetworkIO.writeNetwork(trainedNetwork, "yoloSwaggins");
-		readFromSavedNetwork("yoloSwaggins");
-	}
-	
-	private static void readWithInputReader() throws IOException{
-		List<ImageReadMethod> readMethods = new ArrayList<ImageReadMethod>();
-	//	readMethods.add(ImageReadMethod.NEURAL_NETWORK);
-		readMethods.add(ImageReadMethod.LEAST_DISTANCE);
-		
-		System.out.println("Reading... (shh... be patient.)");
-		
-		BufferedImage image = ImageIO.read(new File("C:\\Users\\nredmond\\Pictures\\charTest2.png"));
-		ReadResult yes = null; // InputReader.readImageInput(image, readMethods);
-		
-		String result = yes.getTranslationString();
-		System.out.println("RESULT: " + result);
-		
-		String correctedResult = SpellChecker.spellCheckText(result);
-		System.out.println("AFTER SPELL CHECK: " + correctedResult);
-		
-		System.out.println("\r\nNumber characters rejected: " + yes.getRejections().size());
-	}
-	
-	private static void renameCharacters(CharacterType type, int setNumber) throws IOException{
-		String dir = "C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/unformatted";
-		String appendix = ((Integer)setNumber).toString();
-		FileOperations.renameFilesWithAppendedName(dir, appendix);
-		
-		FileOperations.addAlphanumericsToMetadataFile(type, setNumber);
-	}
-	
 	private static void readFromSavedNetwork(String networkName) throws IOException{
 		INeuralNetwork savedNetwork = NeuralNetworkIO.readNetwork(networkName);
 		List<Receptor> receptors = ReceptorIO.readReceptors("myReceptors");
@@ -236,5 +199,12 @@ public class Main {
 		
 		System.out.println("RESULT: " + result);
 		System.out.println("AVG CONFIDENCE: " + avgConfidence);
+	}
+
+	@Override
+	public void mouseClicked() {
+		window.setVisible(true);
+		splash.setVisible(false);
+		splash.dispose();
 	}
 }

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="imageProcessing.RowPatternTransformer"/>
 <fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
 <fullyQualifiedTypeName name="imageProcessing.ImageNormalizer"/>
@@ -26,7 +24,6 @@
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
 <fullyQualifiedTypeName name="java.io.DataInputStream"/>
 <fullyQualifiedTypeName name="io.MnistReader"/>
-<fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
 <fullyQualifiedTypeName name="debug.FeatureExtractionDebug"/>
 <fullyQualifiedTypeName name="io.TrainingDataReader"/>
 <fullyQualifiedTypeName name="io.NeuralNetworkIO"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
 <fullyQualifiedTypeName name="io.Logger"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
+<fullyQualifiedTypeName name="neuralNetwork.MatrixBackpropTrainer"/>
+<fullyQualifiedTypeName name="app.ImageReader"/>
 </qualifiedTypeNameHistroy>

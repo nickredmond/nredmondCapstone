@@ -1,13 +1,12 @@
 package imageHandling;
 
-import imageProcessing.TranslationResult;
-
+import java.io.Serializable;
 import java.util.List;
 
-import app.CharacterResult;
 import neuralNetwork.CharacterReader;
+import app.CharacterResult;
 
-public enum ImageReadMethod {
+public enum ImageReadMethod implements Serializable{
 	LEAST_DISTANCE{
 		@Override
 		public ICharacterImageHandler getHandler(CharacterReader reader, List<CharacterResult> results) {

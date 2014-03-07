@@ -5,8 +5,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
@@ -28,6 +28,8 @@ public class DrawingArea extends JPanel {
 	
 	private int currentDataDrawingValue;
 	
+	private DragListener listener;
+	
 	DrawingPanel parent;
 	
 	public DrawingArea(DrawingPanel parent){
@@ -39,7 +41,9 @@ public class DrawingArea extends JPanel {
 		
 		this.parent = parent;
 		
-		this.addMouseMotionListener(new DragListener());
+		listener = new DragListener();
+		this.addMouseMotionListener(listener);
+		this.addMouseListener(new MouseClickListener());
 		this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		
 		this.setSize(new Dimension(AREA_WIDTH, AREA_HEIGHT));
@@ -92,6 +96,13 @@ public class DrawingArea extends JPanel {
 				
 				parent.drawingChanged();
 			}
+		}
+	}
+	
+	private class MouseClickListener extends MouseAdapter{
+		@Override
+		public void mousePressed(MouseEvent evt) {
+			listener.mouseDragged(evt);
 		}
 	}
 	

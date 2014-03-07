@@ -1,0 +1,9 @@
+package app;
+
+import imageHandling.ImageReadMethod;
+
+public class UserPreferences {
+	private boolean isAccuracyPromptEnabled;
+	private boolean isSpellCheckEnabled;
+	private ImageReadMethod readMethod;
+}

@@ -10,3 +10,5 @@
 2014-03-03 23:50:59 --- Error occured while translating folder. Message: null; Source: [ui.FolderTranslationTab$ButtonListener$1.run(FolderTranslationTab.java:155)]
 2014-03-04 00:10:52 --- Unknown error occured while running application. Message: "java.lang.ArrayIndexOutOfBoundsException: 1"; Source: ui.ImageLoader.isImage(ImageLoader.java:29)
 2014-03-04 00:11:44 --- Unknown error occured while running application. Message: "java.lang.ArrayIndexOutOfBoundsException: 1"; Source: ui.ImageLoader.isImage(ImageLoader.java:29)
+2014-03-06 23:04:19 --- Error loading user preferences. Message: preferences.t4l (The system cannot find the file specified)
+2014-03-06 23:04:39 --- Error loading user preferences. Message: preferences.t4l (The system cannot find the file specified)

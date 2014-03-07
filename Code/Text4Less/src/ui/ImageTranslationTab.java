@@ -1,6 +1,7 @@
 package ui;
 
 import imageHandling.ImageReadMethod;
+import io.UserPreferencesIO;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,6 +17,7 @@ import neuralNetwork.INeuralNetwork;
 import spellCheck.SpellChecker;
 import app.InputReader;
 import app.ReadResult;
+import app.UserPreferences;
 
 public class ImageTranslationTab extends JPanel{
 	private ImageLoaderPanel loaderPanel;
@@ -46,12 +48,21 @@ public class ImageTranslationTab extends JPanel{
 		this.setVisible(true);
 	}
 	
+	public void setUserPreferences(UserPreferences preferences){
+		isSpellCheckEnabled = preferences.isSpellCheckEnabled();
+		selectedReadMethod = preferences.getReadMethod();
+	}
+	
 	public void advancedOptionsSaveChangesClicked(ImageReadMethod readMethod, INeuralNetwork chosenNetwork,
 			String networkName, boolean useSpellCheck){
 		selectedReadMethod = readMethod;
 		this.chosenNetwork = chosenNetwork;
 		this.networkName = networkName;
 		isSpellCheckEnabled = useSpellCheck;
+		
+		UserPreferences preferences = new UserPreferences(UserPreferencesIO.readPreferences().isAccuracyPromptEnabled(),
+				isSpellCheckEnabled, selectedReadMethod);
+		UserPreferencesIO.writePreferences(preferences);
 	}
 	
 	public void imageLoaded(File selectedImage){

@@ -1,0 +1,32 @@
+package ui;
+
+import io.Logger;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
+public class SplashScreen extends JFrame {
+	private final String IMAGE_PATH = "splashScreen.png";
+	private Image splashImage;
+	
+	private float loadPercentage = 0.0f;
+	private String loadStatus = "";
+	
+	public SplashScreen(){
+		try {
+			splashImage = ImageIO.read(new File(IMAGE_PATH));
+		} catch (IOException e) {
+			Logger.logMessage("Could not load splash screen image. Message: " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public void paint(Graphics g){
+		
+	}
+}

@@ -1,0 +1,26 @@
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class SplashWindow extends JFrame{
+	JPanel splashPanel;
+	
+	public SplashWindow(){
+		splashPanel = new JPanel();
+		splashPanel.setBackground(Color.blue);
+		splashPanel.setOpaque(false);
+		splashPanel.add(new JLabel("Test This"));
+		
+		this.setOpacity(0.5f);
+		
+		this.setContentPane(splashPanel);
+		this.setUndecorated(true);
+		
+		this.setSize(new Dimension(800, 800));
+		this.setVisible(true);
+	}
+}

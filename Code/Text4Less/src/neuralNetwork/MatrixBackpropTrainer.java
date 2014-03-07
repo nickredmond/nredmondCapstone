@@ -82,7 +82,7 @@ public class MatrixBackpropTrainer implements INetworkTrainer {
 			
 			mse = performTrainingIteration(trainingSet, network);
 			cve = crossValidate(testSet, network);
-			//System.out.println("MSE: " + mse + ", CVE: " + cve);
+			System.out.println("MSE: " + mse + ", CVE: " + cve);
 			numberIterationsPerformed++;
 		}while(mse > errorGoal && numberIterationsPerformed < maxIterations && mse < previousError);
 		

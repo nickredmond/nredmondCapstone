@@ -14,3 +14,7 @@
 1393900881346	Delete element
 1393900886501	Delete elements
 1393901020277	Move compilation unit
+1394169885841	Rename field 'test'
+1394170672772	Encapsulate field 'isAccuracyPromptEnabled'
+1394170678154	Encapsulate field 'isSpellCheckEnabled'
+1394170683325	Encapsulate field 'readMethod'
