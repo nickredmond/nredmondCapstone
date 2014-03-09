@@ -2,6 +2,7 @@ package imageHandling;
 
 import imageProcessing.TranslationResult;
 import io.CharacterType;
+import io.Logger;
 import io.TrainingDataReader;
 
 import java.awt.image.BufferedImage;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 import neuralNetwork.CharacterTrainingExample;
 import app.CharacterResult;
@@ -28,8 +31,7 @@ public class LeastDistanceHandler implements ICharacterImageHandler {
 		try {
 			examples = TrainingDataReader.createTrainingSetFromFile(TRAINING_TYPE);
 		} catch (IOException e) {
-			System.out.println("FAILED TO CREATE TRAINING SET.");
-			e.printStackTrace();
+			Logger.logMessage("Failed to create training set. Message: " + e.getMessage());
 		}
 	}
 	
@@ -78,6 +80,7 @@ public class LeastDistanceHandler implements ICharacterImageHandler {
 	
 	@Override
 	public void handleImage(BufferedImage img) {
+		JOptionPane.showMessageDialog(null, "yes");
 		char chosenCharacter = 'A';
 		float highestCorrelation = -1.0f;
 		

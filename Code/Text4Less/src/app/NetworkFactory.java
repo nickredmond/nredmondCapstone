@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterNetworkTrainer;
 import neuralNetwork.CharacterTrainingExample;
@@ -42,7 +44,7 @@ public class NetworkFactory {
 		for(CharacterTrainingExample nextExample : testSet){
 			trainer.addTestExample(nextExample);
 		}
-		
+
 		networkTrainer.setErrorGoal(errorGoal);
 		networkTrainer.setIterations(numIterations);
 		

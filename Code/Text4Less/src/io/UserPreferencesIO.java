@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
 
-import neuralNetwork.INeuralNetwork;
+import app.Main;
 import app.UserPreferences;
 
 public class UserPreferencesIO {
@@ -20,7 +20,7 @@ public class UserPreferencesIO {
 		UserPreferences preferences = null;
 		
 		try {
-			FileInputStream inputStream = new FileInputStream(FILEPATH);
+			FileInputStream inputStream = new FileInputStream(new Main().getWorkingDirectory() + FILEPATH);
 			ObjectInputStream objectInput = new ObjectInputStream(inputStream);
 			preferences = (UserPreferences) objectInput.readObject();
 			
@@ -37,7 +37,7 @@ public class UserPreferencesIO {
 	
 	public static void writePreferences(UserPreferences preferences){
 		try{
-			FileOutputStream outputStream = new FileOutputStream(FILEPATH);
+			FileOutputStream outputStream = new FileOutputStream(new Main().getWorkingDirectory() + FILEPATH);
 			ObjectOutputStream objectOutput = new ObjectOutputStream(outputStream);
 			objectOutput.writeObject(preferences);
 			

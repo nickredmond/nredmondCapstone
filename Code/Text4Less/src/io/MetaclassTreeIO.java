@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import decisionTrees.GeneticMetaclassTree;
+import app.Main;
 import decisionTrees.IMetaclassTree;
 
 public class MetaclassTreeIO {
-	private static String FILEPATH = "savedDecisionTrees/";
+	private static String FILEPATH = new Main().getWorkingDirectory() + "/savedDecisionTrees/";
 	private static String EXTENSION = ".tree";
 	
 	public static void saveTree(IMetaclassTree tree, String filename) throws IOException{

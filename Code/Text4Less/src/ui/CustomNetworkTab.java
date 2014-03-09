@@ -29,6 +29,7 @@ import neuralNetwork.ITrainingProgressHandler;
 import neuralNetwork.MatrixBackpropTrainer;
 import neuralNetwork.MatrixNeuralNetwork;
 import app.AlphaNumericCharacterConverter;
+import app.Main;
 import app.NetworkFactory;
 
 public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler {
@@ -69,7 +70,7 @@ public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler
 
 	private void setupTrainingDataSelectionPanel() {
 		setSelectionPanel = new TrainingSetSelectionPanel(false);
-		setSelectionPanel.setSelectedFolder(new File("trainingImages/ASCII2"));
+		setSelectionPanel.setSelectedFolder(new File(new Main().getWorkingDirectory() + "/trainingImages/ASCII2"));
 		this.add(setSelectionPanel);
 	}
 
@@ -194,11 +195,11 @@ public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler
 							try {
 								trainButton.setEnabled(false);
 								saveButton.setEnabled(false);
-								
+
 								INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 								INeuralNetwork network = new MatrixNeuralNetwork(((AlphaNumericIOTranslator)translator).getInputLength(),
 										numberLayers, numberNeurons, AlphaNumericCharacterConverter.NUMBER_CLASSES, true);
-								
+
 								File selectedTrainingSet = setSelectionPanel.getSelectedFolder();
 								
 								customNetwork = NetworkFactory.getTrainedNetwork(network, translator, selectedTrainingSet, 

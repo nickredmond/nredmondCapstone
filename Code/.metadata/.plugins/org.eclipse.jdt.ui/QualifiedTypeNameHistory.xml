@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="debug.CharacterViewDebug"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageBinarizer"/>
-<fullyQualifiedTypeName name="imageProcessing.ImageNormalizer"/>
-<fullyQualifiedTypeName name="imageProcessing.ImagePreprocessor"/>
-<fullyQualifiedTypeName name="java.util.Calendar"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="ui.AdvancedOptionsWindow.SpellCheckListener"/>
 <fullyQualifiedTypeName name="spellCheck.SpellChecker"/>
-<fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.Cursor"/>
 <fullyQualifiedTypeName name="app.LeastDistanceCalculator"/>
 <fullyQualifiedTypeName name="math.ProbabilityCalculator"/>
@@ -39,25 +32,32 @@
 <fullyQualifiedTypeName name="debug.ConfusionMatrixDebug"/>
 <fullyQualifiedTypeName name="app.Logger"/>
 <fullyQualifiedTypeName name="ui.ImageLoader"/>
-<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
-<fullyQualifiedTypeName name="imageHandling.ImageReadMethod"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="app.DirectoryReader"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
 <fullyQualifiedTypeName name="javax.swing.Box"/>
-<fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="app.InputReader"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="io.AppStatusIO"/>
 <fullyQualifiedTypeName name="io.AppCloseStatus"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="javax.swing.SwingWorker"/>
 <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
-<fullyQualifiedTypeName name="io.Logger"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="networkIOtranslation.AlphaNumericIOTranslator"/>
 <fullyQualifiedTypeName name="neuralNetwork.MatrixBackpropTrainer"/>
 <fullyQualifiedTypeName name="app.ImageReader"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="io.Logger"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="ui.SplashScreen"/>
+<fullyQualifiedTypeName name="app.Main"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="ui.ImageTranslationTab"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="imageHandling.ImageReadMethod"/>
+<fullyQualifiedTypeName name="app.UserPreferences"/>
+<fullyQualifiedTypeName name="io.UserPreferencesIO"/>
 </qualifiedTypeNameHistroy>

@@ -3,6 +3,7 @@ package ui;
 import io.UserPreferencesIO;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ public class MenuWindow extends JFrame {
 		setupWindow();
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Text4Less");
 		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 	}
 	

@@ -8,11 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import app.CharacterResult;
 import neuralNetwork.CharacterReader;
+import app.CharacterResult;
+import app.Main;
 
 public class ImageHandlerFactory {
-	public static final String CONFIG_FILEPATH = "config.txt";
+	public static final String CONFIG_FILEPATH = new Main().getWorkingDirectory() + "/config.txt";
 	
 	public static ICharacterImageHandler getImageHandler(List<CharacterResult> results, CharacterReader reader) throws IOException{
 		BufferedReader configReader = new BufferedReader(new FileReader(new File(CONFIG_FILEPATH)));

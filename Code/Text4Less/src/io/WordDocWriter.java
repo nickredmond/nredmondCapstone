@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.Main;
+
 public class WordDocWriter {
 	private String documentMetadata;
 	private List<String> translations;
@@ -34,7 +36,7 @@ public class WordDocWriter {
 	}
 	
 	private void addMetadata() throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader(new File("metadataFiles/wordDocMetadata.txt")));
+		BufferedReader reader = new BufferedReader(new FileReader(new File(new Main().getWorkingDirectory() + "/metadataFiles/wordDocMetadata.txt")));
 		
 		String nextLine = "";
 		documentMetadata = "";

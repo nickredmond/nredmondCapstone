@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import app.Main;
+
 public class Logger {
 	private static final String DEFAULT_LOG_FILENAME = "appLog";
 	private static final String LOG_EXTENSION = ".txt";
-	private static final String FILEPATH = "logFiles/";
+	private static final String FILEPATH = new Main().getWorkingDirectory() + "/logFiles/";
 	
 	public static void logMessage(String message){
 		logMessage(message, DEFAULT_LOG_FILENAME);

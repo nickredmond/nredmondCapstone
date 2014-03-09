@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import networkIOtranslation.AlphaNumericIOTranslator;
 import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
@@ -25,7 +27,7 @@ public class InputReader {
 		currentNetwork = network;
 	}
 	
-	public static ReadResult readImageInput(BufferedImage image, ImageReadMethod method) throws IOException{
+	public static ReadResult readImageInput(BufferedImage image, ImageReadMethod method) throws IOException{	
 		ReadResult result = null;
 		ImageHandlerFactory.setHandlerMethod(method);
 		
@@ -35,7 +37,6 @@ public class InputReader {
 		else{
 			INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 			ImageReader reader = new ImageReader(currentNetwork, translator);
-			
 			List<CharacterResult> results = reader.readTextFromImage(image);
 			
 			result = convertTranslationToResult(results);
@@ -51,7 +52,8 @@ public class InputReader {
 		INetworkIOTranslator translator = new AlphaNumericIOTranslator();
 		
 		for (int i = 0; i < DEFAULT_NETWORKS.length; i++){
-			INeuralNetwork nextNetwork = NeuralNetworkIO.readNetwork(DEFAULT_NETWORKS[i]);
+			INeuralNetwork nextNetwork = NeuralNetworkIO.readFromFilepath(new Main().getWorkingDirectory() + 
+					"/savedNetworks/" + DEFAULT_NETWORKS[i] + ".ann");
 			ImageReader reader = new ImageReader(nextNetwork, translator);
 			List<CharacterResult> results = reader.readTextFromImage(image);
 			
@@ -85,17 +87,20 @@ public class InputReader {
 		String resultString = "";
 		ReadResult result = new ReadResult();
 		
-		for (CharacterResult nextResult : translation){			
-			String nextTranslationString = (nextResult.getResult() == null) ? " " : nextResult.getResult().toString();
-			String newline = TranslationResult.NEWLINE_VALUE;
-			
-			if (nextTranslationString.equals(newline)){
-				resultString += newline;
+		for (CharacterResult nextResult : translation){		
+			if (nextResult != null){
+				String nextTranslationString = (nextResult.getResult() == null) ? " " : nextResult.getResult().toString();
+				String newline = TranslationResult.NEWLINE_VALUE;
+				
+				if (nextTranslationString.equals(newline)){
+					resultString += newline;
+				}
+				else if (nextResult.isRejected()){
+					result.addRejection(nextResult);
+				}
+				else resultString += nextResult.getResult().getCharacter();
 			}
-			else if (nextResult.isRejected()){
-				result.addRejection(nextResult);
-			}
-			else resultString += nextResult.getResult().getCharacter();
+			else resultString += " ";
 		}
 		
 		result.setTranslationString(resultString);

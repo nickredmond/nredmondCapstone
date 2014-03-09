@@ -17,6 +17,7 @@ import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.CharacterReader;
 import neuralNetwork.INeuralNetwork;
 import app.CharacterResult;
+import app.Main;
 
 public class CharacterRecognitionPanel extends JPanel implements INetworkSelectionHandler{
 	private INeuralNetwork selectedNetwork;
@@ -24,7 +25,7 @@ public class CharacterRecognitionPanel extends JPanel implements INetworkSelecti
 	private JButton recognizeButton;
 	private JLabel translationLabel, confidenceLabel;
 	
-	private final String DEFAULT_NETWORK_PATH = "savedNetworks/customNetworks/handwritingExtra.ann";
+	private final String DEFAULT_NETWORK_PATH = new Main().getWorkingDirectory() + "/savedNetworks/customNetworks/handwritingExtra.ann";
 	
 	private BufferedImage characterImage;
 	private INetworkIOTranslator translator;

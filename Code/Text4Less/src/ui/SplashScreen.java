@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import app.IClickHandler;
+import app.Main;
 
 public class SplashScreen extends JFrame {
 	private final String IMAGE_PATH = "splashScreen.png";
@@ -49,7 +50,7 @@ public class SplashScreen extends JFrame {
 		this.handler = handler;
 		
 		try {
-			splashImage = ImageIO.read(new File(IMAGE_PATH));
+			splashImage = ImageIO.read(new File(new Main().getWorkingDirectory() + IMAGE_PATH));
 			loadFont = new Font("Arial", Font.PLAIN, 12);
 			clickFont = new Font("Arial", Font.BOLD, 18);
 			

@@ -94,10 +94,12 @@ public class ImageTranslationTab extends JPanel{
 						LoadingScreen loading = new LoadingScreen("Reading image", false, ImageTranslationTab.this, 400, 250);
 						
 						BufferedImage image = ImageIO.read(imageFile);
+						
 						InputReader.setNetwork(chosenNetwork);
 						ReadResult result = InputReader.readImageInput(image, selectedReadMethod);
-						String resultText = result.getTranslationString();
 						
+						String resultText = result.getTranslationString();
+
 						if (isSpellCheckEnabled){
 							resultText = SpellChecker.spellCheckText(resultText);
 						}
