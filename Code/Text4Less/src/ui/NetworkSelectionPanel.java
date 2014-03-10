@@ -1,12 +1,11 @@
 package ui;
 
+import io.NeuralNetworkIO;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import io.NeuralNetworkIO;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -16,6 +15,7 @@ import javax.swing.JPanel;
 
 import neuralNetwork.INeuralNetwork;
 import app.InputReader;
+import app.Main;
 
 public class NetworkSelectionPanel extends JPanel {
 	private INeuralNetwork chosenNetwork;
@@ -64,7 +64,7 @@ public class NetworkSelectionPanel extends JPanel {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == chooseNetworkButton){
 				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File("savedNetworks/customNetworks"));
+				chooser.setCurrentDirectory(new File(new Main().getWorkingDirectory() + "/savedNetworks/customNetworks"));
 				int result = chooser.showOpenDialog(NetworkSelectionPanel.this);
 				
 				if (result == JFileChooser.APPROVE_OPTION){

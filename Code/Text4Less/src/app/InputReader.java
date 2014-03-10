@@ -18,7 +18,7 @@ import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 
 public class InputReader {
-	public static final String TRAINED_NETWORK_NAME = "testThis";
+	public static final String TRAINED_NETWORK_NAME = "default";
 	private static final String[] DEFAULT_NETWORKS = {"endOfLineTestNetArial", "yoloSwaggins2"};
 	
 	private static INeuralNetwork currentNetwork;

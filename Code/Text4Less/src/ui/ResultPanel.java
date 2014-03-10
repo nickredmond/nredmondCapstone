@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -52,6 +53,7 @@ public class ResultPanel extends JPanel {
 		title.setFont(HomeWindow.DEFAULT_LABEL_FONT);
 		
 		textArea = new JTextArea();
+		textArea.setFont(new Font("Helvetica", Font.PLAIN, 18));
 		textArea.setEnabled(false);
 		textArea.setLineWrap(true);
 		resultArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

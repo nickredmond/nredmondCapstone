@@ -142,6 +142,7 @@ public class TrainingDataReader {
 				}
 				catch(IOException e){
 					System.out.println("Name that failed: " + nextFilename);
+					JOptionPane.showMessageDialog(null, "Name that failed: " + nextFilename);
 					throw e;
 				}
 				
