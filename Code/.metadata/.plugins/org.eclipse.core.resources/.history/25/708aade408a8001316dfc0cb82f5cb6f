@@ -228,7 +228,7 @@ public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler
 			}
 			else if (evt.getSource() == saveButton){
 				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(new File(new Main().getWorkingDirectory() + "/savedNetworks/customNetworks"));
+				chooser.setCurrentDirectory(new File("savedNetworks/customNetworks"));
 				chooser.addChoosableFileFilter(new FileNameExtensionFilter("Artifical Neural Networks", "ann"));
 				int result = chooser.showSaveDialog(CustomNetworkTab.this);
 				

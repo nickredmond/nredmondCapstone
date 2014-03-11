@@ -1,6 +1,5 @@
 package ui;
 
-import io.Logger;
 import io.NeuralNetworkIO;
 
 import java.awt.Dimension;
@@ -9,8 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,15 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import networkIOtranslation.AlphaNumericIOTranslator;
-import networkIOtranslation.INetworkIOTranslator;
 import neuralNetwork.INeuralNetwork;
 import neuralNetwork.ITrainingProgressHandler;
-import neuralNetwork.MatrixBackpropTrainer;
-import neuralNetwork.MatrixNeuralNetwork;
-import app.AlphaNumericCharacterConverter;
 import app.Main;
-import app.NetworkFactory;
 
 public class CustomNetworkTab extends JPanel implements ITrainingProgressHandler {
 	private JTextField numberLayersBox, numberNeuronsBox, iterationsField, mseField;

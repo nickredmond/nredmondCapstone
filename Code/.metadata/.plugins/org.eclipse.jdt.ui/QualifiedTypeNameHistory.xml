@@ -50,14 +50,14 @@
 <fullyQualifiedTypeName name="app.ImageReader"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
-<fullyQualifiedTypeName name="io.Logger"/>
-<fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="ui.SplashScreen"/>
-<fullyQualifiedTypeName name="app.Main"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 <fullyQualifiedTypeName name="ui.ImageTranslationTab"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="imageHandling.ImageReadMethod"/>
 <fullyQualifiedTypeName name="app.UserPreferences"/>
 <fullyQualifiedTypeName name="io.UserPreferencesIO"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="app.Main"/>
+<fullyQualifiedTypeName name="io.Logger"/>
 </qualifiedTypeNameHistroy>

@@ -18,8 +18,8 @@
 		<item value="true" key="jarOptionsWizardPage.EXPORT_ERRORS"/>
 		<item value="true" key="JarPackageWizardPage.EXPORT_CLASS_FILES"/>
 		<item value="false" key="jarOptionsWizardPage.SAVE_DESCRIPTION"/>
-		<item value="false" key="JarManifestWizardPage.SAVE_MANIFEST"/>
 		<item value="false" key="JarPackageWizardPage.EXPORT_JAVA_FILES"/>
+		<item value="false" key="JarManifestWizardPage.SAVE_MANIFEST"/>
 		<item value="false" key="JarPackageWizardPage.EXPORT_OUTPUT_FOLDER"/>
 		<item value="true" key="JarPackageWizardPage.COMPRESS"/>
 		<item value="true" key="jarOptionsWizardPage.BUILD_IF_NEEDED"/>
@@ -30,12 +30,13 @@
 		</list>
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Vendor\splash.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
-		<item value="SplashDemo - SplashScreenTest" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Vendor\Text4Less.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="MainTest - Text4Less" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
 		<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Code" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Vendor\Text4Less.jar"/>
 			<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Vendor\splash.jar"/>
 			<item value="C:\Users\nredmond\Workspaces\CapstoneNickRedmond\Vendor\text4less.jar"/>
 		</list>
@@ -69,19 +70,19 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
-	<section name="NewClassWizardPage">
-		<item value="false" key="create_constructor"/>
-		<item value="true" key="create_unimplemented"/>
+	<section name="RenameInformationPopup">
 	</section>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="false" key="renameSubpackages"/>
-		<item value="false" key="updateQualifiedNames"/>
 		<item value="*" key="patterns"/>
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="false" key="renameSubpackages"/>
 		<item value="1" key="updateSimilarElementsMatchStrategy"/>
 		<item value="false" key="updateTextualMatches"/>
 		<item value="false" key="updateSimilarElements"/>
 	</section>
-	<section name="RenameInformationPopup">
+	<section name="NewClassWizardPage">
+		<item value="false" key="create_constructor"/>
+		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.text.QuickOutline">
 		<item value="false" key="GoIntoTopLevelTypeAction.isChecked"/>
