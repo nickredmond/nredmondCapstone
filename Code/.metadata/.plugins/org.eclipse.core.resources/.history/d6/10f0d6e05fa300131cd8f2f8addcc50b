@@ -1,0 +1,5 @@
+package neuralNetwork;
+
+public interface ITrainingProgressHandler {
+	public void progressUpdate(float mse, int iterationsPerformed);
+}

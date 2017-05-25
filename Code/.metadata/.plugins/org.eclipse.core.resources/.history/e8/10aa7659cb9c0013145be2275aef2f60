@@ -1,0 +1,43 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import neuralNetwork.CharacterTrainingExample;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixNeuralNetwork;
+
+public class BasicTreeFinder extends MetaclassTreeFinder {
+
+	public BasicTreeFinder(Set<CharacterTrainingExample> trainingSet,
+			Set<CharacterTrainingExample> testSet, char[] classes) {
+		super(trainingSet, testSet, classes);
+	}
+
+	@Override
+	public MetaclassTree getTree() {
+		FeatureExtractionIOTranslator translator = new FeatureExtractionIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, 2, true);
+		
+		char[][] combinedClasses = getCombinedClasses(classes);
+		
+		
+		return null;
+	}
+	
+	private char[][] getCombinedClasses(char[] currentClasses){
+		int splitIndex = currentClasses.length / 2;
+		char[] leftClasses = new char[splitIndex];
+		char[] rightClasses = new char[currentClasses.length - leftClasses.length];
+		
+		for (int i = 0; i < splitIndex; i++){
+			leftClasses[i] = currentClasses[i];
+		}
+		for (int i = 0; i < rightClasses.length; i++){
+			rightClasses[i] = currentClasses[i + splitIndex];
+		}
+		
+		char[][] combined = {leftClasses, rightClasses};
+		return combined;
+	}
+}

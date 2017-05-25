@@ -1,0 +1,42 @@
+package ui;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+import app.ImageReadMethod;
+
+public class AdvancedOptionsPanel extends JFrame {
+	//JMenu classificationMethods;
+	private JList<JCheckBox> classificationMethods;
+	
+	Map<String, ImageReadMethod> readMethods;
+	
+	public AdvancedOptionsPanel(){
+		initializeReadMethods();
+		setupClassificationOptions();
+		
+		this.getContentPane().add(classificationMethods);
+	}
+	
+	private void setupClassificationOptions() {
+		JCheckBox[] checkBoxes = new JCheckBox[readMethods.size()];
+		
+		int index = 0;
+		for (String nextMethodString : readMethods.keySet()){
+			checkBoxes[index] = new JCheckBox(nextMethodString);
+			index++;
+		}
+		
+		classificationMethods = new JList<JCheckBox>(checkBoxes);
+	}
+
+	private void initializeReadMethods(){
+		readMethods = new HashMap<String, ImageReadMethod>();
+		readMethods.put("Neural Network", ImageReadMethod.NEURAL_NETWORK);
+		readMethods.put("Least Distance", ImageReadMethod.LEAST_DISTANCE);
+	}
+}

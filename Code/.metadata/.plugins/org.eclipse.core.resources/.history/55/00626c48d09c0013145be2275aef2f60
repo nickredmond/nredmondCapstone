@@ -1,0 +1,20 @@
+package decisionTrees;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
+
+public class BasicSplitMetaclassTree implements IMetaclassTree {
+	
+	
+	@Override
+	public TranslationResult readCharacter(BufferedImage image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public MetaclassNode getLeafNode(BufferedImage image){
+		
+	}
+}

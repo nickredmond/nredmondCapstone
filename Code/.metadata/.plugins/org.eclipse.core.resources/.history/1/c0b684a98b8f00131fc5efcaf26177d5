@@ -1,0 +1,21 @@
+package ui;
+
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+public class AdvancedOptionsPanel extends JFrame {
+	//JMenu classificationMethods;
+	private JList<JCheckBox> classificationMethods;
+	private final String[] CLASSIFICATION_OPTIONS = {"Neural Network", "Least Distance"};
+	
+	public AdvancedOptionsPanel(){
+		JCheckBox[] checkBoxes = new JCheckBox[CLASSIFICATION_OPTIONS.length];
+		
+		for (int i = 0; i < CLASSIFICATION_OPTIONS.length; i++){
+			checkBoxes[i] = new JCheckBox(CLASSIFICATION_OPTIONS[i]);
+		}
+		
+		classificationMethods = new JList<JCheckBox>(checkBoxes);
+	}
+}

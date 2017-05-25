@@ -1,0 +1,35 @@
+package threading;
+
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import neuralNetwork.TrainingExample;
+import app.CorrelationHandler;
+
+
+public class CorrelationThreadPool {
+	CorrelationHandler handler;
+	Map<BufferedImage, Integer> mappedImages;
+	
+	public CorrelationThreadPool(CorrelationHandler handler){
+		this.handler = handler;
+		mappedImages = new HashMap<BufferedImage, Integer>();
+	}
+	
+	public void addImage(BufferedImage image, int index){
+		mappedImages.put(image, index);
+	}
+	
+	public void execute(){
+		ExecutorService service = Executors.newFixedThreadPool(threadPoolSize);
+		
+		for (TrainingExample nextExample : trainingSet){
+			Runnable nextTrainingThread = new TrainingExampleThread(network.cloneNetwork(), trainer, nextExample, deltas);
+			service.execute(nextTrainingThread);
+		}
+		service.shutdown();
+	}
+}

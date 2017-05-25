@@ -1,0 +1,7 @@
+package threading;
+
+import java.util.List;
+
+public class DeltaValues {
+	private List<Integer[][]> inputDeltas, hiddenDeltas, outputDeltas;
+}

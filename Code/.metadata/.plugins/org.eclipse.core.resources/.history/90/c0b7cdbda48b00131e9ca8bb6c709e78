@@ -1,0 +1,30 @@
+package app;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class DictionaryFactory {
+	public static final String DICTIONARY_FILEPATH = "dictionary.txt";
+	
+	public static IDictionary getDictionary(){
+		IDictionary dictionary = new TextFileDictionary();
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File(DICTIONARY_FILEPATH)));
+			String nextLine = "";
+			
+			while ((nextLine = reader.readLine()) != null){
+				dictionary.addWord(nextLine);
+			}
+			
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return dictionary;
+	}
+}

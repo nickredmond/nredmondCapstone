@@ -1,0 +1,15 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class NeighboringImageHypothesizer {
+	public static List<BufferedImage> combineImagesThatFormCharacters(List<BufferedImage> line){
+		for (int i = 0; i < line.size() - 1; i++){
+			BufferedImage left = line.get(i);
+			BufferedImage right = line.get(i+1);
+			
+			BufferedImage combined = new BufferedImage(left.getWidth()+right.getWidth(), left.getHeight(), BufferedImage.TYPE_INT_RGB);
+		}
+	}
+}

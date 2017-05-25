@@ -1,0 +1,12 @@
+package ui;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+
+public class AdvancedOptionsPanel extends JFrame {
+	JMenu classificationMethods;
+	
+	public AdvancedOptionsPanel(){
+		
+	}
+}

@@ -1,0 +1,11 @@
+package math;
+
+public class EntropyCalculator {
+	public static float calculateShannonEntropy(String input, int numberClasses){
+		
+	}
+	
+	public static float calculateShannonEntropy(String input){
+		
+	}
+}

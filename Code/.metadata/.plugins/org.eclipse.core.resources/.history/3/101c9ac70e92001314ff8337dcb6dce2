@@ -1,0 +1,10 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class NeighboringImageHypothesizer {
+	public static List<BufferedImage> combineImagesThatFormCharacters(List<BufferedImage> line){
+		
+	}
+}

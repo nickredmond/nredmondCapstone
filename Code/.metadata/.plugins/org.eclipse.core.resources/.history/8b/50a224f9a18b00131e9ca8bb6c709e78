@@ -1,0 +1,15 @@
+package app;
+
+public class SpellChecker {
+	private final int MAX_DISTANCE = 4;
+	
+	public static String correctSpelling(String word){
+		IDictionary dictionary = DictionaryFactory.getDictionary();
+		
+		if (!dictionary.contains(word)){
+			
+		}
+		
+		return null;
+	}
+}

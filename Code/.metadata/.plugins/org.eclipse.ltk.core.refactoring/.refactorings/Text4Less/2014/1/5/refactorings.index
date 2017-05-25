@@ -1,0 +1,24 @@
+1390698780921	Extract method 'ignoreSurroundingPixels'
+1390703140639	Extract method 'traverseToNextPoint'
+1390703156338	Rename local variable 'nextLeftPoint'
+1390712249576	Rename local variable 'value'
+1390845086731	Delete elements
+1390856814870	Rename local variable 't'
+1390863665052	Encapsulate field 'result'
+1390863670388	Encapsulate field 'confidence'
+1390866464488	Rename local variable 'i'
+1390866471001	Rename local variable 'j'
+1390867381459	Move compilation units
+1390867871714	Rename local variable 'i'
+1390934382060	Copy package
+1390934391535	Delete element
+1390934395319	Delete element
+1390936528753	Rename local variable 'inputNum'
+1390937233358	Rename field 'hiddenNeurons'
+1390940909532	Rename local variable 'hiddenZvalues'
+1390940930746	Rename local variable 'i'
+1390941434061	Rename local variable 'i'
+1390942119672	Rename method 'getOutputForInput'
+1390942378436	Rename local variable 'i'
+1390961680730	Rename local variable 'outputDeltas'
+1390962281905	Extract method 'calculateErrorsAndDeltas'

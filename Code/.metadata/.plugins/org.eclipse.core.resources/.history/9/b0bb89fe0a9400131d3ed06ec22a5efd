@@ -1,0 +1,83 @@
+package receptors;
+
+import imageProcessing.ImageBinarizer;
+
+import java.awt.image.BufferedImage;
+
+import debug.FeatureExtractionDebug;
+
+public class ReceptorFilter {
+	
+	public static boolean crossesImage(Receptor receptor, BufferedImage image){
+		boolean crosses = false;
+		
+		float slopeY = receptor.getEndingPoint().Y() - receptor.getStartingPoint().Y();
+		float slopeX = receptor.getEndingPoint().X() - receptor.getStartingPoint().X();
+		
+		float scaleFactor = (slopeX != 0) ? Math.abs(1.0f / slopeX) : Math.abs(1.0f / slopeY);
+		
+		float xTravel = (scaleFactor * slopeX);
+		float yTravel = (scaleFactor * slopeY);
+		
+		int startingX = (int)(receptor.getStartingPoint().X() * image.getWidth());
+		int startingY = (int)(receptor.getStartingPoint().Y() * image.getHeight());
+		
+		if (startingX == image.getWidth())
+			startingX--;
+		if (startingY == image.getHeight())
+			startingY--;
+		
+		int endingX = (int)(receptor.getEndingPoint().X() * image.getWidth());
+		int endingY = (int)(receptor.getEndingPoint().Y() * image.getHeight());
+		
+		if (endingX == image.getWidth())
+			endingX--;
+		if (endingY == image.getHeight())
+			endingY--;
+		
+		int[][] imageValues = ImageBinarizer.convertImageToBinaryValues(image);
+		
+		float currentY = startingY;
+	//	float currentX = startingX;
+		System.out.println("starting: " + startingX + " " + startingY);
+		for (int currentX = startingX; isInBounds(imageValues, currentX, currentY, endingX, endingY, xTravel, yTravel) 
+				&& !crosses; currentX += xTravel){
+			int col = (int)currentX;			
+			
+			System.out.println("col: " + col + " " + (int)currentY);
+			imageValues[(int)currentY][col] = 2;
+			
+			crosses = (imageValues[(int)currentY][col] == 1);
+			
+			float oldY = currentY;
+			currentY += yTravel;
+			
+			boolean isInImage = true;
+			
+			while (Math.abs(currentY - oldY) >= 1 && isInImage){
+				oldY += (yTravel > 0) ? 1 : -1;
+				isInImage = (oldY >= 0 && oldY < imageValues.length);
+				
+				if (isInImage){
+					imageValues[(int)oldY][col] = 1;
+				}
+			}
+		}
+		
+		FeatureExtractionDebug.printImg(imageValues);
+		
+		return crosses;
+	}
+	
+	private static boolean isInBounds(int[][] imageValues, float currentX, float currentY,
+			int endingX, int endingY, float xTravel, float yTravel){
+		int currentYint = (int)currentY;
+		
+		boolean isInImage = ((int)currentX < imageValues[0].length && (int)currentX >= 0 && currentYint < imageValues.length &&
+				currentYint >= 0);
+		boolean isInVectorX = (xTravel > 0) ? (currentX <= endingX) : (currentX >= endingX);
+		boolean isInVectorY = (yTravel > 0) ? (currentY <= endingY) : (currentY >= endingY);
+		
+		return isInImage && isInVectorX && isInVectorY;
+	}
+}

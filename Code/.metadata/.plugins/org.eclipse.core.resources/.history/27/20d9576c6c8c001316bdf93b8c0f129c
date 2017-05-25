@@ -1,0 +1,21 @@
+package app;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class CorrelationHandler implements ICharacterImageHandler {
+	List<TranslationResult> results;
+	
+	public CorrelationHandler(List<TranslationResult> results){
+		this.results = results;
+	}
+	
+	@Override
+	public void handleImage(BufferedImage img) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

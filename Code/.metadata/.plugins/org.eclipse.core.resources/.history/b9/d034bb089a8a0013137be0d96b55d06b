@@ -1,0 +1,25 @@
+package math;
+
+public class GpuNetworkCalculator implements INetworkCalculator {
+	String sigmoidSource = 			 "__kernel void "+
+	        "sigmoidKernel(__global const float *a,"+
+	        "             __global float *c)"+
+	        "{"+
+	        "    c[0] = 1.0f / (1.0f + exp(a[0]));"+
+	        "}";
+	
+
+	@Override
+	public float[] calculateSigmoidValues(float[] zValues) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] calculateErrorValues(float[][] weights,
+			float[] nextLayerError) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

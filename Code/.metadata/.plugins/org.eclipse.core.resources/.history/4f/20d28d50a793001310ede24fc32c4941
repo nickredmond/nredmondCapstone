@@ -1,0 +1,28 @@
+package receptors;
+
+import java.awt.Point;
+
+public class Receptor {
+	private Point startingPoint, endingPoint;
+	
+	public Receptor(Point startingPoint, Point endingPoint){
+		this.startingPoint = startingPoint;
+		this.endingPoint = endingPoint;
+	}
+
+	public Point getStartingPoint() {
+		return startingPoint;
+	}
+
+	public void setStartingPoint(Point startingPoint) {
+		this.startingPoint = startingPoint;
+	}
+
+	public Point getEndingPoint() {
+		return endingPoint;
+	}
+
+	public void setEndingPoint(Point endingPoint) {
+		this.endingPoint = endingPoint;
+	}
+}

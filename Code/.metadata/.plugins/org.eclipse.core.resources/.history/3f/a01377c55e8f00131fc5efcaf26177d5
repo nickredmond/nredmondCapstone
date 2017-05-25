@@ -1,0 +1,14 @@
+package ui;
+
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+public class AdvancedOptionsPanel extends JFrame {
+	//JMenu classificationMethods;
+	private JList classificationMethods;
+	private final String[] CLASSIFICATION_OPTIONS = {"Neural Network", "Least Distance"};
+	
+	public AdvancedOptionsPanel(){
+		
+	}
+}

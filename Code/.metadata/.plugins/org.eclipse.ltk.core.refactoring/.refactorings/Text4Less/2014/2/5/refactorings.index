@@ -1,0 +1,12 @@
+1391233281910	Move compilation unit
+1391233513167	Encapsulate field 'inputDeltas'
+1391233516463	Encapsulate field 'hiddenDeltas'
+1391233519909	Encapsulate field 'outputDeltas'
+1391233635599	Encapsulate field 'inputTotal'
+1391233639602	Encapsulate field 'outputTotal'
+1391233645793	Encapsulate field 'hiddenTotal'
+1391233663851	Encapsulate field 'error'
+1391233680023	Rename field 'error'
+1391292889438	Delete elements
+1391299085864	Rename local variable 'j'
+1391299091907	Rename local variable 'i'

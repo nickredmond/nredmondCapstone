@@ -1,0 +1,9 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+
+public class ImageBinarizer {
+	public static int[][] convertImageToBinaryValues(BufferedImage image){
+		
+	}
+}

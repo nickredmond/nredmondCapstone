@@ -1,0 +1,14 @@
+package ui;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class CustomNetworkWindow extends JFrame {
+	JTextField numberLayersBox, numberNeuronsBox;
+	
+	public CustomNetworkWindow(){
+		JPanel numberLayersPanel = new JPanel();
+		JPanel numberNeuronsPanel = new JPanel();
+	}
+}

@@ -5,12 +5,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class NeuralNetwork implements Serializable {
+public class NeuralNetwork implements Serializable, INeuralNetwork {
 	NetworkLayer inputLayer, outputLayer;
 	List<NetworkLayer> hiddenLayers;
 	private final int FIRST_HIDDEN_LAYER_INDEX = 0;
 	private final float MAX_RANDOM_WEIGHT = 1.0f;
 	private final float ACTIVATION_BOUNDARY = 0.5f;
+	
+	@Override
+	public NeuralNetwork cloneNetwork(){
+		int numInputs = inputLayer.getNeurons().size() - 1;
+		int numHiddenLayers = hiddenLayers.size();
+		int numNeuronsPerHidden = hiddenLayers.get(0).getNeurons().size() - 1;
+		int numberOutputs = outputLayer.getNeurons().size();
+		boolean isRandom = true;
+		
+		return new NeuralNetwork(numInputs, numHiddenLayers, numNeuronsPerHidden,
+				numberOutputs, isRandom);
+	}
 	
 	public NetworkLayer getOutputLayer(){
 		return outputLayer;
@@ -22,6 +34,10 @@ public class NeuralNetwork implements Serializable {
 	
 	public NetworkLayer getInputLayer(){
 		return inputLayer;
+	}
+	
+	public NeuralNetwork(){
+		
 	}
 	
 	public NeuralNetwork(int numberInputs, int numberHiddenLayers,
@@ -162,7 +178,7 @@ public class NeuralNetwork implements Serializable {
 		return normalizedInput;
 	}
 	
-	public float[] getOutputForInput(float[] input){
+	public float[] forwardPropagate(float[] input){
 		List<Neuron> inputNeurons = inputLayer.getNeurons();
 		float[] normalizedInput = new float[inputNeurons.size()];
 		
@@ -224,5 +240,131 @@ public class NeuralNetwork implements Serializable {
 				nextNeuron.setValue(activationValue);
 			}
 		}
+	}
+
+	@Override
+	public float[] getInputValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getInputWeights() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getInputDeltas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] getHiddenValues(int layer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] getHiddenErrors(int layer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getHiddenWeights(int layer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getHiddenDeltas(int layer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] getOutputValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] getOutputErrors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getOutputWeights() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[][] getOutputDeltas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setInputWeight(int i, int j, float value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHiddenWeight(int layer, int i, int j, float value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setOutputWeight(int i, int j, float value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHiddenError(int layer, float[] value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setOutputError(float[] value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setInputDelta(float[][] value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHiddenDelta(int layer, float[][] value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setOutputDelta(float[][] value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getNumberHiddenLayers() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float[] getOutputForInput(float[] input) {
+		// TODO Auto-generated method stub
+		return forwardPropagate(input);
 	}
 }

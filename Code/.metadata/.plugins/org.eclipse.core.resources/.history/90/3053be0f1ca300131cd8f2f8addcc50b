@@ -1,0 +1,9 @@
+package threading;
+
+public class UncaughtExceptionHandler extends ThreadGroup{
+
+	public UncaughtExceptionHandler() {
+		super("UncaughtExceptionHandler");
+	}
+
+}

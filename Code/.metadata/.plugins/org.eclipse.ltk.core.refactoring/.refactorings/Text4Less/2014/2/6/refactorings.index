@@ -1,0 +1,26 @@
+1391300277414	Rename type 'Dictionary'
+1391314327014	Move compilation units
+1391315632648	Rename type 'DictionaryCreator'
+1391315639737	Rename type 'DictionaryCreatorTest'
+1391315644427	Rename type 'DictionaryCreator'
+1391315678021	Move compilation unit
+1391388284874	Rename local variable 'smallestCorrelation'
+1391388494835	Rename type 'TranslationHandlerFactory'
+1391388988871	Rename local variable 'bufferedReader'
+1391482352088	Encapsulate field 'image'
+1391482372976	Encapsulate field 'result'
+1391482419985	Encapsulate field 'translationString'
+1391482588227	Rename enum constant 'TRANSLATION'
+1391482613335	Rename enum constant 'CORRELATION'
+1391482628530	Rename type 'ImageHandlerType'
+1391482709326	Rename type 'CharacterRejection'
+1391484042423	Rename type 'TranslationHandler'
+1391484057993	Rename type 'CorrelationHandler'
+1391484079362	Encapsulate field 'isRejected'
+1391485764855	Rename method 'getResult'
+1391540835381	Rename local variable 'numberCharacters'
+1391585225086	Delete element
+1391585240859	Move compilation units
+1391709191692	Delete element
+1391731678988	Rename type 'AdvancedOptionsPanel'
+1391788226865	Rename local variable 'newImgWidth'

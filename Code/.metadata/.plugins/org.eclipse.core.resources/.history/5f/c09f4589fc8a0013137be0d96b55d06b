@@ -1,0 +1,9 @@
+package threading;
+
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixBackpropTrainer;
+
+public class TrainingExampleThread {
+	private INeuralNetwork network;
+	private MatrixBackpropTrainer trainer;
+}

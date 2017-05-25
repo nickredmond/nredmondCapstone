@@ -1,0 +1,14 @@
+package genetics;
+
+public class RouletteChromosomeChooser implements IChromosomeChooser{
+	@Override
+	public int[] chooseChromosome(Chromosome[] chromosomes) {
+		int totalSlices = 0;
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			totalSlices += (int)(chromosomes[i].)
+		}
+		
+		return null;
+	}
+}

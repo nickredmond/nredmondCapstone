@@ -1,0 +1,32 @@
+package io;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import javax.swing.JOptionPane;
+
+import neuralNetwork.INeuralNetwork;
+import app.UserPreferences;
+
+public class UserPreferencesIO {
+	private static final String FILEPATH = "preferences.t4l";
+	
+	public static UserPreferences readPreferences() {
+		UserPreferences preferences = null;
+		
+		try {
+			FileInputStream inputStream = new FileInputStream(FILEPATH);
+			ObjectInputStream objectInput = new ObjectInputStream(inputStream);
+			preferences = (UserPreferences) objectInput.readObject();
+			
+			objectInput.close();
+			inputStream.close();
+		} catch (IOException | ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Could not load user preferences", "Error", JOptionPane.ERROR_MESSAGE);
+			Logger.logMessage("Error loading user preferences. Message: " + e.getMessage());
+		}
+		
+		return preferences;
+	}
+}

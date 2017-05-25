@@ -1,0 +1,63 @@
+package io;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.List;
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class MnistParser {
+	private static final int NUMBER_TRAINING_IMAGES = 60000;
+	private static final int NUMBER_TEST_IMAGES = 10000;
+	
+	private static final int LABEL_METADATA_BUFFER_SIZE = 8;
+	private static final int IMAGE_METADATA_BUFFER_SIZE = 16;
+	
+	private static final int DATA_BUFFER_SIZE = 1;
+	
+	private static final int LABEL_START = 48;
+	
+	public static Set<CharacterTrainingExample> readImages(String imagesFilepath, String labelsFilepath, int numberImages) throws IOException{
+		List<Character> setLabels = readLabels(numberImages, labelsFilepath);
+		
+		return null;
+	}
+	
+	private static List<Character> readLabels(int numberImages, String labelsFilepath) throws IOException{
+		InputStream labelInput = new FileInputStream(new File(labelsFilepath));
+		
+		byte[] buffer = new byte[LABEL_METADATA_BUFFER_SIZE];
+		
+		int position = labelInput.read(buffer, 0, LABEL_METADATA_BUFFER_SIZE);
+		
+		System.out.println("bytes read: " + position);
+		
+		ByteBuffer b = ByteBuffer.wrap(buffer);
+		
+		
+		
+		int magicNumber = b.asIntBuffer().get();
+		int numberLabels = b.asIntBuffer().get();
+		
+		System.out.println("Magic number: " + magicNumber + ", num: " + numberLabels);
+		
+		return null;
+	}
+	
+	private static int convertByteArrayToInt(byte[] array, int start){
+		final int LENGTH = 4;
+		
+		if (start + LENGTH > array.length){
+			throw new IllegalArgumentException("Starting point is too far for 32-bit integer.");
+		}
+		
+		for (int i = start; i < start + LENGTH; i++){
+			
+		}
+	}
+}

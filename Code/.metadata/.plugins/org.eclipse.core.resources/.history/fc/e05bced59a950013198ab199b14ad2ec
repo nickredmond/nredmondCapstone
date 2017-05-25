@@ -1,0 +1,9 @@
+package ui;
+
+import javax.swing.JPanel;
+
+public class DrawingArea extends JPanel {
+	private final int AREA_HEIGHT = 300;
+	private final int AREA_WIDTH = 300;
+	private int height, width;
+}

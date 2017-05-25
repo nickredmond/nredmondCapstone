@@ -1,0 +1,16 @@
+POPULAR MISCLASSIFICATIONS
+
+*** Here, the arrow (symbolized as "-->") denotes that the character on the left was misclassified as
+	the character(s) on the right n times. For example, the line "C --> c (2)" means that uppercase C was
+	incorrectly classified as lowercase c, and this misclassification happened twice.
+
+C --> c (2)
+D --> o (2)
+I --> T (2)
+M --> H (2)
+Z --> z (2)
+
+i --> I, l (1)
+I --> l    (1)
+j --> i, 1 (1)
+l --> I, 1 (1)

@@ -1,0 +1,36 @@
+package app;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import neuralNetwork.CharacterReader;
+
+public class NeuralNetworkHandler implements ICharacterImageHandler {
+	private final float MIN_CONFIDENCE = 0.93f;
+	private List<TranslationResult> results;
+	private CharacterReader reader;
+	
+	private List<BufferedImage> rejectedImages;
+	
+	public NeuralNetworkHandler(List<TranslationResult> results, CharacterReader reader){
+		this.results = results;
+		this.reader = reader;
+		rejectedImages = new ArrayList<BufferedImage>();
+	}
+	
+	@Override
+	public void handleImage(BufferedImage img) {
+		TranslationResult translation = reader.readCharacter(img);
+		results.add(translation);
+		
+	}
+
+	@Override
+	public List<BufferedImage> getRejectedImages() {
+		return rejectedImages;
+	}
+
+}

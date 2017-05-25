@@ -1,25 +1,28 @@
 package neuralNetwork;
 
-import imageProcessing.INetworkIOTranslator;
-import imageProcessing.NetworkIOTranslator;
+import imageProcessing.TranslationResult;
 
 import java.awt.image.BufferedImage;
 
+import networkIOtranslation.INetworkIOTranslator;
+import app.CharacterResult;
+
 public class CharacterReader {
-	private NeuralNetwork network;
+	private INeuralNetwork network;
 	private INetworkIOTranslator translator;
 	
-	public CharacterReader(NeuralNetwork network, INetworkIOTranslator translator){
+	public CharacterReader(INeuralNetwork network, INetworkIOTranslator translator){
 		this.network = network;
 		this.translator = translator;
 	}
 	
-	public char readCharacter(BufferedImage img){
-		float[] input = translator.translateImageToNetworkInput(img);
-		float[] output = network.getOutputForInput(input);
+	public CharacterResult readCharacter(BufferedImage img){		
+		float[] input = translator.translateImageToNetworkInput(img);	
+		float[] output = network.forwardPropagate(input);
 		
-		char result = translator.translateNetworkOutputToCharacter(output);
+		TranslationResult result = translator.translateNetworkOutputToCharacter(output);
+		CharacterResult charResult = new CharacterResult(img, result);
 		
-		return result;
+		return charResult;
 	}
 }

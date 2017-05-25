@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
+import receptors.Receptor;
+
 public class ReceptorChooser {
 	private static final int WHITE_RGB_VALUE = -20000;
 	private static final float TOLERANCE = 0.02f;

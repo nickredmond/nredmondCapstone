@@ -1,0 +1,35 @@
+package networkIOtranslation;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class ReceptorNetworkIOTranslator implements INetworkIOTranslator {
+	private List<Receptor> receptors;
+	
+	public ReceptorNetworkIOTranslator(List<Receptor> receptors){
+		this.receptors = receptors;
+	}
+	
+	@Override
+	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
+		return new AlphaNumericIOTranslator().translateNetworkOutputToCharacter(output);
+	}
+
+	@Override
+	public int[] translateCharacterToNetworkOutput(char c) {
+		return new AlphaNumericIOTranslator().translateCharacterToNetworkOutput(c);
+	}
+
+	@Override
+	public float[] translateImageToNetworkInput(BufferedImage img) {
+		float[] input = new float[receptors.size()];
+		
+		for (int i = 0; i < input.length; i++){
+			
+		}
+	}
+
+}

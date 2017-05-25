@@ -1,0 +1,11 @@
+package appTest;
+
+import java.awt.image.BufferedImage;
+
+import javax.swing.JPanel;
+
+public class SegmentationPanel extends JPanel {
+	public SegmentationPanel(BufferedImage image, int[] histogramData, int width, int height){
+		
+	}
+}

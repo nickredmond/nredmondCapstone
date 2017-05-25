@@ -1,0 +1,40 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class SplashWindow extends JFrame{
+	JPanel splashPanel;
+	
+	public SplashWindow(){
+		splashPanel = new JPanel();
+		splashPanel.setBackground(Color.blue);
+		splashPanel.setOpaque(false);
+		splashPanel.add(new JLabel("Test This"));
+		
+		this.setLocationRelativeTo(null);
+		this.setUndecorated(true);
+		this.setSize(new Dimension(1000, 800));
+		
+		this.setVisible(true);
+	}
+	
+	@Override
+	public void paint(Graphics g){
+		try {
+			Image img = ImageIO.read(new File("C:/Users/nredmond/Documents/Capstone/splashTest.png"));
+			g.drawImage(img, 0, 0, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

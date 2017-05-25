@@ -1,0 +1,26 @@
+package networkIOtranslation;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+
+public class AlphaNumericIOTranslator implements INetworkIOTranslator{
+
+	@Override
+	public TranslationResult translateNetworkOutputToCharacter(float[] output) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] translateCharacterToNetworkOutput(char c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] translateImageToNetworkInput(BufferedImage img) {
+		return new FeatureExtractionIOTranslator().translateImageToNetworkInput(img);
+	}
+
+}

@@ -1,0 +1,16 @@
+package decisionTrees;
+
+import java.util.Set;
+
+import neuralNetwork.CharacterTrainingExample;
+
+public class OptimalTreeFinder {
+	private Set<CharacterTrainingExample> trainingSet, testSet;
+	private float minRequiredFitness;
+	
+	private final float DEFAULT_REQUIRED_FITNESS = 0.1f;
+	
+	public OptimalTreeFinder(Set<CharacterTrainingExample> trainingSet, Set<CharacterTrainingExample> testSet){
+		
+	}
+}

@@ -1,0 +1,28 @@
+package app;
+
+public class AlphaNumericCharacterConverter implements ICharacterConverter {
+	private final int UPPER_START = 65;
+	private final int UPPER_END = 90;
+	private final int LOWER_START = 97;
+	private final int LOWER_END = 122;
+	private final int NUMERIC_START = 48;
+	private final int NUMERIC_END = 57;
+	
+	public int convertCharacterToClassNumber(char character) throws Exception{
+		int asciiValue = (int)character;
+		int classNumber = 0;
+		
+		if (asciiValue >= UPPER_START && asciiValue <= UPPER_END){
+			classNumber = asciiValue - UPPER_START;
+		}
+		else if (asciiValue >= LOWER_START && asciiValue <= LOWER_END){
+			classNumber = asciiValue - LOWER_START + (UPPER_END - UPPER_START + 1);
+		}
+		else if (asciiValue >= NUMERIC_START && asciiValue <= NUMERIC_END){
+			classNumber = asciiValue - NUMERIC_START + (UPPER_END - UPPER_START + 1) + (LOWER_END - LOWER_START + 1);
+		}
+		else throw new Exception("Character cannot be converted to class (not supported character)");
+		
+		return classNumber;
+	}
+}

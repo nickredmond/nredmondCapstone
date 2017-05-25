@@ -1,0 +1,12 @@
+package appTest;
+
+import networkIOtranslation.FeatureExtractionIOTranslator;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.MatrixNeuralNetwork;
+
+public class NNclassificationLogic {
+	public static void testLogic(){
+		FeatureExtractionIOTranslator translator = new FeatureExtractionIOTranslator();
+		INeuralNetwork network = new MatrixNeuralNetwork(translator.getInputLength(), 1, 100, 2, true);
+	}
+}

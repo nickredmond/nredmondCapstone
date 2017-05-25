@@ -1,0 +1,28 @@
+package ui;
+
+public class MainWindow {
+	
+	public void advancedOptionsSaveChangesClicked(){
+		
+	}
+	
+	public void imageLoaded(){
+		
+	}
+	
+	public void imageLoadFailed(){
+		
+	}
+	
+	public void advancedOptionsClicked(){
+		
+	}
+	
+	public void loadImageClicked(){
+		
+	}
+	
+	public void translateClicked(){
+		
+	}
+}

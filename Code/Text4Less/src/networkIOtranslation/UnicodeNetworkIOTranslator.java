@@ -1,0 +1,63 @@
+package networkIOtranslation;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+
+public class UnicodeNetworkIOTranslator implements INetworkIOTranslator {
+	private final int NUMBER_UNICODE_VALUES = 128;
+	
+	@Override
+	public TranslationResult translateNetworkOutputToCharacter(float[] output){
+		int maxValueIndex = 0;
+		float maxValue = 0.0f;
+		
+		for (int i = 0; i < output.length; i++){
+			if (output[i] > maxValue){
+				maxValueIndex = i;
+				maxValue = output[i];
+			}
+		}
+		
+		int[] normalizedOutput = new int[output.length];
+		normalizedOutput[maxValueIndex] = 1;
+		
+		char resultChar = translateNetworkOutputToCharacter(normalizedOutput);
+		float confidence = 0.0f; // UHHHH...
+		return new TranslationResult(resultChar, confidence);
+	}
+	
+	private char translateNetworkOutputToCharacter(int[] output) {
+		int unicodeValue = 0;
+		boolean foundValue = false;
+		
+		for (int i = 0; i < output.length && !foundValue; i++){
+			if(output[i] == 1){
+				foundValue = true;
+				unicodeValue = i;
+			}
+		}
+		
+		return (char)unicodeValue;
+	}
+
+	@Override
+	public int[] translateCharacterToNetworkOutput(char c) {
+		int[] result = new int[NUMBER_UNICODE_VALUES];
+		int characterUnicodeValue = (int)c;
+		result[characterUnicodeValue] = 1;
+		
+		return result;
+	}
+
+	@Override
+	public float[] translateImageToNetworkInput(BufferedImage img) {
+		return new NetworkIOTranslator().translateImageToNetworkInput(img);
+	}
+
+	@Override
+	public int getInputLength() {
+		return new NetworkIOTranslator().getInputLength();
+	}
+	
+}

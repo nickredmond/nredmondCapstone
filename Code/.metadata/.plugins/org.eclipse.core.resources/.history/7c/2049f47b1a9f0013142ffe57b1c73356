@@ -1,0 +1,22 @@
+package app;
+
+import java.io.File;
+import java.util.List;
+
+import neuralNetwork.INeuralNetwork;
+
+public class DirectoryReader {
+	
+	
+	public static void setNetwork(INeuralNetwork network){
+		InputReader.setNetwork(network);
+	}
+	
+	public static List<String> readDirectoryImages(File directory){
+		File[] files = directory.listFiles();
+		
+		for (File nextFile : files){
+			
+		}
+	}
+}

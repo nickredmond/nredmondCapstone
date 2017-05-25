@@ -1,0 +1,5 @@
+package receptors;
+
+public class FloatPoint {
+
+}

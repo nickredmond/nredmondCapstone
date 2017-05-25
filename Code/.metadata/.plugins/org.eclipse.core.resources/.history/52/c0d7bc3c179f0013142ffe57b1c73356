@@ -1,0 +1,16 @@
+package ui;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class FolderTranslationWindow extends JFrame {
+	private JButton chooseFolderButton, translateButton, saveButton;
+	private JLabel selectedFolderLabel;
+	
+	private SpellCheckPanel spellCheckPanel;
+	
+	public FolderTranslationWindow(){
+		
+	}
+}

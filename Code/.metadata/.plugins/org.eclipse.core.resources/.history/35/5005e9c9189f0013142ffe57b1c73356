@@ -1,0 +1,86 @@
+package ui;
+
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import ui.ResultPanel.ButtonListener;
+
+public class FolderTranslationWindow extends JFrame {
+	private JButton chooseFolderButton, translateButton, saveButton;
+	private JLabel selectedFolderLabel;
+	
+	private SpellCheckPanel spellCheckPanel;
+	private File selectedFolder;
+	
+	private JTextArea textArea;
+	
+	public FolderTranslationWindow(){
+		setupDisplay();
+	}
+
+	private void setupDisplay() {
+		ButtonListener listener = new ButtonListener();		
+		Container contentPane = this.getContentPane();
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+	}
+	
+	private void setupSpellCheckPanel(Container contentPane){
+		spellCheckPanel = new SpellCheckPanel();
+		contentPane.add(spellCheckPanel);
+	}
+	
+	private void setupResultPanel(ButtonListener listener, Container contentPane){
+		JPanel resultPanel = new JPanel();
+		resultPanel.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		JLabel title = new JLabel("RESULTS:");
+		
+		textArea = new JTextArea();
+		textArea.setEnabled(false);
+		textArea.setLineWrap(true);
+		JScrollPane resultArea = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		saveButton = new JButton("Save as MS Word Doc");
+		saveButton.setEnabled(false);
+		saveButton.addActionListener(listener);
+		
+		resultPanel.add(title);
+		resultPanel.add(resultArea);
+		resultPanel.add(saveButton);
+		
+		contentPane.add(resultPanel);
+	}
+	
+	private void setupFolderSelectionPanel(ButtonListener listener, Container contentPane){
+		JPanel chooseFolderPanel = new JPanel();
+		chooseFolderPanel.setLayout(new BoxLayout(chooseFolderPanel, BoxLayout.X_AXIS));
+		chooseFolderPanel.add(new JLabel("Selected Folder: "));
+		
+		selectedFolderLabel = new JLabel("(None selected)");
+		chooseFolderPanel.add(selectedFolderLabel);
+		
+		chooseFolderButton = new JButton("Choose Folder");
+		chooseFolderButton.addActionListener(listener);
+		chooseFolderButton.add(chooseFolderButton);
+		
+		contentPane.add(chooseFolderPanel);
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+}

@@ -1,0 +1,31 @@
+package app;
+
+import imageProcessing.TranslationResult;
+
+import java.awt.image.BufferedImage;
+
+public class CharacterRejection {
+	private BufferedImage image;
+	private TranslationResult result;
+	
+	public CharacterRejection(BufferedImage img, TranslationResult result){
+		setImage(img);
+		this.setResult(result);
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	public TranslationResult getResult() {
+		return result;
+	}
+
+	public void setResult(TranslationResult result) {
+		this.result = result;
+	}
+}

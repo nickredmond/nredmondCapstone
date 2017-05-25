@@ -1,0 +1,27 @@
+package app;
+
+public class SpellChecker {
+	private static final int MAX_DISTANCE = 4;
+	
+	public static String correctSpelling(String word){
+		IDictionary dictionary = DictionaryFactory.getDictionary();
+		String closestMatch = word;
+		
+		if (!dictionary.contains(word)){
+			int smallestDistance = -1;
+			
+			for (String nextWord : dictionary.getWords()){
+				if (Math.abs(nextWord.length() - word.length()) <= MAX_DISTANCE){
+					int editDistance = EditDistanceCalculator.calculateLevenshteinDistance(word, nextWord, false);
+					
+					if (editDistance < smallestDistance || smallestDistance < 0){
+						smallestDistance = editDistance;
+						closestMatch = nextWord;
+					}
+				}
+			}
+		}
+		
+		return closestMatch;
+	}
+}

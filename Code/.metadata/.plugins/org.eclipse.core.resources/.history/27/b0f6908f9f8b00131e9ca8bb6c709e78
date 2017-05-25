@@ -1,0 +1,8 @@
+package app;
+
+public interface IDictionary {
+	public void addWord();
+	public void removeWord();
+	public boolean contains(String word);
+	public void save();
+}

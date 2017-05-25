@@ -1,0 +1,46 @@
+package ui;
+
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
+
+import app.UserPreferences;
+
+public class MenuWindow extends JFrame {
+	private final int DEFAULT_HEIGHT = 750;
+	private final int DEFAULT_WIDTH = 875;
+	
+	private UserPreferences preferences;
+	
+	public MenuWindow(UserPreferences preferences){
+		this.preferences = preferences;
+		setupWindow();
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	}
+
+	private void setupWindow() {
+		ImageTranslationTab imgTab = new ImageTranslationTab();
+		imgTab.setUserPreferences(preferences);
+		
+		JTabbedPane pane = new JTabbedPane();
+		pane.setFont(HomeWindow.DEFAULT_LABEL_FONT);
+		pane.addTab("Image Translation", imgTab);
+		pane.addTab("Folder Translation", new FolderTranslationTab());
+		pane.addTab("Neural Network Training", new CustomNetworkTab());
+		pane.addTab("Handwritten Characters", new DigitalDrawingTab());
+		
+		this.getContentPane().add(pane);
+	}
+	
+	@Override
+	public void setVisible(boolean visible){
+		super.setVisible(visible);
+		
+		if (preferences.isAccuracyPromptEnabled()){
+			
+		}
+	}
+}

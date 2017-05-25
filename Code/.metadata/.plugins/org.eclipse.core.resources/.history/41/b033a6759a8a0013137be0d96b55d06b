@@ -1,0 +1,27 @@
+package math;
+
+public class GpuNetworkCalculator implements INetworkCalculator {
+	private static final String SIGMOID_SOURCE = "__kernel void "+
+	        "sigmoidKernel(__global const float *a,"+
+	        "             __global float *c)"+
+	        "{"+
+	        "    c[0] = 1.0f / (1.0f + exp(a[0]));"+
+	        "}";
+	private static final String ERROR_SOURCE = "__kernel void"+
+	        "errorKernel(__global const float *weightValues,"+
+			"			 __global c"
+
+	@Override
+	public float[] calculateSigmoidValues(float[] zValues) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float[] calculateErrorValues(float[][] weights,
+			float[] nextLayerError) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

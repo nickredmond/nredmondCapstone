@@ -1,0 +1,13 @@
+package app;
+
+public class TranslationHandler implements ICharacterImageHandler {
+
+	public 
+	
+	@Override
+	public void handleImage(BufferedImage img) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

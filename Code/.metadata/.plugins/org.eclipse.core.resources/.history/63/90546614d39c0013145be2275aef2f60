@@ -1,0 +1,7 @@
+package imageHandling;
+
+public class DecisionTreeHandler implements ICharacterImageHandler{
+	private final String DECISION_TREE_NAME = "treeTest";
+	
+	
+}

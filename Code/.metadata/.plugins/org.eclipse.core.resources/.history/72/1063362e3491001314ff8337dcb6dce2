@@ -1,0 +1,15 @@
+package ui;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
+public class CustomNetworkWindow extends JFrame {
+	public CustomNetworkWindow(){
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fc.showOpenDialog(this);
+		
+		this.pack();
+		this.setVisible(true);
+	}
+}

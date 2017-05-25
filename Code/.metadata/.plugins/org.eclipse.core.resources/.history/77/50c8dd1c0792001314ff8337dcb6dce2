@@ -1,0 +1,11 @@
+package appTest;
+
+import javax.swing.JPanel;
+
+public class SegmentationHistogramPanel extends JPanel {
+	private int width;
+	
+	public SegmentationHistogramPanel(){
+		
+	}
+}

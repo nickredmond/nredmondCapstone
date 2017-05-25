@@ -1,0 +1,8 @@
+package decisionTrees;
+
+import neuralNetwork.INeuralNetwork;
+
+public class MetaclassNode {
+	private char[] classes;
+	private INeuralNetwork network;
+}

@@ -1,0 +1,19 @@
+package app;
+
+import java.util.List;
+
+public class Dictionary implements TextFileDictionary {
+	private List<String> words;
+	
+	public boolean contains(String word){
+		return words.contains(word);
+	}
+	
+	public void addWord(String word){
+		words.add(word);
+	}
+	
+	public void removeWord(String word){
+		words.remove(word);
+	}
+}

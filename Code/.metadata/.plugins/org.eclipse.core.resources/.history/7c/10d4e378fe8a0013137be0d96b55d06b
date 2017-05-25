@@ -1,0 +1,25 @@
+package threading;
+
+import neuralNetwork.INetworkTrainer;
+import neuralNetwork.INeuralNetwork;
+import neuralNetwork.TrainingExample;
+
+public class TrainingExampleThread implements Runnable {
+	private INeuralNetwork network;
+	private INetworkTrainer trainer;
+	private TrainingExample example;
+	private Float errorSum;
+	
+	public TrainingExampleThread(INeuralNetwork network, INetworkTrainer trainer, 
+			TrainingExample example, Float errorSum){
+		this.network = network;
+		this.trainer = trainer;
+		this.example = example;
+		this.errorSum = errorSum;
+	}
+	
+	@Override
+	public void run() {
+		errorSum += trainer.calculateErrorsAndDeltas(network, example);
+	}
+}

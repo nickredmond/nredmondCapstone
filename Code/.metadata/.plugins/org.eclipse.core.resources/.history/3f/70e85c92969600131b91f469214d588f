@@ -1,0 +1,156 @@
+package ui;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.BoxLayout;
+import javax.swing.InputVerifier;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import app.AlphaNumericCharacterConverter;
+
+public class SaveImageWindow extends JFrame{
+	private JLabel selectedFolderLabel;
+	private JButton chooseFolderButton, saveButton, newSetButton, saveSetButton;
+	private JTextField characterTextField, newSetField;
+	private JPanel addFolderPanel, setFolderPanel;
+	
+	private File selectedFolder;
+	private DrawingPanel panel;
+	
+	public SaveImageWindow(DrawingPanel panel){
+		this.panel = panel;
+		setupWindow();
+		this.pack();
+		this.setVisible(true);
+	}
+
+	private void setupWindow() {
+		setFolderPanel = new JPanel();
+		setFolderPanel.setLayout(new BoxLayout(setFolderPanel, BoxLayout.Y_AXIS));
+		
+		JPanel selectedFolderPanel = new JPanel();
+		selectedFolderLabel = new JLabel("Selected Training Set: ---");
+		chooseFolderButton = new JButton("Choose Folder...");
+		chooseFolderButton.addActionListener(new ButtonListener());
+		newSetButton = new JButton("New Folder");
+		newSetButton.addActionListener(new ButtonListener());
+		
+		selectedFolderPanel.setLayout(new BoxLayout(selectedFolderPanel, BoxLayout.X_AXIS));
+		selectedFolderPanel.add(selectedFolderLabel);
+		selectedFolderPanel.add(chooseFolderButton);
+		selectedFolderPanel.add(newSetButton);
+		setFolderPanel.add(selectedFolderPanel);
+		
+		setupAddFolderPanel();
+		setFolderPanel.add(addFolderPanel);
+		addFolderPanel.setVisible(false);
+		
+		JPanel characterSelectionPanel = new JPanel();
+		JLabel charLabel = new JLabel("Enter character:");
+		characterTextField = new JTextField(1);
+		characterTextField.setInputVerifier(new InputVerifier(){
+			@Override
+			public boolean verify(JComponent input) {
+				JTextField field = (JTextField)input;
+				return (field.getText().length() <= 1);
+			}
+		});
+		
+		characterSelectionPanel.setLayout(new BoxLayout(characterSelectionPanel, BoxLayout.X_AXIS));
+		characterSelectionPanel.add(charLabel);
+		characterSelectionPanel.add(characterTextField);
+		
+		JLabel infoLabel = new JLabel("Which character should this be recognized as? (Alphanumeric characters only)");
+		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ButtonListener());
+		
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.getContentPane().add(setFolderPanel);
+		this.getContentPane().add(infoLabel);
+		this.getContentPane().add(characterSelectionPanel);
+		this.getContentPane().add(saveButton);
+	}
+	
+	private void setupAddFolderPanel() {
+		addFolderPanel = new JPanel();
+		newSetField = new JTextField();
+		saveSetButton = new JButton("Create Training Set (Adds new folder)");
+		saveSetButton.addActionListener(new ButtonListener());
+		
+		addFolderPanel.setLayout(new BoxLayout(addFolderPanel, BoxLayout.X_AXIS));
+		addFolderPanel.add(newSetField);
+		addFolderPanel.add(saveSetButton);
+	}
+
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == chooseFolderButton){
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setCurrentDirectory(new File("C:\\Users\\nredmond\\Workspaces\\CapstoneNickRedmond\\Code\\Text4Less\\trainingImages"));
+				
+				int result = chooser.showOpenDialog(SaveImageWindow.this);
+				
+				if (result == JFileChooser.APPROVE_OPTION){
+					selectedFolder = chooser.getSelectedFile();
+					selectedFolderLabel.setText("Selected Training Set: " + selectedFolder.getName());
+				}
+			}
+			else if (evt.getSource() == saveButton){
+				if (selectedFolder != null){
+					String selectedChar = characterTextField.getText();
+					
+					if (selectedChar.length() == 1 && isValidCharacter(selectedChar.charAt(0))){
+						char character = selectedChar.charAt(0);
+						String filename = TrainingDataNameAssigner.assignName(selectedFolder, character);
+						File imageFile = new File(selectedFolder.getAbsoluteFile() + "/" + filename);
+						panel.imageSaved(imageFile);
+						SaveImageWindow.this.dispose();
+					}
+					else JOptionPane.showMessageDialog(SaveImageWindow.this, 
+							"Must enter a valid character (A-Z, a-z, or 0-9 only).", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+				}
+				else JOptionPane.showMessageDialog(SaveImageWindow.this, 
+						"Must select a destination folder for the image.", "No Folder Selected", JOptionPane.ERROR_MESSAGE);
+			}
+			else if (evt.getSource() == newSetButton){
+				addFolderPanel.setVisible(true);
+				repaint();
+			}
+			else if (evt.getSource() == saveSetButton){
+				String folderName = newSetField.getText();
+				
+				if (folderName.length() > 0 && !folderName.contains(".")){
+					File trainingDataDir = new File("C:/Users/nredmond/Workspaces/CapstoneNickRedmond/Code/Text4Less/trainingImages/" + folderName);
+					boolean success = trainingDataDir.mkdir();
+					
+					addFolderPanel.setVisible(false);
+					repaint();
+					
+					if (!success){
+						JOptionPane.showMessageDialog(SaveImageWindow.this, "Could not create the specified folder.", "Unknown Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else JOptionPane.showMessageDialog(SaveImageWindow.this, "Training set name is invalid.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+
+		private boolean isValidCharacter(char character) {
+			int charValue = (int)character;
+			return ((charValue >= AlphaNumericCharacterConverter.UPPER_START && charValue <= AlphaNumericCharacterConverter.UPPER_END) ||
+					(charValue >= AlphaNumericCharacterConverter.LOWER_START && charValue <= AlphaNumericCharacterConverter.LOWER_END) ||
+					(charValue >= AlphaNumericCharacterConverter.NUMERIC_START && charValue <= AlphaNumericCharacterConverter.NUMERIC_END));
+		}
+	}
+}

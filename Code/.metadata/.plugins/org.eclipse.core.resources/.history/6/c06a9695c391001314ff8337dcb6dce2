@@ -1,0 +1,36 @@
+package ui;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class LoadingScreen extends JFrame implements Runnable {
+	private String text;
+	private int maxNumberDots, currentDotNumber;
+	private boolean isRunning;
+	
+	private JLabel screenTextLabel;
+	
+	private final int DEFAULT_MAX_DOTS = 5;
+	
+	public LoadingScreen(String message){
+		maxNumberDots = DEFAULT_MAX_DOTS;
+		currentDotNumber = 0;
+		
+		screenTextLabel = new JLabel();
+		
+		text = message;
+		isRunning = true;
+		this.run();
+	}
+	
+	public void closeScreen(){
+		
+	}
+
+	@Override
+	public void run() {
+		while (isRunning){
+			
+		}
+	}
+}

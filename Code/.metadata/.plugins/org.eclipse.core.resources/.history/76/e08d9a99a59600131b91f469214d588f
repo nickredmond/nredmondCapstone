@@ -1,0 +1,37 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import neuralNetwork.INeuralNetwork;
+
+public class CharacterRecognitionPanel extends JPanel implements INetworkSelectionHandler{
+	private INeuralNetwork selectedNetwork;
+	private NetworkSelectionPanel networkPanel;
+	private JButton recognizeButton;
+	
+	public CharacterRecognitionPanel(){
+		
+	}
+	
+	private void setupPanel(){
+		networkPanel = new NetworkSelectionPanel(this);
+	}
+	
+	@Override
+	public void networkSelected(String networkName, INeuralNetwork network) {
+		selectedNetwork = network;
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == recognizeButton){
+				
+			}
+		}
+	}
+}

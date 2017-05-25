@@ -1,0 +1,75 @@
+package genetics;
+
+public class TestFitnessCalculator implements IFitnessCalculator {
+	private int desiredOutputValue;
+	
+	public TestFitnessCalculator(int desired){
+		desiredOutputValue = desired;
+	}
+	
+	@Override
+	public float getFitness(int[] chromosome) {		
+		if (chromosome.length % 4 != 0){
+			throw new IllegalArgumentException("Chromosome length must be divisible by 4");
+		}
+		
+		int value = getValueFor(chromosome);
+		
+		float fitness = 1.0f;
+		int difference = Math.abs(desiredOutputValue - value); 
+		
+		if (difference > 0){
+			fitness = 1.0f / difference;
+		}
+		
+		return fitness;
+	}
+	
+	public int getValueFor(int[] chromosome){
+		int numberValues = chromosome.length / 4;
+		
+		boolean isValue = true;
+		int finalValue = 0;
+		boolean isAdding = false;
+		boolean isPreviousOperator = false;
+		
+		for (int i = 0; i < numberValues; i++){
+			int startingIndex = i * 4;
+			int geneValue = convertFromBinary(chromosome, startingIndex, 4);
+			
+			if (geneValue <= 12){
+				if (isValue && geneValue < 10){
+					if (i > 0){
+						finalValue = finalValue + (isAdding ? geneValue : (-1 * geneValue));
+					}
+					else finalValue += geneValue;
+				}
+				else if (!isValue && geneValue == 10 && !isPreviousOperator){
+					isPreviousOperator = true;
+					isAdding = true;
+				}
+				else if (!isValue && geneValue == 11 && !isPreviousOperator){
+					isPreviousOperator = true;
+					isAdding = false;
+				}
+			}
+			
+			isValue = !isValue;
+		}
+		
+		return finalValue;
+	}
+	
+	private int convertFromBinary(int[] chromosome, int startingIndex, int length){	
+		int value = 0;
+		
+		for (int i = startingIndex; i < (startingIndex + length); i++){
+			int currentBitValue = (int) Math.pow(2, length - (i - startingIndex) - 1);
+			if (chromosome[i] == 1){
+				value += currentBitValue;
+			}
+		}
+		
+		return value;
+	}
+}

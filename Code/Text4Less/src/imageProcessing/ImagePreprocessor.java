@@ -1,8 +1,12 @@
 package imageProcessing;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 public class ImagePreprocessor {
 	private final float WHITESPACE_MARGIN = 0.0002f;
@@ -23,6 +27,35 @@ public class ImagePreprocessor {
 		return fullCrop;
 	}
 	
+	// TEST METHOD //
+	public void doStuff(BufferedImage image) throws IOException{
+		BufferedImage topBottom = trimMargins(image);
+		List<BufferedImage> lines = splitIntoLines(topBottom);
+		ImageIO.write(lines.get(0), "jpg", new File("trainingImages/unformatted/before.jpg"));
+		BufferedImage firstLine = lines.get(0);
+		
+		BufferedImage yes = trimMargins(firstLine);
+		ImageIO.write(yes, "jpg", new File("trainingImages/unformatted/after.jpg"));
+	}
+	
+	public int getLineHeight(BufferedImage line) throws IOException{
+		BufferedImage trimmedLine = trimMargins(line);
+		return trimmedLine.getHeight();
+	}
+	
+	public int getFontSize(BufferedImage image) throws IOException{
+		BufferedImage trimmedImage = trimMargins(image);
+		List<BufferedImage> lines = splitIntoLines(trimmedImage);
+		
+		int totalHeight = 0;
+		
+		for (BufferedImage nextLine : lines){
+		totalHeight += getLineHeight(nextLine);
+		}
+		
+		return (int)((float)totalHeight /lines.size());
+	}
+	
 	private BufferedImage trimTopBottomMargins(BufferedImage original){
 		RgbLimitSet rowLimits = 
 				getRgbValueLimits(RgbValueReader.ROW_VALUE_READER, original, original.getHeight());
@@ -30,12 +63,18 @@ public class ImagePreprocessor {
 		
 		maxRowWhitespaceValue = maxWhitespaceRowValue;
 		
-		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.ROW_VALUE_READER, 
+		ValueRange cropValues = getCropValueSet(original, RgbValueReader.ROW_VALUE_READER, 
 				original.getHeight(), maxWhitespaceRowValue);
 		
-		int cropHeight = cropValues.getEndValue() - cropValues.getStartValue();
-		BufferedImage trimmedImg = original.getSubimage(0, cropValues.getStartValue() - CROP_PIXEL_BUFFER, 
-				original.getWidth(), cropHeight + CROP_PIXEL_BUFFER);
+		int endValue = (cropValues.getEndValue() < original.getHeight()) ? cropValues.getEndValue() : original.getHeight() - 1;
+		
+		int cropHeight = endValue - cropValues.getStartValue();
+		int paddedCropHeight = (cropHeight + CROP_PIXEL_BUFFER < original.getHeight()) ? cropHeight + CROP_PIXEL_BUFFER : cropHeight;
+		int paddedCropY = (cropValues.getStartValue() - CROP_PIXEL_BUFFER >= 0) ? 
+				cropValues.getStartValue() - CROP_PIXEL_BUFFER : cropValues.getStartValue();
+		
+		BufferedImage trimmedImg = original.getSubimage(0, paddedCropY, 
+				original.getWidth(), paddedCropHeight);
 		
 		return trimmedImg;
 	}
@@ -45,17 +84,23 @@ public class ImagePreprocessor {
 				getRgbValueLimits(RgbValueReader.COLUMN_VALUE_READER, original, original.getWidth());
 		long maxWhitespaceColValue = 
 				(long) (colLimits.getLowestRgbValue() + (WHITESPACE_MARGIN * colLimits.getRgbRange()));		
-		CropValueSet cropValues = getCropValueSet(original, RgbValueReader.COLUMN_VALUE_READER,
+		ValueRange cropValues = getCropValueSet(original, RgbValueReader.COLUMN_VALUE_READER,
 				original.getWidth(), maxWhitespaceColValue);
 		
-		int cropWidth = cropValues.getEndValue() - cropValues.getStartValue();
-		BufferedImage trimmedImg = original.getSubimage(cropValues.getStartValue() - CROP_PIXEL_BUFFER, 0, 
-				cropWidth + CROP_PIXEL_BUFFER, original.getHeight());
+		int endValue = (cropValues.getEndValue() < original.getWidth()) ? cropValues.getEndValue() : original.getWidth() - 1;
+		
+		int cropWidth = endValue - cropValues.getStartValue();
+		int paddedCropWidth = ((cropWidth + CROP_PIXEL_BUFFER < original.getWidth()) ? cropWidth + CROP_PIXEL_BUFFER : cropWidth);
+		int paddedCropX = (cropValues.getStartValue() - CROP_PIXEL_BUFFER >= 0) ?
+				cropValues.getStartValue() - CROP_PIXEL_BUFFER : cropValues.getStartValue();
+		;
+		BufferedImage trimmedImg = original.getSubimage(paddedCropX, 0, 
+			paddedCropWidth, original.getHeight());
 		
 		return trimmedImg;
 	}
 	
-	private CropValueSet getCropValueSet(BufferedImage original, RgbValueReader reader,
+	private ValueRange getCropValueSet(BufferedImage original, RgbValueReader reader,
 			int maxPosition, long maxWhitespaceValue){
 		int startValue = 0;
 		int endValue = 0;
@@ -76,7 +121,7 @@ public class ImagePreprocessor {
 			}
 		}
 		
-		return new CropValueSet(startValue, endValue);
+		return new ValueRange(startValue, endValue + 5);
 	}
 	
 	private RgbLimitSet getRgbValueLimits(RgbValueReader reader, BufferedImage img, int maxPosition){
@@ -99,7 +144,7 @@ public class ImagePreprocessor {
 	
 	
 	public List<BufferedImage> splitIntoLines(BufferedImage document){
-		List<CropValueSet> lineValues = new LinkedList<CropValueSet>();
+		List<ValueRange> lineValues = new LinkedList<ValueRange>();
 		RgbValueReader reader = RgbValueReader.ROW_VALUE_READER;
 		boolean isInLine = false;
 		
@@ -115,17 +160,19 @@ public class ImagePreprocessor {
 			}
 			else if (isInLine && nextRgbValue <= maxRowWhitespaceValue){
 				nextEndValue = row;
-				CropValueSet nextLineValues = new CropValueSet(nextStartValue - SPLIT_PIXEL_BUFFER, 
-						nextEndValue + SPLIT_PIXEL_BUFFER);
+				
+				int cropStart = (nextStartValue - SPLIT_PIXEL_BUFFER >= 0) ? nextStartValue - SPLIT_PIXEL_BUFFER : 0;
+				int cropEnd = (nextEndValue + SPLIT_PIXEL_BUFFER < document.getHeight()) ? nextEndValue + SPLIT_PIXEL_BUFFER : document.getHeight() - 1;
+				
+				ValueRange nextLineValues = new ValueRange(cropStart, 
+						cropEnd);
 				lineValues.add(nextLineValues);
 				isInLine = false;
 			}
 		}
 		
-		if (isInLine = true){
-			CropValueSet nextLineValues = new CropValueSet(nextStartValue - SPLIT_PIXEL_BUFFER, 
-					document.getHeight() - 1);
-			lineValues.add(nextLineValues);
+		if (lineValues.size() == 0){
+			lineValues.add(new ValueRange(0, document.getHeight()));
 		}
 		
 		List<BufferedImage> croppedImages = convertCropValuesToImages(lineValues, document,
@@ -140,10 +187,10 @@ public class ImagePreprocessor {
 	}
 	
 	private List<BufferedImage> convertCropValuesToImages(
-			List<CropValueSet> lineValues, BufferedImage image, ImageCropper cropper) {
+			List<ValueRange> lineValues, BufferedImage image, ImageCropper cropper) {
 		List<BufferedImage> croppedImages = new LinkedList<BufferedImage>();
 		
-		for (CropValueSet nextSet : lineValues){
+		for (ValueRange nextSet : lineValues){
 			int valueDifference = nextSet.getEndValue() - nextSet.getStartValue();
 			
 			BufferedImage nextCroppedImage = cropper.cropWithValues(nextSet.getStartValue(), 
@@ -158,7 +205,7 @@ public class ImagePreprocessor {
 	
 	
 	public List<BufferedImage> splitIntoCharacters(BufferedImage line){
-		List<CropValueSet> characters = new LinkedList<CropValueSet>();
+		List<ValueRange> characters = new LinkedList<ValueRange>();
 		RgbValueReader reader = RgbValueReader.COLUMN_VALUE_READER;
 		int startValue = 0;
 		boolean reachedCharacter = false;
@@ -175,7 +222,7 @@ public class ImagePreprocessor {
 			long rgbValue = reader.readRgbValue(line, col);
 			
 			if (rgbValue <= maxWhitespaceColValue && reachedCharacter){				
-				CropValueSet nextSet = new CropValueSet(startValue, col);
+				ValueRange nextSet = new ValueRange(startValue, col);
 				characters.add(nextSet);
 				reachedCharacter = false;
 				startValue = col;
@@ -184,15 +231,18 @@ public class ImagePreprocessor {
 				reachedCharacter = true;
 				
 				if (col - startValue > averageWhitespaceLength){
-					CropValueSet nextSet = new CropValueSet(startValue, col);
+					ValueRange nextSet = new ValueRange(startValue, col);
 					characters.add(nextSet);
 					startValue = col;
 				}
 			}
 		}
 		
-		CropValueSet nextSet = new CropValueSet(startValue, line.getWidth() - 1);
-		characters.add(nextSet);
+		ValueRange nextSet = new ValueRange(startValue, line.getWidth() - 1);
+		
+		if (nextSet.getEndValue() > nextSet.getStartValue()){
+			characters.add(nextSet);
+		}
 		
 		return convertCropValuesToImages(characters, line, ImageCropper.LEFT_RIGHT_CROPPER);
 	}

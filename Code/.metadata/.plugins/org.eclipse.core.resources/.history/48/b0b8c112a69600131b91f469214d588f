@@ -1,0 +1,50 @@
+package ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import networkIOtranslation.AlphaNumericIOTranslator;
+import networkIOtranslation.INetworkIOTranslator;
+import neuralNetwork.CharacterReader;
+import neuralNetwork.INeuralNetwork;
+
+public class CharacterRecognitionPanel extends JPanel implements INetworkSelectionHandler{
+	private INeuralNetwork selectedNetwork;
+	private NetworkSelectionPanel networkPanel;
+	private JButton recognizeButton;
+	
+	private INetworkIOTranslator translator;
+	
+	public CharacterRecognitionPanel(){
+		translator = new AlphaNumericIOTranslator();
+	}
+	
+	private void setupPanel(){
+		networkPanel = new NetworkSelectionPanel(this);
+		recognizeButton = new JButton("Recognize Current Image");
+		recognizeButton.addActionListener(new ButtonListener());
+	}
+	
+	@Override
+	public void networkSelected(String networkName, INeuralNetwork network) {
+		selectedNetwork = network;
+	}
+	
+	private class ButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == recognizeButton){
+				if (selectedNetwork == null){
+					selectedNetwork = networkPanel.getNetwork();
+				}
+				
+				
+				CharacterReader reader = new CharacterReader(selectedNetwork, translator);
+				reader.readCharacter(null); // CHANGE THIS FROM NULL OMG CHANGE THIS!!!
+			}
+		}
+	}
+}

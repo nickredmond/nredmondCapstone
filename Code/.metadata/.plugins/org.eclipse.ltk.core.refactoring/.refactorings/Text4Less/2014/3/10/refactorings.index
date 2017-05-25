@@ -1,0 +1,20 @@
+1393802474812	Copy compilation units
+1393802566043	Delete elements
+1393802670993	Copy compilation units
+1393802745614	Move compilation unit
+1393802757318	Rename type 'MainTest'
+1393802828010	Rename type 'MainWindow'
+1393802845315	Rename type 'MainPanel'
+1393802898801	Rename type 'CustomNetworkWindow'
+1393802920563	Rename type 'MainWindowTab'
+1393802974807	Rename type 'FolderTranslationWindow'
+1393803119143	Rename type 'DigitalDrawingWindow'
+1393815428850	Delete element
+1393815446650	Rename package 'alternateUI'
+1393900881346	Delete element
+1393900886501	Delete elements
+1393901020277	Move compilation unit
+1394169885841	Rename field 'test'
+1394170672772	Encapsulate field 'isAccuracyPromptEnabled'
+1394170678154	Encapsulate field 'isSpellCheckEnabled'
+1394170683325	Encapsulate field 'readMethod'

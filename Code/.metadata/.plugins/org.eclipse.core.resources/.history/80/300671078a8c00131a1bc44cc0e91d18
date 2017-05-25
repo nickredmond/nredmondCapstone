@@ -1,0 +1,28 @@
+package imageProcessing;
+
+import java.util.List;
+
+import featureExtraction.FeatureExtractionHelper;
+
+public class NoiseRemover {
+	public static void removeNoise(int[][] imageValues){
+		int[][] noiseRemovedValues = imageValues;
+		
+		for (int row = 0; row < noiseRemovedValues.length; row++){
+			for (int col = 0; col < noiseRemovedValues[0].length; col++){
+				List<Integer> surroundingValues = FeatureExtractionHelper.getSurroundingValuesFromPoints(noiseRemovedValues, row, col);
+				int numSurroundingBlackValues = 0;
+				
+				for (Integer nextValue : surroundingValues){
+					if (nextValue > 0){
+						numSurroundingBlackValues++;
+					}
+				}
+				
+				if (numSurroundingBlackValues == 0){
+					noiseRemovedValues[row][col] = 0;
+				}
+			}
+		}
+	}
+}

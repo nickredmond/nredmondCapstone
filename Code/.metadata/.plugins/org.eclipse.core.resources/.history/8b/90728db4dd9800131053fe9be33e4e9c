@@ -1,0 +1,38 @@
+package genetics;
+
+public class BasicGeneticAlgorithm implements IGeneticAlgorithm {
+	private float mutationRate, crossoverRate;
+	
+	@Override
+	public int[][] generateRandomChromosomeSet(int numberChromosomes,
+			int chromosomeLength) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[][] breed(int[][] originalChromosomes) {
+		return null;
+	}
+
+	@Override
+	public void setMutationRate(float rate) {
+		mutationRate = rate;
+	}
+
+	@Override
+	public float getMutationRate() {
+		return mutationRate;
+	}
+
+	@Override
+	public void setCrossoverRate(float rate) {
+		crossoverRate = rate;
+	}
+
+	@Override
+	public float getCrossoverRate() {
+		return crossoverRate;
+	}
+
+}

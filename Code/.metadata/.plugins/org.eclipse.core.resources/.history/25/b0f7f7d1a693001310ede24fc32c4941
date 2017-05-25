@@ -1,0 +1,13 @@
+package receptors;
+
+import java.util.List;
+import java.util.Random;
+
+public class ReceptorGenerator {
+	private static float SMALLEST_VALUE = 0;
+	private static float LARGEST_VALUE = 1;
+	
+	public static List<Receptor> generateRandomReceptors(int amountToGenerate){
+		Random rand = new Random();
+	}
+}

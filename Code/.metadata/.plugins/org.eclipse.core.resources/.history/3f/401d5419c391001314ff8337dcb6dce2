@@ -1,0 +1,8 @@
+package ui;
+
+import javax.swing.JFrame;
+
+public class LoadingScreen extends JFrame {
+	private String text;
+	private int maxNumberDots, currentDotNumber;
+}

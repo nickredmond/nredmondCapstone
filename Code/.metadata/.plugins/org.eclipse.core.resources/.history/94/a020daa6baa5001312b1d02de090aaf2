@@ -1,0 +1,21 @@
+package app;
+
+import imageHandling.ImageReadMethod;
+
+public class UserPreferences {
+	private boolean isAccuracyPromptEnabled;
+	private boolean isSpellCheckEnabled;
+	private ImageReadMethod readMethod;
+	public boolean isAccuracyPromptEnabled() {
+		return isAccuracyPromptEnabled;
+	}
+	public void setAccuracyPromptEnabled(boolean isAccuracyPromptEnabled) {
+		this.isAccuracyPromptEnabled = isAccuracyPromptEnabled;
+	}
+	public boolean isSpellCheckEnabled() {
+		return isSpellCheckEnabled;
+	}
+	public void setSpellCheckEnabled(boolean isSpellCheckEnabled) {
+		this.isSpellCheckEnabled = isSpellCheckEnabled;
+	}
+}

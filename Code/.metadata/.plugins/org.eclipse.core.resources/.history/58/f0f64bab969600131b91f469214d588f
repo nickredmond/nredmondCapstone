@@ -1,0 +1,45 @@
+package ui;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import ui.SaveImageWindow.ButtonListener;
+
+public class TrainingSetSelectionPanel extends JPanel {
+	private JPanel addFolderPanel;
+	
+	private void setupPanel(){
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		JPanel selectedFolderPanel = new JPanel();
+		selectedFolderLabel = new JLabel("Selected Training Set: ---");
+		chooseFolderButton = new JButton("Choose Folder...");
+		chooseFolderButton.addActionListener(new ButtonListener());
+		newSetButton = new JButton("New Folder");
+		newSetButton.addActionListener(new ButtonListener());
+		
+		selectedFolderPanel.setLayout(new BoxLayout(selectedFolderPanel, BoxLayout.X_AXIS));
+		selectedFolderPanel.add(selectedFolderLabel);
+		selectedFolderPanel.add(chooseFolderButton);
+		selectedFolderPanel.add(newSetButton);
+		this.add(selectedFolderPanel);
+		
+		setupAddFolderPanel();
+		this.add(addFolderPanel);
+		addFolderPanel.setVisible(false);
+	}
+	
+	private void setupAddFolderPanel() {
+		addFolderPanel = new JPanel();
+		newSetField = new JTextField();
+		saveSetButton = new JButton("Create Training Set (Adds new folder)");
+		saveSetButton.addActionListener(new ButtonListener());
+		
+		addFolderPanel.setLayout(new BoxLayout(addFolderPanel, BoxLayout.X_AXIS));
+		addFolderPanel.add(newSetField);
+		addFolderPanel.add(saveSetButton);
+	}
+}

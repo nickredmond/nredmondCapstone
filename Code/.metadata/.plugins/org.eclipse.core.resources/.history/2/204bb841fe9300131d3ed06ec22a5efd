@@ -1,0 +1,14 @@
+package receptors;
+
+import java.awt.image.BufferedImage;
+
+public class ReceptorFilter {
+	
+	private boolean crossesImage(Receptor receptor, BufferedImage image){
+		boolean crosses = false;
+		
+		
+		
+		return true;
+	}
+}

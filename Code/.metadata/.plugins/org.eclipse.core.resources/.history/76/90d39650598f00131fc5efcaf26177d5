@@ -1,0 +1,9 @@
+package ui;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class ImageLoaderPanel extends JPanel {
+	JPanel buttonPanel, previewPanel;
+	JButton loadImageButton, translateButton, advancedButton;
+}

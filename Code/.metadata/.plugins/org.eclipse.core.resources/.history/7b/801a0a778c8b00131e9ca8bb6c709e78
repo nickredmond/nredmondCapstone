@@ -1,0 +1,32 @@
+package app;
+
+import io.FileOperations;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class TrainingDataCreationHandler implements ICharacterImageHandler {
+	
+	@Override
+	public void handleImage(BufferedImage img){
+	  try {
+		  File dir = new File(FileOperations.TRAINING_DATA_DIR);
+		  File[] files = dir.listFiles();
+		  
+		  System.out.println("doin it:");
+		  
+		  for (int i = 0; i < files.length; i++){
+			  System.out.println("hell yeah: " + files[i].getName());
+		  }
+		  System.out.println("did it");
+		  
+		  
+	      ImageIO.write(img, "jpg", new File(FileOperations.TRAINING_DATA_DIR + System.nanoTime() + ".jpg"));
+	  } catch (IOException e) {
+	          e.printStackTrace();
+	  }
+	}
+}

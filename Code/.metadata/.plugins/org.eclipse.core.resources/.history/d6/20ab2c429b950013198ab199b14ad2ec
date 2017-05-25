@@ -1,0 +1,25 @@
+package ui;
+
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
+
+public class DrawingArea extends JPanel {
+	private final int AREA_HEIGHT = 300;
+	private final int AREA_WIDTH = 300;
+	
+	private final int DEFAULT_HEIGHT = 10;
+	private final int DEFAULT_WIDTH = 10;
+	
+	private int height, width;
+	
+	public DrawingArea(){
+		height = DEFAULT_HEIGHT;
+		width = DEFAULT_WIDTH;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		
+	}
+}

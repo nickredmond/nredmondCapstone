@@ -1,20 +1,22 @@
 package neuralNetwork;
 
-import imageProcessing.INetworkIOTranslator;
-import imageProcessing.NetworkIOTranslator;
-
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import networkIOtranslation.INetworkIOTranslator;
+import debug.CharacterViewDebug;
+
 public class CharacterNetworkTrainer {
-	private List<CharacterTrainingExample> trainingExamples;
+	private List<CharacterTrainingExample> trainingExamples, testExamples;
 	INetworkIOTranslator translator;
 	
 	public CharacterNetworkTrainer(INetworkIOTranslator translator){
 		trainingExamples = new LinkedList<CharacterTrainingExample>();
+		testExamples = new LinkedList<CharacterTrainingExample>();
+		
 		this.translator = translator;
 	}
 	
@@ -22,15 +24,21 @@ public class CharacterNetworkTrainer {
 		trainingExamples.add(example);
 	}
 	
-	public void trainNeuralNetwork(NeuralNetwork network, INetworkTrainer trainer){
-		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples();
-		trainer.trainWithTrainingSet(network, trainingSet);
+	public void addTestExample(CharacterTrainingExample example){
+		testExamples.add(example);
+	}
+	
+	public void trainNeuralNetwork(INeuralNetwork network, INetworkTrainer trainer){
+		Set<TrainingExample> trainingSet = setupNetworkTrainingExamples(trainingExamples);
+		Set<TrainingExample> testSet = setupNetworkTrainingExamples(testExamples);
+		
+		trainer.trainWithTrainingSet(network, trainingSet, testSet);
 	}
 
-	private Set<TrainingExample> setupNetworkTrainingExamples() {
+	private Set<TrainingExample> setupNetworkTrainingExamples(List<CharacterTrainingExample> characterExamples) {
 		Set<TrainingExample> examples = new HashSet<TrainingExample>();
 		
-		for (CharacterTrainingExample nextExample : trainingExamples){
+		for (CharacterTrainingExample nextExample : characterExamples){
 			BufferedImage nextImage = nextExample.getCharacterImage();
 			char nextCharacter = nextExample.getCharacterValue();
 			float[] nextInput = translator.translateImageToNetworkInput(nextImage);

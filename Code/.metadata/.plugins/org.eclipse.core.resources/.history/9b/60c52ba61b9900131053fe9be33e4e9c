@@ -1,0 +1,31 @@
+package genetics;
+
+import java.util.Random;
+
+public class RouletteChromosomeChooser implements IChromosomeChooser{
+	@Override
+	public int[] chooseChromosome(Chromosome[] chromosomes) {
+		int totalSlices = 0;
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			totalSlices += (int)(chromosomes[i].getFitness() * 10);
+		}
+		
+		int[][] rouletteChromosomeSet = new int[totalSlices][chromosomes[0].getGenes().length];
+		int setIndex = 0;
+		
+		for (int i = 0; i < chromosomes.length; i++){
+			int numSlices = (int)(chromosomes[i].getFitness() * 10);
+			
+			for (int j = 0; j < numSlices; j++){
+				rouletteChromosomeSet[setIndex] = chromosomes[i].getGenes();
+				setIndex++;
+			}
+		}
+		
+		Random rand = new Random();
+		int index = rand.nextInt(rouletteChromosomeSet.length);
+		
+		return rouletteChromosomeSet[index];
+	}
+}

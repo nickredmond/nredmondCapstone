@@ -1,0 +1,9 @@
+package app;
+
+public class DictionaryCreatorUtil {
+	
+	
+	public static void createCommonPriorityDictionary(){
+		
+	}
+}

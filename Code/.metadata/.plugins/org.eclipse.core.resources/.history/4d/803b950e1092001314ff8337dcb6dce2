@@ -1,0 +1,28 @@
+package imageProcessing;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+import debug.CorrelationDebug;
+
+public class NeighboringImageHypothesizer {
+	private static float MIN_CONFIDENCE_REQUIRED = 0.95f;
+	
+	public static List<BufferedImage> combineImagesThatFormCharacters(List<BufferedImage> line){
+		for (int i = 0; i < line.size() - 1; i++){
+			BufferedImage left = line.get(i);
+			BufferedImage right = line.get(i+1);
+			
+			BufferedImage combined = new BufferedImage(left.getWidth()+right.getWidth(), left.getHeight(), BufferedImage.TYPE_INT_RGB);
+			
+			for (int col = 0; col < combined.getWidth(); col++){
+				for (int row = 0; row < left.getHeight(); row++){
+					int rgb = (col < left.getWidth()) ? left.getRGB(col, row) : right.getRGB(col + left.getWidth(), row);
+					combined.setRGB(col, row, rgb);
+				}
+			}
+			
+			
+		}
+	}
+}
